@@ -1,5 +1,7 @@
+import user from '../user'
+
 export function toggleMenu (state, isVisible) {
-  if (!state.user) {
+  if (user.user) {
     state.isMenuVisible = false
     return
   }

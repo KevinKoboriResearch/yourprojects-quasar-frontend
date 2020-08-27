@@ -1,5 +1,5 @@
 export default function () {
   return {
-    isMenuVisible: false
+    isMenuVisible: true
   }
 }

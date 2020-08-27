@@ -1,40 +1,53 @@
+import Home from '../components/home/Home'
+import AdminPages from '../components/admin/AdminPages'
+import ArticlesByCategory from '../components/article/ArticlesByCategory'
+import ArticleById from '../components/article/ArticleById'
+import Auth from '../components/auth/Auth'
+
+
 const routes = [
   // {
   //   path: '/',
   //   component: () => import('layouts/MainLayout.vue'),
   //   children: [
-  //     { path: '', component: () => import('components/home/Home.vue') },
-  //     { path: 'admin', component: () => import('components/admin/AdminPages.vue') },
-  //     { path: 'categories/:id/articles', component: () => import('components/article/ArticlesByCategory.vue') },
-  //     { path: 'articles/:id', component: () => import('components/article/ArticleById.vue') },
-  //     { path: 'auth', component: () => import('components/auth/Auth.vue') }
+  //     { name: 'home', path: '', component: () => import('components/home/Home.vue') },
+  //     { name: 'adminPages', path: 'admin', component: () => import('components/admin/AdminPages.vue') },
+  //     { name: 'articlesByCategory', path: 'categories/:id/articles', component: () => import('components/article/ArticlesByCategory.vue') },
+  //     { name: 'articleById', path: 'articles/:id', component: () => import('components/article/ArticleById.vue') },
+  //     { name: 'auth', path: 'auth', component: () => import('components/auth/Auth.vue') }
   //   ]
   // },
   {
+    // name: 'articlesByCategory',
+    // path: '/',
+    // component: () => import('layouts/MainLayout.vue'),
+    // children: [
+    //   { name: 'home', path: '', component: () => import('../components/home/Home.vue') }
+    // ]
     name: 'home',
     path: '/',
-    component: () => import('../components/home/Home.vue')
+    component: Home
   },
   {
     name: 'adminPages',
     path: '/admin',
-    component: () => import('../components/admin/AdminPages.vue'),
+    component: AdminPages,
     meta: { requiresAdmin: true }
   },
   {
     name: 'articlesByCategory',
     path: '/categories/:id/articles',
-    component: () => import('../components/article/ArticlesByCategory.vue')
+    component: ArticlesByCategory
   },
   {
     name: 'articleById',
     path: '/articles/:id',
-    component: () => import('../components/article/ArticleById.vue')
+    component: ArticleById
   },
   {
     name: 'auth',
     path: '/auth',
-    component: () => import('../components/auth/Auth.vue')
+    component: Auth
   },
   {
     name: 'error',

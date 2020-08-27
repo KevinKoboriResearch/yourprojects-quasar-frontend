@@ -12,35 +12,18 @@
 
 <script>
 import axios from "axios"
-import { baseApiUrl, userKey } from "./global"
+import { baseApiUrl, userKey } from "../global"
 import { mapState } from "vuex"
-import Header from "./components/template/Header"
-import Menu from "./components/template/Menu"
-import Content from "./components/template/Content"
-import Footer from "./components/template/Footer"
-import Loading from "./components/template/Loading"
+import Header from "../components/template/Header"
+import Menu from "../components/template/Menu"
+import Content from "../components/template/Content"
+import Footer from "../components/template/Footer"
+import Loading from "../components/template/Loading"
 
 export default {
 	name: "App",
 	components: { Header, Menu, Content, Footer, Loading },
-  computed: {
-    isMenuVisible: {
-      get () {
-        return this.$store.state.leftDrawer.isMenuVisible
-      },
-      set (val) {
-        this.$store.commit('leftDrawer/isMenuVisible', val)
-      }
-    },
-    user: {
-      get () {
-        return this.$store.state.user.user
-      },
-      set (val) {
-        this.$store.commit('user/setUser', val)
-      }
-    }
-  },
+	computed: mapState(['isMenuVisible', 'user']),
 	data: function() {
 		return {
 			validatingToken: true
@@ -52,7 +35,7 @@ export default {
 
 			const json = localStorage.getItem(userKey)
 			const userData = JSON.parse(json)
-			this.$store.commit('user/setUser', null)
+			this.$store.commit('setUser', null)
 
 			if(!userData) {
 				this.validatingToken = false
@@ -63,11 +46,11 @@ export default {
 			const res = await axios.post(`${baseApiUrl}/validateToken`, userData)
 
 			if (res.data) {
-				this.$store.commit('user/setUser', userData)
+				this.$store.commit('setUser', userData)
 
-				// if(this.$mq === 'xs' || this.$mq === 'sm') {
-				// 	this.$store.commit('leftDrawer/toggleMenu', false)
-				// }
+				if(this.$mq === 'xs' || this.$mq === 'sm') {
+					this.$store.commit('toggleMenu', false)
+				}
 			} else {
 				localStorage.removeItem(userKey)
 				this.$router.push({ name: 'auth' })

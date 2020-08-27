@@ -1,3 +1,21 @@
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
+
+import VueMq from 'vue-mq'
+
+Vue.use(VueMq, {
+    breakpoints: {
+        xs: 576,
+        sm: 768,
+        md: 960,
+        lg: 1140,
+        xl: Infinity
+    }
+})
+
 import Vue from 'vue'
 import Toasted from 'vue-toasted'
 

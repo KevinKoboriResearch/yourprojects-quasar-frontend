@@ -2,9 +2,7 @@
   <div
   >
   <!-- class="loading" -->
-    <!-- <img> -->
-    <!-- src="../../assets/loading.gif" -->
-    <!-- alt="Loading" -->
+    <img src="../../assets/loading.gif" alt="Loading">
   </div>
 </template>
 
@@ -15,10 +13,10 @@ export default {
 </script>
 
 <style>
-/* .loading {
+.loading {
   grid-area: content;
   display: flex;
   justify-content: center;
   align-items: center;
-} */
+}
 </style>
