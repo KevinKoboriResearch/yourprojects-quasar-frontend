@@ -1,13 +1,13 @@
 <template>
     <div class="user-admin">
-        <b-form v-show="showForm">
+        <b-form v-show="showForm" >
+          <!-- && Object.keys(user).length === 0 && user.constructor === Object -->
             <input id="user-id" type="hidden" v-model="user.id" />
             <b-row>
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome:" label-for="user-name">
                         <b-form-input id="user-name" type="text"
                             v-model="user.name" required
-                            :readonly="mode === 'remove'"
                             placeholder="Informe o Nome do Usuário..." />
                     </b-form-group>
                 </b-col>
@@ -15,16 +15,16 @@
                     <b-form-group label="E-mail:" label-for="user-email">
                         <b-form-input id="user-email" type="text"
                             v-model="user.email" required
-                            :readonly="mode === 'remove'"
                             placeholder="Informe o E-mail do Usuário..." />
                     </b-form-group>
                 </b-col>
             </b-row>
-            <b-form-checkbox id="user-admin" v-show="mode === 'save'"
+            <b-form-checkbox id="user-admin"
                 v-model="user.admin" class="mt-3 mb-3">
                 Administrador?
             </b-form-checkbox>
-            <b-row v-show="mode === 'save'">
+            <b-row
+            >
                 <b-col md="6" sm="12">
                     <b-form-group label="Senha:" label-for="user-password">
                         <b-form-input id="user-password" type="password"
@@ -43,52 +43,51 @@
             </b-row>
             <b-row>
                 <b-col xs="12">
-                    <b-button variant="primary" v-if="mode === 'save'"
+                    <b-button variant="primary"
                         @click="save">Salvar</b-button>
-                    <b-button variant="danger" v-if="mode === 'remove'"
-                        @click="remove">Excluir</b-button>
                     <b-button class="ml-2" @click="reset">Cancelar</b-button>
                 </b-col>
             </b-row>
         </b-form>
         <hr>
-
+            <!-- :columns="columns" -->
         <q-table
-            title="Treats"
             :data="users"
-            :columns="columns"
             row-key="name"
+            class="row align-start justity-start"
+            style="min-witdh: 100%;"
         >
 
             <template v-slot:header="props">
                 <q-tr :props="props">
-                    <q-th auto-width />
+                    <q-th auto-width>
+                                          <b-button style="max-width: 40px;" variant="primary" class="q-mr-sm"
+                            @click="user = {}, showForm = !showForm, expand = false"
+                      ><i :class="showForm ? 'fa fa-minus' : 'fa fa-user-plus'"></i></b-button><strong>AÇÕES</strong>
+                      </q-th>
                     <q-th
                         v-for="col in props.cols"
                         :key="col.name"
                         :props="props"
                     >
+                    <strong>
                         {{ col.label }}
+                        </strong>
                     </q-th>
                 </q-tr>
             </template>
 
             <template v-slot:body="props">
                 <q-tr :props="props">
-                    <q-td auto-width>
-                      <b-button variant="primary" v-show="showForm"
-                            @click="loadUser(props.row, 'save'), props.expand = !props.expand, showForm = !showForm"
-                      >Editar</b-button>
-                      <!-- <div class="columnq-px-xl"></div> -->
-                      <b-button variant="danger" v-show="showForm"
-                            @click="loadUser(props.row, 'remove'), props.expand = !props.expand, showForm = !showForm"
-                      >Excluir</b-button>
-                        <!-- <q-btn v-show="showForm" color="green" style="background-color: black;" label="delete"
-                            @click="loadUser(props.row, 'remove'), props.expand = !props.expand, showForm = !showForm"
-                        />
-                        <q-btn v-show="showForm" size="sm" color="green" round dense
-                        @click="loadUser(props.row, 'save'), props.expand = !props.expand,
-                        showForm = !showForm" :icon="props.expand ? 'remove' : 'add'" /> -->
+                    <q-td
+                      title="oi"
+                      style="max-width: 0px;">
+                      <b-button variant="warning" class="q-mr-sm"
+                            @click="loadUser(props.row), props.expand = !props.expand, expand = true, showForm = false"
+                      ><i class="fa fa-pencil"></i></b-button>
+                      <b-button variant="danger" class="q-mr-sm"
+                            @click="loadUser(props.row), remove(), expand = true, showForm = false"
+                      ><i class="fa fa-trash"></i></b-button>
                     </q-td>
                     <q-td
                         v-for="col in props.cols"
@@ -98,64 +97,61 @@
                         {{ col.value }}
                     </q-td>
                 </q-tr>
-                <q-tr v-show="props.expand" :props="props">
-                    <q-td colspan="100%">
-                        <b-form>
-                            <input id="user-id" type="hidden" v-model="user.id" />
-                            <b-row>
-                                <b-col md="6" sm="12">
-                                    <b-form-group label="Nome:" label-for="user-name">
-                                        <b-form-input id="user-name" type="text"
-                                            v-model="user.name" required
-                                            :readonly="mode === 'remove'"
-                                            placeholder="Informe o Nome do Usuário..." />
-                                    </b-form-group>
-                                </b-col>
-                                <b-col md="6" sm="12">
-                                    <b-form-group label="E-mail:" label-for="user-email">
-                                        <b-form-input id="user-email" type="text"
-                                            v-model="user.email" required
-                                            :readonly="mode === 'remove'"
-                                            placeholder="Informe o E-mail do Usuário..." />
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
-                            <b-form-checkbox id="user-admin" v-show="mode === 'save'"
-                                v-model="user.admin" class="mt-3 mb-3">
-                                Administrador?
-                            </b-form-checkbox>
-                            <b-row v-show="mode === 'save'">
-                                <b-col md="6" sm="12">
-                                    <b-form-group label="Senha:" label-for="user-password">
-                                        <b-form-input id="user-password" type="password"
-                                            v-model="user.password" required
-                                            placeholder="Informe a Senha do Usuário..." />
-                                    </b-form-group>
-                                </b-col>
-                                <b-col md="6" sm="12">
-                                    <b-form-group label="Confirmação de Senha:"
-                                        label-for="user-confirm-password">
-                                        <b-form-input id="user-confirm-password" type="password"
-                                            v-model="user.confirmPassword" required
-                                            placeholder="Confirme a Senha do Usuário..." />
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
-                            <b-row>
-                                <b-col xs="12">
-                                    <b-button variant="primary" v-if="mode === 'save'"
-                                        @click="save">Salvar</b-button>
-                                    <b-button variant="danger" v-if="mode === 'remove'"
-                                        @click="remove">Excluir</b-button>
-                                    <b-button class="ml-2"
-                                    @click="reset, user = {}, props.expand = !props.expand, showForm = !showForm, mode = 'save'">Cancelar</b-button>
-                                </b-col>
-                            </b-row>
-                        </b-form>
-                    </q-td>
-                </q-tr>
-            </template>
-        </q-table>
+                <q-tr v-show="props.expand && expand === false" :props="props">
+                  <q-td colspan="100%">
+                    <b-form>
+                      <input id="user-id" type="hidden" v-model="user.id" />
+                      <b-row>
+                          <b-col md="6" sm="12">
+                              <b-form-group label="Nome:" label-for="user-name">
+                                  <b-form-input id="user-name" type="text"
+                                      v-model="user.name" required
+                                      placeholder="Informe o Nome do Usuário..." />
+                              </b-form-group>
+                          </b-col>
+                          <b-col md="6" sm="12">
+                              <b-form-group label="E-mail:" label-for="user-email">
+                                  <b-form-input id="user-email" type="text"
+                                      v-model="user.email" required
+                                      placeholder="Informe o E-mail do Usuário..." />
+                              </b-form-group>
+                          </b-col>
+                      </b-row>
+                      <b-form-checkbox id="user-admin"
+                          v-model="user.admin" class="mt-3 mb-3">
+                          Administrador?
+                      </b-form-checkbox>
+                      <b-row
+                      >
+                          <b-col md="6" sm="12">
+                              <b-form-group label="Senha:" label-for="user-password">
+                                  <b-form-input id="user-password" type="password"
+                                      v-model="user.password" required
+                                      placeholder="Informe a Senha do Usuário..." />
+                              </b-form-group>
+                          </b-col>
+                          <b-col md="6" sm="12">
+                              <b-form-group label="Confirmação de Senha:"
+                                  label-for="user-confirm-password">
+                                  <b-form-input id="user-confirm-password" type="password"
+                                      v-model="user.confirmPassword" required
+                                      placeholder="Confirme a Senha do Usuário..." />
+                              </b-form-group>
+                          </b-col>
+                      </b-row>
+                      <b-row>
+                          <b-col xs="12">
+                              <b-button variant="primary"
+                                  @click="save">Salvar</b-button>
+                                              <b-button class="ml-2"
+                                              @click="reset, user = {}, props.expand = !props.expand, expand = false">Cancelar</b-button>
+                                          </b-col>
+                                      </b-row>
+                                  </b-form>
+                              </q-td>
+                          </q-tr>
+                      </template>
+                  </q-table>
     <!-- <q-table
       title="Treats"
       :data="users"
@@ -213,8 +209,9 @@ export default {
     name: 'UserAdmin',
     data: function() {
         return {
-            showForm: true,
-            mode: 'save',
+            showForm: false,
+            expand: false,
+            // mode: 'save',
             user: {},
             users: [],
             fields: [
@@ -235,7 +232,7 @@ export default {
             })
         },
         reset() {
-            this.mode = 'save'
+            // this.mode = 'save'
             this.user = {}
             this.loadUsers()
         },
@@ -258,8 +255,7 @@ export default {
                 })
                 .catch(showError)
         },
-        loadUser(user, mode = 'save') {
-            this.mode = mode
+        loadUser(user) {
             this.user = { ...user }
         }
     },

@@ -43,6 +43,9 @@
             <b-button class="ml-2" @click="reset">Cancelar</b-button>
         </b-form>
         <hr>
+        <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
+                    <i class="fa fa-pencil"></i>
+        </b-button>
         <b-table hover striped :items="articles" :fields="fields">
           <div styyle="background-color: #000; width: 400px;"></div>
             <template slot="actions" slot-scope="data">
