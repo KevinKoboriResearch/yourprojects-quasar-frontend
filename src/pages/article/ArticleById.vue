@@ -10,7 +10,7 @@
 // import hljs from 'highlightjs/highlight.pack.js'
 import { baseApiUrl } from '../../global'
 import axios from 'axios'
-import PageTitle from '../template/PageTitle'
+import PageTitle from '../../components/template/PageTitle'
 
 export default {
     name: 'ArticleById',

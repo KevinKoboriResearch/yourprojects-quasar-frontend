@@ -1,13 +1,16 @@
 <template>
+<q-layout>
 	<div id="q-app" :class="{'hide-menu': !isMenuVisible || !user}">
 		<Header title="Cod3r - Base de Conhecimento"
 			:hideToggle="!user"
 			:hideUserDropdown="!user" />
-		<Menu v-if="user" />
+		<!-- <Menu v-if="user" /> -->
+    <leftDrawer v-if="user" />
 		<Loading v-if="validatingToken" />
 		<Content v-else />
 		<Footer />
 	</div>
+</q-layout>
 </template>
 
 <script>
@@ -19,10 +22,13 @@ import Menu from "./components/template/Menu"
 import Content from "./components/template/Content"
 import Footer from "./components/template/Footer"
 import Loading from "./components/template/Loading"
+import leftDrawer from "./components/template/leftDrawer"
 
 export default {
 	name: "App",
-	components: { Header, Menu, Content, Footer, Loading },
+  components: { Header, Menu, Content, Footer, Loading,
+    leftDrawer
+  },
   computed: {
     isMenuVisible: {
       get () {

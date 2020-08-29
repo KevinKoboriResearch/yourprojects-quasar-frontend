@@ -44,12 +44,15 @@
         </b-form>
         <hr>
         <b-table hover striped :items="articles" :fields="fields">
+          <div styyle="background-color: #000; width: 400px;"></div>
             <template slot="actions" slot-scope="data">
                 <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
                     <i class="fa fa-pencil"></i>
+                    <!-- <q-icon name="mdi-close" /> -->
                 </b-button>
                 <b-button variant="danger" @click="loadArticle(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
+                    <!-- <q-icon name="mdi-close" /> -->
                 </b-button>
             </template>
         </b-table>

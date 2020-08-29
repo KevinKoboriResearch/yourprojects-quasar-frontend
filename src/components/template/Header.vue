@@ -2,6 +2,7 @@
     <header class="header">
         <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
             <i class="fa fa-lg" :class="icon"></i>
+            <!-- <q-icon :name="icon" /> -->
         </a>
         <h1 class="title">
             <router-link to="/">{{ title }}</router-link>
@@ -23,7 +24,8 @@ export default {
   },
   computed: {
     icon() {
-        return this.$store.state.leftDrawer.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
+      // return this.$store.state.leftDrawer.isMenuVisible ? "mdi-close" : "mdi-menu"
+      return this.$store.state.leftDrawer.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
     }
   },
   methods: {

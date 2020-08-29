@@ -1,6 +1,8 @@
 <template>
     <div class="category-admin">
         <b-form>
+                {{count}}
+      {{limit}}
             <input id="category-id" type="hidden" v-model="category.id" />
             <b-form-group label="Nome:" label-for="category-name">
                 <b-form-input id="category-name" type="text"
@@ -25,15 +27,17 @@
         </b-form>
         <hr>
         <b-table hover striped :items="categories" :fields="fields">
-            <template slot="actions" slot-scope="data">
+          <div class="bg-red q-pa-xl"></div>
+            <!-- <template slot="actions" slot-scope="data">
                 <b-button variant="warning" @click="loadCategory(data.item)" class="mr-2">
                     <i class="fa fa-pencil"></i>
                 </b-button>
                 <b-button variant="danger" @click="loadCategory(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
                 </b-button>
-            </template>
+            </template> -->
         </b-table>
+        <b-pagination size="md" v-model="page" :total-rows="count" :per-page="limit" />
     </div>
 </template>
 
@@ -43,11 +47,12 @@ import axios from 'axios'
 
 export default {
     name: 'CategoryAdmin',
-    data: function() {
+    data () {
         return {
             mode: 'save',
             category: {},
             categories: [],
+            limit: 0,
             fields: [
                 { key: 'id', label: 'Código', sortable: true },
                 { key: 'name', label: 'Nome', sortable: true },
@@ -61,9 +66,12 @@ export default {
             const url = `${baseApiUrl}/categories`
             axios.get(url).then(res => {
                 // this.categories = res.data
-                this.categories = res.data.map(category => {
+                // this.categories = res.data.data.map(category => {
+                  this.categories = res.data.map(category => {
                     return { ...category, value: category.id, text: category.path }
                 })
+                this.count = res.data.count
+                this.limit = res.data.limit
             })
         },
         reset() {

@@ -1,6 +1,5 @@
 <template>
 <div>
-  {{$store.state.leftDrawer.isMenuVisible}}
     <aside class="menu" v-show="isMenuVisible">
         <div class="menu-filter">
             <i class="fa fa-search fa-lg"></i>
@@ -10,26 +9,6 @@
         <Tree :data="treeData" :options="treeOptions"
             :filter="treeFilter" ref="tree" />
     </aside>
-    <!-- <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer> -->
 </div>
 </template>
 
@@ -75,9 +54,9 @@ export default {
                 params: { id: node.id }
             })
 
-            // if(this.$mq === 'xs' || this.$mq === 'sm') {
-            //     this.$store.commit('leftDrawer/toggleMenu', false)
-            // }
+            if(this.$mq === 'xs' || this.$mq === 'sm') {
+                this.$store.commit('leftDrawer/toggleMenu', false)
+            }
         }
     },
     mounted() {

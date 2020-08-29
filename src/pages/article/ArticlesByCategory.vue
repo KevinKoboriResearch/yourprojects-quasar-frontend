@@ -18,7 +18,7 @@
 <script>
 import { baseApiUrl } from '../../global'
 import axios from 'axios'
-import PageTitle from '../template/PageTitle'
+import PageTitle from '../../components/template/PageTitle'
 import ArticleItem from './ArticleItem'
 
 export default {

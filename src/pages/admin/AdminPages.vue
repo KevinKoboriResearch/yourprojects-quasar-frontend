@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PageTitle from '../template/PageTitle'
+import PageTitle from '../../components/template/PageTitle'
 import ArticleAdmin from './ArticleAdmin'
 import CategoryAdmin from './CategoryAdmin'
 import UserAdmin from './UserAdmin'

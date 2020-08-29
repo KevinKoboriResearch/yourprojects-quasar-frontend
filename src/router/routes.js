@@ -1,8 +1,9 @@
-import Home from '../components/home/Home'
-import AdminPages from '../components/admin/AdminPages'
-import ArticlesByCategory from '../components/article/ArticlesByCategory'
-import ArticleById from '../components/article/ArticleById'
-import Auth from '../components/auth/Auth'
+import Home from '../pages/home/Home'
+import AdminPages from '../pages/admin/AdminPages'
+import ArticlesByCategory from '../pages/article/ArticlesByCategory'
+import ArticleById from '../pages/article/ArticleById'
+import Auth from '../pages/auth/Auth'
+import Error404 from '../pages/Error404.vue'
 
 
 const routes = [
@@ -52,7 +53,7 @@ const routes = [
   {
     name: 'error',
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: Error404
   }
 ]
 

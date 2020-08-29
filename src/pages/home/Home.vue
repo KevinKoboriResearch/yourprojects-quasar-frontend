@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import PageTitle from '../template/PageTitle'
+import PageTitle from '../../components/template/PageTitle'
 import Stat from './Stat'
 // import axios from 'axios'
 // import { baseApiUrl } from '@/global'
