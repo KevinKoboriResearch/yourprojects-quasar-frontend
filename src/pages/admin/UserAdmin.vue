@@ -134,10 +134,10 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td>
-            <q-btn class="bg-yellow q-mr-sm" flat v-show="!showForm" @click="loadUser(props.row), props.expand = !props.expand">
+            <q-btn class="bg-yellow q-mr-sm" flat @click="loadUser(props.row), props.expand = !props.expand">
               <i class="fa fa-user-edit"></i>
             </q-btn>
-            <q-btn class="bg-red" flat v-show="!showForm" @click="loadUser(props.row), remove()">
+            <q-btn class="bg-red" flat @click="loadUser(props.row), remove()">
               <i class="fa fa-trash-alt"></i>
             </q-btn>
           </q-td>
