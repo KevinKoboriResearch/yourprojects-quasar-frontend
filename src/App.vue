@@ -89,32 +89,36 @@ export default {
 </script>
 
 <style>
-	* {
-		font-family: "Lato", sans-serif;
-	}
+body::-webkit-scrollbar {
+  width: 0px;
+}
 
-	body {
-		margin: 0;
-	}
+* {
+  font-family: "Lato", sans-serif;
+}
 
-	#q-app {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
+body {
+  margin: 0;
+}
 
-		height: 100vh;
-		display: grid;
-		grid-template-rows: 60px 1fr 40px;
-		grid-template-columns: 300px 1fr;
-		grid-template-areas:
-			"header header"
-			"menu content"
-			"menu footer";
-	}
+#q-app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
-	#q-app.hide-menu {
-		grid-template-areas:
-			"header header"
-			"content content"
-			"footer footer";
-	}
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 60px 1fr 40px;
+  grid-template-columns: 300px 1fr;
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "menu footer";
+}
+
+#q-app.hide-menu {
+  grid-template-areas:
+    "header header"
+    "content content"
+    "footer footer";
+}
 </style>

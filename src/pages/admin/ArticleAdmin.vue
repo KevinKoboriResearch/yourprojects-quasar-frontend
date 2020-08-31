@@ -147,7 +147,7 @@
           />
         </div>
       </div>
-          <VueEditor v-model="article.content"
+          <VueEditor v-model="article.content" :editor-toolbar="customToolbar"
             placeholder="Informe o Conteúdo do Artigo..." />
       <div class="row">
         <q-btn @click="save" label="Submit" type="submit" color="primary"/>
@@ -294,7 +294,7 @@
                   />
                 </div>
               </div>
-                  <VueEditor v-model="article.content"
+                  <VueEditor v-model="article.content" :editor-toolbar="customToolbar"
                     placeholder="Informe o Conteúdo do Artigo..." />
               <div class="row">
                 <q-btn @click="save, props.expand = !props.expand" label="Submit" type="submit" color="primary"/>
@@ -321,7 +321,7 @@ export default {
     components: { VueEditor },
     data: function() {
       return {
-        showForm: true,
+        showForm: false,
         article: {},
         articles: [],
         categories: [],
@@ -334,6 +334,11 @@ export default {
           { key: 'name', label: 'Nome', sortable: true },
           { key: 'description', label: 'Descrição', sortable: true },
           { key: 'actions', label: 'Ações' }
+        ],
+        customToolbar: [
+          // ["bold", "italic", "underline"],
+          // [{ list: "ordered" }, { list: "bullet" }],
+          // ["image", "code-block"]
         ]
       }
     },

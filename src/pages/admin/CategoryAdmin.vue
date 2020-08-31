@@ -157,7 +157,7 @@ export default {
   name: 'CategoryAdmin',
   data () {
     return {
-      showForm: true,
+      showForm: false,
       category: {},
       categories: [],
       tableCategories: [],
