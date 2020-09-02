@@ -31,7 +31,7 @@ const routes = [
       { name: 'services', path: 'services', component: Services },
       { name: 'doubts', path: 'doubts', component: Doubts },
       { name: 'userArticles', path: 'user/articles', component: UserArticles },
-      { name: 'adminPages', path: 'admin', component: AdminPages },
+      { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
       // meta: { requiresAdmin: true }
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },

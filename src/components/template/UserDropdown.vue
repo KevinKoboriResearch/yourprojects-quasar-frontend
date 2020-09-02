@@ -13,13 +13,13 @@
     <!-- <Gravatar :email="user.email" alt="User" /> -->
     <!-- <div style="height:18px"></div> -->
       <q-list class="q-pt-md" @mouseover.native="listOver = true" @mouseout.native="listOver = false">
-        <q-item to="admin">
+        <q-item to="/admin" v-if="user.admin">
           <!-- v-if="user.admin" -->
           <q-item-section>
             <q-item-label>Admin Pages</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item to="user/articles">
+        <q-item to="/user/articles">
           <q-item-section>
             <q-item-label>Meu Blog</q-item-label>
           </q-item-section>

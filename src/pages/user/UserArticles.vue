@@ -82,7 +82,7 @@
         </div>
         {{user.id}}
         {{article.userId}}
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
+        <!-- <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
           <q-select
             id="category-parentId"
             standout
@@ -91,7 +91,7 @@
             map-options
             emit-value
           />
-        </div>
+        </div> -->
       </div>
           <!-- @focus="onEditorFocus" -->
         <VueEditor v-model="article.content"
@@ -231,7 +231,7 @@
                     emit-value
                   />
                 </div>
-                <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
+                <!-- <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
                   <q-select
                     id="category-parentId"
                     standout
@@ -240,7 +240,7 @@
                     map-options
                     emit-value
                   />
-                </div>
+                </div> -->
               </div>
               <!-- :editor-toolbar="customToolbar" -->
               <!-- :editorOptions="editorSettings" ref="editor"-->
@@ -407,7 +407,7 @@ export default {
       this.loadArticles()
     },
     save(val) {
-      // this.article.userId = this.user.id
+      this.article.userId = this.user.id
       const method = this.article.id ? 'put' : 'post'
       const id = this.article.id ? `/${this.article.id}` : ''
       axios[method](`${baseApiUrl}/articles${id}`, this.article)
@@ -452,14 +452,14 @@ export default {
       //   })
       // })
     },
-    loadUsers() {
-      const url = `${baseApiUrl}/users`
-      axios.get(url).then(res => {
-        this.users = res.data.map(user => {
-          return { value: user.id, label: `${user.name} - ${user.email}` }
-        })
-      })
-    }
+    // loadUsers() {
+    //   const url = `${baseApiUrl}/users`
+    //   axios.get(url).then(res => {
+    //     this.users = res.data.map(user => {
+    //       return { value: user.id, label: `${user.name} - ${user.email}` }
+    //     })
+    //   })
+    // }
   },
   watch: {
     page() {
@@ -467,8 +467,8 @@ export default {
     }
   },
   mounted() {
-      // this.loadUser()
-      this.loadUsers()
+      this.loadUser()
+      // this.loadUsers()
       this.loadCategories()
       this.loadArticles()
   }
