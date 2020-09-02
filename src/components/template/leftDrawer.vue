@@ -1,8 +1,58 @@
 <template>
   <div>
     <!-- {{getTreeData()}} -->
+    <q-toolbar :class="$q.dark.isActive ? 'bg-black text-white': 'bg-white text-black'">
+        <!-- <q-btn round dense flat icon="menu" class="q-mr-xs" /> -->
+        <!-- <q-avatar class="gt-xs">
+          <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+        </q-avatar> -->
+
+        <!-- <q-space /> -->
+
+        <q-input dense standout v-model="treeFilter" input-class="text-left" style="width: 100%;">
+          <template v-slot:append>
+            <q-icon v-if="treeFilter === ''" name="search" />
+            <q-icon v-else name="clear" class="cursor-pointer" @click="treeFilter = ''" />
+          </template>
+        </q-input>
+      </q-toolbar>
+    <!-- <div class="menu-filter">
+        <i class="fa fa-search fa-lg"></i>
+        <input type="text" placeholder="Digite para filtrar..."
+            v-model="treeFilter" class="filter-field">
+    </div> -->
     <Tree :data="treeData" :options="treeOptions"
             :filter="treeFilter" ref="tree" />
+
+    <!-- <q-list v-for="(item, i) in treeData" :key="i">
+      <q-expansion-item :duration="500" class="bg-white text-grey-10" group="somegroup1" :label="item.name" v-if="item.children" :to="item.to" exact>
+        <q-list v-for="(ite, u) in item.children" :key="u" :to="item.to">
+          <q-expansion-item :duration="500" class="bg-grey-10 text-white" group="somegroup2" :label="ite.name" v-if="ite.children" :to="ite.to" exact>
+            <q-list v-for="(it, x) in ite.children" :key="x">
+              <q-expansion-item :duration="500" class="bg-grey-9 text-white" group="somegroup3" :label="it.name" v-if="it.children" :to="it.to" exact>
+                <q-list v-for="(iz, u) in it.children" :key="u">
+                  <q-expansion-item :duration="500" class="bg-grey-8 text-white" group="somegroup4" :label="iz.name" v-if="iz.children" :to="iz.to" exact>
+                  </q-expansion-item>
+                  <q-item v-else exact-active-class="text-cyan-13" clickable v-ripple class="bg-grey-9 text-white" :to="iz.to" exact>
+                    <q-item-section>{{iz.name}}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-expansion-item>
+              <q-item v-else exact-active-class="text-cyan-13" clickable v-ripple class="bg-grey-9 text-white" :to="it.to" exact>
+                <q-item-section>{{it.name}}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-expansion-item>
+          <q-item v-else exact-active-class="text-cyan-13" clickable v-ripple class="bg-grey-10 text-white" :to="ite.to" exact>
+            <q-item-section>{{ite.name}}</q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+      <q-item v-else exact-active-class="text-cyan-13" clickable v-ripple class="bg-white text-black" :to="item.to" exact>
+        <q-item-section>{{item.name}}</q-item-section>
+      </q-item>
+    </q-list> -->
+
     <!-- <q-list v-for="(item, i) in items" :key="i">
       <q-expansion-item :duration="500" class="bg-white text-grey-10" group="somegroup1" :label="item.name" v-if="item.children" :to="item.to" exact>
         <q-list v-for="(ite, u) in item.children" :key="u" :to="item.to">
@@ -65,9 +115,9 @@ export default {
         params: { id: node.id }
       })
 
-      // if(this.$mq === 'xs' || this.$mq === 'sm') {
-      //   this.$store.commit('leftDrawer/toggleMenu', false)
-      // }
+      if(this.$mq === 'xs' || this.$mq === 'sm') {
+        this.$store.commit('leftDrawer/toggleMenu', false)
+      }
     }
   },
   mounted() {
@@ -83,20 +133,20 @@ export default {
           filter: { emptyText: 'Categoria não encontrada' }
       },
 
-      SecondRightDrawer: false,
-      SecondLeftDrawer: false,
-      clipped: false,
-      absolute: false,
-      admins: [
-        ['Management', 'mdi-people-outline'],
-        ['Settings', 'mdi-settings']
-      ],
-      cruds: [
-        ['Create', 'mdi-add'],
-        ['Read', 'mdi-insert-drive-file'],
-        ['Update', 'mdi-update'],
-        ['Delete', 'mdi-delete']
-      ],
+      // SecondRightDrawer: false,
+      // SecondLeftDrawer: false,
+      // clipped: false,
+      // absolute: false,
+      // admins: [
+      //   ['Management', 'mdi-people-outline'],
+      //   ['Settings', 'mdi-settings']
+      // ],
+      // cruds: [
+      //   ['Create', 'mdi-add'],
+      //   ['Read', 'mdi-insert-drive-file'],
+      //   ['Update', 'mdi-update'],
+      //   ['Delete', 'mdi-delete']
+      // ],
       items: [
         {
           name: 'Vuetify',

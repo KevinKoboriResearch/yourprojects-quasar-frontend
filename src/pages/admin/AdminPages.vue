@@ -1,10 +1,10 @@
 <template>
     <div class="admin-pages">
-        <PageTitle icon="fa fa-cogs" main="Administração do Sistema"
+      <!-- {{$store.state.adminPages.tab}} -->
+        <!-- <PageTitle icon="fa fa-cogs" main="Administração do Sistema"
             sub="Cadastros & Cia" />
-        <div class="admin-pages-tabs">
-          <!-- <div class="q-pa-md">
-    <div class="q-gutter-y-md" style="max-width: 600px"> -->
+        <div class="admin-pages-tabs"> -->
+          <!-- <VueEditorImage/> -->
           <q-card>
             <q-tabs
               v-model="tab"
@@ -24,17 +24,14 @@
 
             <q-tab-panels v-model="tab" animated>
               <q-tab-panel class="noScroll" style="min-height: 410px" name="articles">
-                <!-- <div class="text-h6">Mails</div> -->
                 <ArticleAdmin />
               </q-tab-panel>
 
               <q-tab-panel class="noScroll" style="min-height: 410px" name="categories">
-                <!-- <div class="text-h6">Alarms</div> -->
                 <CategoryAdmin />
               </q-tab-panel>
 
               <q-tab-panel class="noScroll" style="min-height: 410px" name="users">
-                <!-- <div class="text-h6">Movies</div> -->
                 <UserAdmin />
               </q-tab-panel>
             </q-tab-panels>
@@ -62,6 +59,7 @@ import PageTitle from '../../components/template/PageTitle'
 import ArticleAdmin from './ArticleAdmin'
 import CategoryAdmin from './CategoryAdmin'
 import UserAdmin from './UserAdmin'
+// import VueEditorImage from './Vue÷EditorImage'
 
 export default {
     name: 'AdminPages',
@@ -71,6 +69,16 @@ export default {
         tab: 'articles'
       }
     }
+    // computed: {
+      // tab: {
+      //   get () {
+      //     return this.$store.state.adminPages.tab
+      //   },
+      //   set (val) {
+      //     this.$store.commit('adminPages/changeAdminTab', val)
+      //   }
+      // }
+    // }
 }
 </script>
 

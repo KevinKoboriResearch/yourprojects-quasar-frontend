@@ -1,32 +1,40 @@
 <template>
     <div class="article-by-id">
         <PageTitle icon="fa fa-file-o" :main="article.name" :sub="article.description" />
-        <div class="article-content" v-html="article.content"></div>
+        <!-- <div class="article-content" v-html="article.content"></div> -->
+          <!-- class="bg-white" -->
+        <vue-editor
+          class="article-content"
+          v-model="article.content" :editor-toolbar="customToolbar" disabled/>
     </div>
 </template>
 
 <script>
-// import 'highlightjs/styles/dracula.css'
-// import hljs from 'highlightjs/highlight.pack.js'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/qtcreator_dark.css'
 import { baseApiUrl } from '../../global'
 import axios from 'axios'
 import PageTitle from '../../components/template/PageTitle'
+import { VueEditor } from "vue2-editor"
 
 export default {
-    name: 'ArticleById',
-    components: { PageTitle },
-    data: function() {
-        return {
-            article: {}
-        }
-    },
+  name: 'ArticleById',
+  components: { PageTitle, VueEditor },
+  data: function() {
+    return {
+      article: {},
+      customToolbar: [
+        []
+      ],
+    }
+  },
     mounted() {
         const url = `${baseApiUrl}/articles/${this.$route.params.id}`
         axios.get(url).then(res => this.article = res.data)
     },
     updated() {
-        document.querySelectorAll('.article-content pre.ql-syntax').forEach(e => {
-            // hljs.highlightBlock(e)
+        document.querySelectorAll('.article-content pre.ql-syntax').forEach((block) => {
+          hljs.highlightBlock(block);
         })
     }
 }

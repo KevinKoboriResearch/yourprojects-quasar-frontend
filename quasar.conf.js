@@ -6,8 +6,8 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
-
 module.exports = function (/* ctx */) {
+  // const webpack = require('webpack')
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -99,9 +99,19 @@ module.exports = function (/* ctx */) {
       // components: [],
       // directives: [],
 
+      // plugins: [
+      //   new VueLoaderPlugin(),
+      //   new webpack.ProvidePlugin({
+      //     'window.Quill': 'quill/dist/quill.js',
+      //     'Quill': 'quill/dist/quill.js',
+      //   })
+      // ],
       // Quasar plugins
+
       plugins: [
+        'Loading',
         'Dialog'
+
       ]
     },
 

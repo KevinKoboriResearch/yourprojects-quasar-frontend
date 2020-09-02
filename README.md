@@ -31,3 +31,4 @@ lazy vue router:
 <!-- && Object.keys(user).length === 0 && user.constructor === Object -->
 - https://codepen.io/spyke113/pen/bZZJYQ
 - https://github.com/quasarframework/quasar/issues/587
+- https://github.com/apostrophecms/apostrophe/issues/1291

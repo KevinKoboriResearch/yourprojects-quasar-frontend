@@ -1,9 +1,7 @@
 <template>
-  <div class="user-admin q-pa-sm bg-green">
+  <div class="user-admin q-pa-sm bg-deep-purple-9 square_rounded">
     <q-form
       v-show="showForm"
-      @submit="onSubmit"
-      @reset="onReset"
       class="q-gutter-md"
     >
       <div class="row">
@@ -105,8 +103,8 @@
         <q-space/>
         <q-btn @click="showForm = false" label="Cancelar" type="cancel" color="primary" flat class="q-ml-sm" />
       </div>
-    </q-form>
     <hr>
+    </q-form>
     <q-table
       v-show="!showForm"
       :data="users"
@@ -152,8 +150,6 @@
         <q-tr v-show="props.expand" :props="props">
           <q-td colspan="100%">
             <q-form
-              @submit="onSubmit"
-              @reset="onReset"
               class="q-gutter-md"
             >
               <div class="row">
@@ -327,3 +323,12 @@ export default {
     }
 }
 </script>
+
+<style>
+.square_rounded {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="article-admin">
+  <div>
     <q-form
       v-show="showForm"
       class="q-gutter-md"
@@ -80,6 +80,8 @@
             emit-value
           />
         </div>
+        {{user.id}}
+        {{article.userId}}
         <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
           <q-select
             id="category-parentId"
@@ -272,7 +274,8 @@
 </template>
 
 <script>
-import { baseApiUrl, showError } from '../../global'
+// import { baseApiUrl, userKey } from "../global"
+import { baseApiUrl, showError, userKey } from '../../global'
 import axios from 'axios'
 import { QSpinnerGears } from 'quasar'
 import { VueEditor } from "vue2-editor"
@@ -292,7 +295,7 @@ import { VueEditor } from "vue2-editor"
 // Quill.register("modules/imageResize", ImageResize)
 
 export default {
-  name: 'ArticleAdmin',
+  name: 'UserArticles',
   components: { VueEditor },
   data: function() {
     return {
@@ -300,7 +303,8 @@ export default {
       article: {},
       articles: [],
       categories: [],
-      users: [],
+      // users: [],
+      user: {},
       defaultCodeEditor: 0
       // fields: [
       //   { key: 'id', label: 'Código', sortable: true },
@@ -392,6 +396,7 @@ export default {
       })
     },
     loadArticles() {
+      // `user/${user.id}/articles`
       const url = `${baseApiUrl}/articles?page=${this.page}`
       axios.get(url).then(res => {
         this.articles = res.data
@@ -402,6 +407,7 @@ export default {
       this.loadArticles()
     },
     save(val) {
+      // this.article.userId = this.user.id
       const method = this.article.id ? 'put' : 'post'
       const id = this.article.id ? `/${this.article.id}` : ''
       axios[method](`${baseApiUrl}/articles${id}`, this.article)
@@ -424,6 +430,7 @@ export default {
         .catch(showError)
     },
     loadArticle(article) {
+      // `user/${user.id}/article/${article.id}`
       axios.get(`${baseApiUrl}/articles/${article.id}`)
         .then(res => this.article = res.data)
     },
@@ -434,6 +441,16 @@ export default {
             return { value: category.id, label: category.path }
         })
       })
+    },
+    loadUser() {
+      const json = localStorage.getItem(userKey)
+      this.user = JSON.parse(json)
+      // const url = `${baseApiUrl}/user/${user.id}`
+      // axios.get(url).then(res => {
+      //   this.users = res.data.map(user => {
+      //     return { value: user.id, label: `${user.name} - ${user.email}` }
+      //   })
+      // })
     },
     loadUsers() {
       const url = `${baseApiUrl}/users`
@@ -450,6 +467,7 @@ export default {
     }
   },
   mounted() {
+      // this.loadUser()
       this.loadUsers()
       this.loadCategories()
       this.loadArticles()

@@ -1,9 +1,8 @@
 <template>
   <div class="category-admin">
+    <!-- {{categories}} -->
     <q-form
       v-show="showForm"
-      @submit="onSubmit"
-      @reset="onReset"
       class="q-gutter-md"
     >
       <div class="row">
@@ -13,19 +12,19 @@
             color="white"
             v-model="category.name"
             label-slot
-            hint="Nome - necessário pelo menos 4 caracteres"
-            lazy-rules
-            :rules="[ val => val && val.length >= 4 || 'Please type something']"
             clearable
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Please type something']"
           >
+            <!-- hint="Nome - necessário pelo menos 4 caracteres" -->
             <template v-slot:label>
               <div class="row items-center all-pointer-events">
                 <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
                   Informe o Nome do Usuário...
 
-                <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                <!-- <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
                   this will be your email login... for more info contact your teacher
-                </q-tooltip>
+                </q-tooltip> -->
               </div>
             </template>
           </q-input>
@@ -45,13 +44,13 @@
         <q-btn @click="save" label="Submit" type="submit" color="primary"/>
         <q-btn @click="reset" label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
         <q-space/>
-        <q-btn @click="showForm = false" label="Cancelar" type="cancel" color="primary" flat class="q-ml-sm" />
+        <q-btn @click="showForm = false" label="Voltar" type="cancel" color="primary" flat class="q-ml-sm" />
       </div>
       <hr>
     </q-form>
     <q-table
       v-show="!showForm"
-      :data="tableCategories"
+      :data="categories"
       row-key="name"
       style="min-witdh: 100%;"
     >
@@ -60,6 +59,9 @@
           <q-th auto-width>
             <q-btn flat class="bg-green q-mr-sm" @click="reset(), props.expand = !props.expand, showForm = !showForm">
               <i class="fa fa-user-plus"></i>
+            </q-btn>
+            <q-btn flat class="bg-yellow q-mr-sm" @click="reaload()">
+              <i class="fa fa-sync-alt"></i>
             </q-btn>
           </q-th>
           <q-th
@@ -80,7 +82,7 @@
             <q-btn class="bg-yellow q-mr-sm" flat @click="loadCategory(props.row), props.expand = !props.expand">
               <i class="fa fa-user-edit"></i>
             </q-btn>
-            <q-btn class="bg-red" flat @click="loadCategory(props.row), remove()">
+            <q-btn class="bg-red" flat @click="loadCategory(props.row), confirmDelete()">
               <i class="fa fa-trash-alt"></i>
             </q-btn>
           </q-td>
@@ -96,8 +98,6 @@
         <q-tr v-show="props.expand" :props="props">
           <q-td colspan="100%">
             <q-form
-              @submit="onSubmit"
-              @reset="onReset"
               class="q-gutter-md"
             >
               <div class="row">
@@ -160,7 +160,7 @@ export default {
       showForm: false,
       category: {},
       categories: [],
-      tableCategories: [],
+      // categories: [],
       fields: [
         { key: 'id', label: 'Código', sortable: true },
         { key: 'name', label: 'Nome', sortable: true },
@@ -170,10 +170,31 @@ export default {
     }
   },
   methods: {
+    confirmDelete () {
+      this.$q.dialog({
+        dark: true,
+        title: 'Apagar',
+        message: 'Tem certeza que quer apagar este artigo?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.remove()
+      }).onCancel(() => {
+      }).onDismiss(() => {
+      })
+    },
+    reaload() {
+      window.location.reload()
+    },
     loadCategories() {
       const url = `${baseApiUrl}/categories`
       axios.get(url).then(res => {
-        this.tableCategories = res.data
+        // this.tableCategories = res.data.map(category => {
+        //   return { ...category }
+        // })
+        // .map(category => {
+        //   return { id: category.id, name: category.name, path: category.path }
+        // })
         this.categories = res.data.map(category => {
           return { ...category, label: category.path, value: category.id }
         })
@@ -189,7 +210,9 @@ export default {
       axios[method](`${baseApiUrl}/categories${id}`, this.category)
         .then(() => {
           this.$toasted.global.defaultSuccess()
-          this.reset()
+          // window.location.reload()
+          // this.$store.commit('adminPages/changeAdminTab', 'categories')
+          // this.reset()
         })
         .catch(showError)
     },

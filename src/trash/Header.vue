@@ -1,14 +1,34 @@
 <template>
-    <header class="header">
+  <div>
+    <!-- <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="left = !left" />
+
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          </q-avatar>
+          Title
+        </q-toolbar-title>
+
+        <q-btn dense flat round icon="menu" @click="right = !right" />
+      </q-toolbar>
+
+      <q-tabs align="left">
+        <q-route-tab to="/page1" label="Page One" />
+        <q-route-tab to="/page2" label="Page Two" />
+        <q-route-tab to="/page3" label="Page Three" />
+      </q-tabs> -->
+      <UserDropdown v-if="!hideUserDropdown" />
+  </div>
+    <!-- <header class="header">
         <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
             <i class="fa fa-lg" :class="icon"></i>
-            <!-- <q-icon :name="icon" /> -->
         </a>
         <h1 class="title">
             <router-link to="/">{{ title }}</router-link>
         </h1>
         <UserDropdown v-if="!hideUserDropdown" />
-    </header>
+    </header> -->
 </template>
 
 <script>

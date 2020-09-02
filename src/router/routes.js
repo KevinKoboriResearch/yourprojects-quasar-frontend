@@ -1,4 +1,8 @@
-import Home from '../pages/home/Home'
+import Home from '../pages/static/home/Home'
+import About from '../pages/static/about/About'
+import Services from '../pages/static/services/Services'
+import Doubts from '../pages/static/doubts/Doubts'
+import UserArticles from '../pages/user/UserArticles'
 import AdminPages from '../pages/admin/AdminPages'
 import ArticlesByCategory from '../pages/article/ArticlesByCategory'
 import ArticleById from '../pages/article/ArticleById'
@@ -19,42 +23,59 @@ const routes = [
   //   ]
   // },
   {
-    // name: 'articlesByCategory',
-    // path: '/',
-    // component: () => import('layouts/MainLayout.vue'),
-    // children: [
-    //   { name: 'home', path: '', component: () => import('../components/home/Home.vue') }
-    // ]
-    name: 'home',
     path: '/',
-    component: Home
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { name: 'home', path: '', component: Home },
+      { name: 'about', path: 'about', component: About },
+      { name: 'services', path: 'services', component: Services },
+      { name: 'doubts', path: 'doubts', component: Doubts },
+      { name: 'userArticles', path: 'user/articles', component: UserArticles },
+      { name: 'adminPages', path: 'admin', component: AdminPages },
+      // meta: { requiresAdmin: true }
+      { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
+      { name: 'articleById', path: 'articles/:id', component: ArticleById },
+      { name: 'auth', path: 'auth', component: Auth },
+      { name: 'error', path: '*', component: Error404 }
+    ]
   },
-  {
-    name: 'adminPages',
-    path: '/admin',
-    component: AdminPages,
-    meta: { requiresAdmin: true }
-  },
-  {
-    name: 'articlesByCategory',
-    path: '/categories/:id/articles',
-    component: ArticlesByCategory
-  },
-  {
-    name: 'articleById',
-    path: '/articles/:id',
-    component: ArticleById
-  },
-  {
-    name: 'auth',
-    path: '/auth',
-    component: Auth
-  },
-  {
-    name: 'error',
-    path: '*',
-    component: Error404
-  }
+  // {
+  //   // name: 'articlesByCategory',
+  //   // path: '/',
+  //   // component: () => import('layouts/MainLayout.vue'),
+  //   // children: [
+  //   //   { name: 'home', path: '', component: () => import('../components/home/Home.vue') }
+  //   // ]
+  //   name: 'home',
+  //   path: '/',
+  //   component: Home
+  // },
+  // {
+  //   name: 'adminPages',
+  //   path: '/admin',
+  //   component: AdminPages,
+  //   meta: { requiresAdmin: true }
+  // },
+  // {
+  //   name: 'articlesByCategory',
+  //   path: '/categories/:id/articles',
+  //   component: ArticlesByCategory
+  // },
+  // {
+  //   name: 'articleById',
+  //   path: '/articles/:id',
+  //   component: ArticleById
+  // },
+  // {
+  //   name: 'auth',
+  //   path: '/auth',
+  //   component: Auth
+  // },
+  // {
+  //   name: 'error',
+  //   path: '*',
+  //   component: Error404
+  // }
 ]
 
 // import Home from '../components/home/Home'
