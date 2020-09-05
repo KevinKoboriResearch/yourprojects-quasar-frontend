@@ -10,13 +10,25 @@
       style="background-color: #ffffff22;"
       :content-style="{ backgroundColor: '#ffffff22' }"
     >
-    <!-- <Gravatar :email="user.email" alt="User" /> -->
-    <!-- <div style="height:18px"></div> -->
-      <q-list class="q-pt-md" @mouseover.native="listOver = true" @mouseout.native="listOver = false">
-        <q-item to="/admin" v-if="user.admin">
+      <!-- <Gravatar :email="user.email" alt="User" /> -->
+      <!-- <div style="height:18px"></div> -->
+      <q-list
+        class="q-pt-md"
+        @mouseover.native="listOver = true"
+        @mouseout.native="listOver = false"
+      >
+        <q-item
+          to="/admin"
+          v-if="user.admin"
+        >
           <!-- v-if="user.admin" -->
           <q-item-section>
             <q-item-label>Admin Pages</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/user/profile">
+          <q-item-section>
+            <q-item-label>Meu Perfil</q-item-label>
           </q-item-section>
         </q-item>
         <q-item to="/user/articles">
@@ -24,7 +36,10 @@
             <q-item-label>Meu Blog</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item @click.prevent="logout()" clickable>
+        <q-item
+          @click.prevent="logout()"
+          clickable
+        >
           <q-item-section>
             <q-item-label>Sair</q-item-label>
           </q-item-section>
@@ -59,7 +74,7 @@ export default {
     }
   },
   methods: {
-    logout() {
+    logout () {
       localStorage.removeItem(userKey)
       this.$store.commit('user/setUser', null)
       this.$router.push({ name: 'auth' })
@@ -88,5 +103,4 @@ export default {
 </script>
 
 <style>
-
 </style>

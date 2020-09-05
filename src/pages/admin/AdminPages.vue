@@ -1,19 +1,16 @@
 <template>
     <div class="admin-pages">
-      <!-- {{$store.state.adminPages.tab}} -->
+      {{$store.state.adminPages.tab}}
         <!-- <PageTitle icon="fa fa-cogs" main="Administração do Sistema"
             sub="Cadastros & Cia" />
         <div class="admin-pages-tabs"> -->
-          <!-- <VueEditorImage/> -->
           <q-card>
             <q-tabs
               v-model="tab"
               dense
-              class="text-grey bg-white"
-              active-color="deep-purple-9"
-              indicator-color="deep-purple-9"
               align="justify"
               narrow-indicator
+              active-color="orange"
             >
               <q-tab name="articles" label="Artigos" />
               <q-tab name="categories" label="Categorias" />
@@ -59,26 +56,25 @@ import PageTitle from '../../components/template/PageTitle'
 import ArticleAdmin from './ArticleAdmin'
 import CategoryAdmin from './CategoryAdmin'
 import UserAdmin from './UserAdmin'
-// import VueEditorImage from './Vue÷EditorImage'
 
 export default {
     name: 'AdminPages',
     components: { PageTitle, ArticleAdmin, CategoryAdmin, UserAdmin },
     data () {
       return {
-        tab: 'articles'
+        // tab: 'articles'
+      }
+    },
+    computed: {
+      tab: {
+        get () {
+          return this.$store.state.adminPages.tab
+        },
+        set (val) {
+          this.$store.commit('adminPages/changeAdminTab', val)
+        }
       }
     }
-    // computed: {
-      // tab: {
-      //   get () {
-      //     return this.$store.state.adminPages.tab
-      //   },
-      //   set (val) {
-      //     this.$store.commit('adminPages/changeAdminTab', val)
-      //   }
-      // }
-    // }
 }
 </script>
 

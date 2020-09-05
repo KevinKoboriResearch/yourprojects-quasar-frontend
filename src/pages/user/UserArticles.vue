@@ -18,10 +18,20 @@
           >
             <template v-slot:label>
               <div class="row items-center all-pointer-events">
-                <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                  Informe o Nome do Artigo...
+                <q-icon
+                  class="q-mr-xs"
+                  color="deep-orange"
+                  size="24px"
+                  name="fa fa-user-tie"
+                />
+                Informe o Nome do Artigo...
 
-                <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                <q-tooltip
+                  content-class="bg-grey-8"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                >
                   this will be your email login... for more info contact your teacher
                 </q-tooltip>
               </div>
@@ -39,10 +49,20 @@
           >
             <template v-slot:label>
               <div class="row items-center all-pointer-events">
-                <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                  Informe a Descrição do Artigo...
+                <q-icon
+                  class="q-mr-xs"
+                  color="deep-orange"
+                  size="24px"
+                  name="fa fa-user-tie"
+                />
+                Informe a Descrição do Artigo...
 
-                <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                <q-tooltip
+                  content-class="bg-grey-8"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                >
                   this will be your email login... for more info contact your teacher
                 </q-tooltip>
               </div>
@@ -60,10 +80,20 @@
           >
             <template v-slot:label>
               <div class="row items-center all-pointer-events">
-                <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                  Informe a URL da Imagem...
+                <q-icon
+                  class="q-mr-xs"
+                  color="deep-orange"
+                  size="24px"
+                  name="fa fa-user-tie"
+                />
+                Informe a URL da Imagem...
 
-                <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                <q-tooltip
+                  content-class="bg-grey-8"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                >
                   this will be your email login... for more info contact your teacher
                 </q-tooltip>
               </div>
@@ -80,8 +110,13 @@
             emit-value
           />
         </div>
-        {{user.id}}
-        {{article.userId}}
+        <!-- user: {{user}}
+        <br>
+        article: {{article}}
+        <br>
+        articles: {{articles}}
+        <br>
+        categories: {{categories}} -->
         <!-- <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
           <q-select
             id="category-parentId"
@@ -93,14 +128,34 @@
           />
         </div> -->
       </div>
-          <!-- @focus="onEditorFocus" -->
-        <VueEditor v-model="article.content"
-          placeholder="Informe o Conteúdo do Artigo..." />
+      <VueEditor
+        v-model="article.content"
+        placeholder="Informe o Conteúdo do Artigo..."
+      />
       <div class="row">
-        <q-btn @click="save" label="Submit" type="submit" color="primary"/>
-        <q-btn @click="reset" label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-        <q-space/>
-        <q-btn @click="showForm = false" label="Cancelar" type="cancel" color="primary" flat class="q-ml-sm" />
+        <q-btn
+          @click="save"
+          label="Submit"
+          type="submit"
+          color="primary"
+        />
+        <q-btn
+          @click="reset"
+          label="Reset"
+          type="reset"
+          color="primary"
+          flat
+          class="q-ml-sm"
+        />
+        <q-space />
+        <q-btn
+          @click="showForm = false"
+          label="Cancelar"
+          type="cancel"
+          color="primary"
+          flat
+          class="q-ml-sm"
+        />
       </div>
       <hr>
     </q-form>
@@ -113,9 +168,13 @@
       <template v-slot:header="props">
         <q-tr :props="props">
           <q-th auto-width>
-            <q-btn flat class="bg-green q-mr-sm" @click="reset(),
+            <q-btn
+              flat
+              class="bg-green q-mr-sm"
+              @click="reset(),
               article.content = `<pre class=\'ql-syntax\' spellcheck=\'false\'>\nDigite aqui dentro o seu código fonte...</pre>`,
-              showForm = !showForm">
+              showForm = !showForm"
+            >
               <i class="fa fa-user-plus"></i>
             </q-btn>
           </q-th>
@@ -133,10 +192,18 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td>
-            <q-btn class="bg-yellow q-mr-sm" flat @click="loadArticle(props.row), props.expand = !props.expand">
+            <q-btn
+              class="bg-yellow q-mr-sm"
+              flat
+              @click="loadArticle(props.row), props.expand = !props.expand"
+            >
               <i class="fa fa-user-edit"></i>
             </q-btn>
-            <q-btn class="bg-red" flat @click="loadArticle(props.row), confirmDelete()">
+            <q-btn
+              class="bg-red"
+              flat
+              @click="loadArticle(props.row), confirmDelete()"
+            >
               <i class="fa fa-trash-alt"></i>
             </q-btn>
           </q-td>
@@ -148,13 +215,16 @@
             {{ col.value }}
           </q-td>
         </q-tr>
-        <q-tr v-show="props.expand" :props="props">
+        <q-tr
+          v-show="props.expand"
+          :props="props"
+        >
           <q-td colspan="100%">
             <q-form
               v-show="!showForm"
               class="q-gutter-md"
             >
-            <!-- <button @click="focusEditor">Focus Editor</button> -->
+              <!-- <button @click="focusEditor">Focus Editor</button> -->
               <div class="row">
                 <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
                   <q-input
@@ -169,10 +239,20 @@
                   >
                     <template v-slot:label>
                       <div class="row items-center all-pointer-events">
-                        <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                          Informe o Nome do Artigo...
+                        <q-icon
+                          class="q-mr-xs"
+                          color="deep-orange"
+                          size="24px"
+                          name="fa fa-user-tie"
+                        />
+                        Informe o Nome do Artigo...
 
-                        <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                        <q-tooltip
+                          content-class="bg-grey-8"
+                          anchor="top left"
+                          self="bottom left"
+                          :offset="[0, 8]"
+                        >
                           this will be your email login... for more info contact your teacher
                         </q-tooltip>
                       </div>
@@ -190,10 +270,20 @@
                   >
                     <template v-slot:label>
                       <div class="row items-center all-pointer-events">
-                        <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                          Informe a Descrição do Artigo...
+                        <q-icon
+                          class="q-mr-xs"
+                          color="deep-orange"
+                          size="24px"
+                          name="fa fa-user-tie"
+                        />
+                        Informe a Descrição do Artigo...
 
-                        <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                        <q-tooltip
+                          content-class="bg-grey-8"
+                          anchor="top left"
+                          self="bottom left"
+                          :offset="[0, 8]"
+                        >
                           this will be your email login... for more info contact your teacher
                         </q-tooltip>
                       </div>
@@ -211,10 +301,20 @@
                   >
                     <template v-slot:label>
                       <div class="row items-center all-pointer-events">
-                        <q-icon class="q-mr-xs" color="deep-orange" size="24px" name="fa fa-user-tie" />
-                          Informe a URL da Imagem...
+                        <q-icon
+                          class="q-mr-xs"
+                          color="deep-orange"
+                          size="24px"
+                          name="fa fa-user-tie"
+                        />
+                        Informe a URL da Imagem...
 
-                        <q-tooltip content-class="bg-grey-8" anchor="top left" self="bottom left" :offset="[0, 8]">
+                        <q-tooltip
+                          content-class="bg-grey-8"
+                          anchor="top left"
+                          self="bottom left"
+                          :offset="[0, 8]"
+                        >
                           this will be your email login... for more info contact your teacher
                         </q-tooltip>
                       </div>
@@ -242,27 +342,35 @@
                   />
                 </div> -->
               </div>
-              <!-- :editor-toolbar="customToolbar" -->
-              <!-- :editorOptions="editorSettings" ref="editor"-->
-                <!-- :editorOptions="editorSettings"
+              <vue-editor
+                id="editor"
                 v-model="article.content"
-                @focus="onEditorFocus"
-                @blur="onEditorBlur" -->
-                <!-- {{article}} -->
-                <!-- @selection-change="onSelectionChange" -->
-                <!-- {{article}} -->
-                <!-- <button @click="setEditorContent">Set Editor Content</button> -->
-                <!-- @selection-change="onSelectionChange"
-                @blur="onEditorBlur" -->
-                <!-- @focus="onEditorFocus" -->
-              <vue-editor id="editor"
-                v-model="article.content"
-                placeholder="Informe o Conteúdo do Artigo..." />
+                placeholder="Informe o Conteúdo do Artigo..."
+              />
               <div class="row">
-                <q-btn @click="save('edit')" label="Submit" type="submit" color="primary"/>
-                <q-btn @click="reset" label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-                <q-space/>
-                <q-btn @click="showForm = false, props.expand = !props.expand" label="Cancelar" type="cancel" color="primary" flat class="q-ml-sm" />
+                <q-btn
+                  @click="save('edit')"
+                  label="Submit"
+                  type="submit"
+                  color="primary"
+                />
+                <q-btn
+                  @click="reset"
+                  label="Reset"
+                  type="reset"
+                  color="primary"
+                  flat
+                  class="q-ml-sm"
+                />
+                <q-space />
+                <q-btn
+                  @click="showForm = false, props.expand = !props.expand"
+                  label="Cancelar"
+                  type="cancel"
+                  color="primary"
+                  flat
+                  class="q-ml-sm"
+                />
               </div>
               <hr>
             </q-form>
@@ -297,12 +405,13 @@ import { VueEditor } from "vue2-editor"
 export default {
   name: 'UserArticles',
   components: { VueEditor },
-  data: function() {
+  data: function () {
     return {
       showForm: false,
       article: {},
       articles: [],
       categories: [],
+      // page: 1,
       // users: [],
       user: {},
       defaultCodeEditor: 0
@@ -313,13 +422,13 @@ export default {
       //   { key: 'actions', label: 'Ações' }
       // ],
       // customToolbar: [
-        // ["bold", "italic", "underline"],
-        // [{ list: "ordered" }, { list: "bullet" }],
-        // ["image", "code-block"]
+      // ["bold", "italic", "underline"],
+      // [{ list: "ordered" }, { list: "bullet" }],
+      // ["image", "code-block"]
       // ],
       // customModulesForEditor: [
       //   { alias: "imageDrop", module: ImageDrop }
-        // { alias: "imageResize", module: ImageResize }
+      // { alias: "imageResize", module: ImageResize }
       // ],
       // editorSettings: {
       //   modules: {
@@ -395,18 +504,20 @@ export default {
       }).onDismiss(() => {
       })
     },
-    loadArticles() {
-      // `user/${user.id}/articles`
-      const url = `${baseApiUrl}/articles?page=${this.page}`
-      axios.get(url).then(res => {
-        this.articles = res.data
-      })
-    },
-    reset() {
+
+    // loadArticles(user) {
+    //   // const id = user.id
+    //   // const url = `${baseApiUrl}/user/${user.id}/articles`
+    //   const url = `${baseApiUrl}/articles?page=${this.page}`
+    //   axios.get(url).then(res => {
+    //     this.articles = res.data
+    //   })
+    // },
+    reset () {
       this.article = {}
       this.loadArticles()
     },
-    save(val) {
+    save (val) {
       this.article.userId = this.user.id
       const method = this.article.id ? 'put' : 'post'
       const id = this.article.id ? `/${this.article.id}` : ''
@@ -414,13 +525,13 @@ export default {
         .then(() => {
           this.$toasted.global.defaultSuccess()
           // this.showLoading()
-          if (val !== 'edit') {
-            this.reset()
-          }
+          // if (val !== 'edit') {
+          //   this.reset()
+          // }
         })
         .catch(showError)
     },
-    remove() {
+    remove () {
       const id = this.article.id
       axios.delete(`${baseApiUrl}/articles/${id}`)
         .then(() => {
@@ -429,29 +540,34 @@ export default {
         })
         .catch(showError)
     },
-    loadArticle(article) {
+    loadArticle (article) {
       // `user/${user.id}/article/${article.id}`
       axios.get(`${baseApiUrl}/articles/${article.id}`)
         .then(res => this.article = res.data)
     },
-    loadCategories() {
+    loadArticles () {
+      // const json = localStorage.getItem(userKey)
+      // const user = JSON.parse(json)
+      // `user/${user.id}/articles`
+      const url = `${baseApiUrl}/user/${this.user.id}/articles`
+      // const id = this.user.id
+      // const url = `${baseApiUrl}/user/${id}/articles`
+      axios.get(url).then(res => {
+        this.articles = res.data
+      })
+    },
+    loadCategories () {
       const url = `${baseApiUrl}/categories`
       axios.get(url).then(res => {
         this.categories = res.data.map(category => {
-            return { value: category.id, label: category.path }
+          return { value: category.id, label: category.path }
         })
       })
     },
-    loadUser() {
+    loadUser () {
       const json = localStorage.getItem(userKey)
       this.user = JSON.parse(json)
-      // const url = `${baseApiUrl}/user/${user.id}`
-      // axios.get(url).then(res => {
-      //   this.users = res.data.map(user => {
-      //     return { value: user.id, label: `${user.name} - ${user.email}` }
-      //   })
-      // })
-    },
+    }
     // loadUsers() {
     //   const url = `${baseApiUrl}/users`
     //   axios.get(url).then(res => {
@@ -462,15 +578,15 @@ export default {
     // }
   },
   watch: {
-    page() {
+    page () {
       this.loadArticles()
     }
   },
-  mounted() {
-      this.loadUser()
-      // this.loadUsers()
-      this.loadCategories()
-      this.loadArticles()
+  mounted () {
+    this.loadUser()
+    // this.loadUsers()
+    this.loadCategories()
+    this.loadArticles(this.user)
   }
   // beforeDestroy () {
   //   if (this.timer !== void 0) {

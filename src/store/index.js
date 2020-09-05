@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import adminPages from './admin-pages'
+import adminPages from './admin-pages'
 import leftDrawer from './left-drawer'
+import rightDrawer from './right-drawer'
 import user from './user'
 
 Vue.use(Vuex)
@@ -20,7 +21,8 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       leftDrawer,
-      // adminPages,
+      rightDrawer,
+      adminPages,
       user
     },
 

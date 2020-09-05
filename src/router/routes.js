@@ -2,6 +2,7 @@ import Home from '../pages/static/home/Home'
 import About from '../pages/static/about/About'
 import Services from '../pages/static/services/Services'
 import Doubts from '../pages/static/doubts/Doubts'
+import UserProfile from '../pages/user/UserProfile'
 import UserArticles from '../pages/user/UserArticles'
 import AdminPages from '../pages/admin/AdminPages'
 import ArticlesByCategory from '../pages/article/ArticlesByCategory'
@@ -26,13 +27,17 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
+      //logged out free routes
       { name: 'home', path: '', component: Home },
       { name: 'about', path: 'about', component: About },
       { name: 'services', path: 'services', component: Services },
       { name: 'doubts', path: 'doubts', component: Doubts },
+      //logged in user routes
+      { name: 'userProfile', path: 'user/profile', component: UserProfile },
       { name: 'userArticles', path: 'user/articles', component: UserArticles },
+      //logged in admin routes
       { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
-      // meta: { requiresAdmin: true }
+      //logged in free routes
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },
       { name: 'auth', path: 'auth', component: Auth },
