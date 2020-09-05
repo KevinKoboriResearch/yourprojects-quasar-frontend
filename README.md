@@ -51,3 +51,10 @@ knex:
 - https://stackoverflow.com/questions/40427903/knex-rollback-specific-migration
 
 v-if="$q.screen.gt.xs"
+
+login google/facebook vue.js:
+- https://www.djamware.com/post/5dd3573da2ab1b989eba80bf/vuejs-2-tutorial-facebook-login-example
+- https://stackoverflow.com/questions/50769341/how-to-implement-google-login-api-in-vuejs
+- https://developers.google.com/identity/sign-in/web/build-button
+- https://developers.google.com/identity/sign-in/web/
+- https://developers.google.com/identity/sign-in/web/sign-in#create_authorization_credentials

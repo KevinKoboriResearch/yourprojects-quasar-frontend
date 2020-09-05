@@ -110,8 +110,8 @@ module.exports = function (/* ctx */) {
 
       plugins: [
         'Loading',
-        'Dialog'
-
+        'Dialog',
+        'AppFullscreen'
       ]
     },
 

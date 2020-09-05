@@ -8,6 +8,7 @@
       height-hint="98"
     >
       <q-toolbar>
+        {{$store.state.user.isConnectedFacebook}}
         <q-btn
           v-if="user"
           dense
@@ -16,8 +17,8 @@
           icon="menu"
           @click="left = !left"
         />
-        {{$store.state.leftDrawer.isMenuVisible}}
-        {{$store.state.rightDrawer.isMenuVisible}}
+        <!-- {{$store.state.leftDrawer.isMenuVisible}}
+        {{$store.state.rightDrawer.isMenuVisible}} -->
         <q-toolbar-title class="q-pt-sm">
           <img
             @click="$q.dark.toggle()"
@@ -26,7 +27,8 @@
           >
         </q-toolbar-title>
 
-        <UserDropdown v-if="user" />
+        <UserDropdown v-if="user && !right" />
+
         <q-btn
           v-if="!user"
           dense
@@ -38,13 +40,14 @@
           v-else
           dense
           flat
-          round
+          size="12px"
+          class="q-py-xs q-px-sm"
           icon="fa fa-user-cog"
           @click="right = !right"
         />
       </q-toolbar>
 
-      <q-tabs v-if="!user">
+      <q-tabs>
         <q-space />
         <q-route-tab
           label="Início"
@@ -70,6 +73,7 @@
       v-if="user"
       v-model="left"
       side="left"
+      show-if-above
       elevated
     >
       <LeftDrawer v-if="user" />
@@ -104,9 +108,6 @@
           class
         >
         <q-toolbar-title>
-          <!-- <q-avatar> -->
-          <!-- <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg"> -->
-          <!-- </q-avatar> -->
           Your Projects
         </q-toolbar-title>
       </q-toolbar>

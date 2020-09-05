@@ -5,30 +5,61 @@
       style="max-width: 400px"
     >
       {{user}}
-      {{isConnected}}
-      <!-- {{showSignup}} -->
-      <div id="google-signin-button"></div>
-      <facebook-login
-        appId="623142018572569"
-        @login="onLogin('signIn')"
-        @logout="onLogout"
-        @get-initial-status="getUserData"
-        @sdk-loaded="sdkLoaded"
-      >
-      </facebook-login>
-      <facebook-login
-        appId="623142018572569"
-        @login="onLogin('signUp')"
-        @logout="onLogout"
-        @get-initial-status="getUserData"
-        @sdk-loaded="sdkLoaded"
-      >
-      </facebook-login>
 
-      <q-form class="q-gutter-md">
+      <!-- @submit="onSubmit"
+        @reset="onReset" -->
+      <!-- <div id="google-signin-button"></div> -->
+      <!-- <div id="google-signin-button"></div> -->
+
+      <!-- <facebook-login
+          class="button"
+          appId="326022817735322"
+          @login="getUserData"
+          @logout="onLogout"
+          @get-initial-status="getUserData"
+        >
+        </facebook-login> -->
+
+      <!-- class="button" -->
+      signup
+      <!-- @login="signUp('facebook')" -->
+      <!-- <facebook-login
+        appId="623142018572569"
+        @login="signUp('facebook')"
+        @logout="onLogout"
+        @get-initial-status="getUserData"
+        @sdk-loaded="sdkLoaded"
+      >
+      </facebook-login> -->
+      <!-- login -->
+      <facebook-login
+        appId="623142018572569"
+        @login="onLogin"
+        @logout="onLogout"
+        @get-initial-status="getUserData"
+        @sdk-loaded="sdkLoaded"
+      >
+      </facebook-login>
+      <div v-if="isConnected">
+        <h1>My Facebook Information</h1>
+        <div>
+          <!-- <div class="list-item"> -->
+          <img :src="user.image">
+          <!-- </div> -->
+          <!-- <div class="list-item"> -->
+          <p>{{user.name}}</p>
+          <!-- </div> -->
+          <!-- <div class="list-item"> -->
+          <p>{{user.email}}</p>
+          <!-- </div> -->
+          <!-- <div class="list-item"> -->
+          <p>{{user.password}}</p>
+          <!-- </div> -->
+        </div>
+      </div>
+      <!-- <q-form class="q-gutter-md">
 
         <q-input
-          v-if="showSignup"
           filled
           v-model="user.name"
           label="Nome e sobrenome"
@@ -37,7 +68,6 @@
         />
 
         <q-input
-          v-if="showSignup"
           filled
           type="number"
           v-model="user.age"
@@ -55,7 +85,7 @@
           label="Email"
           type="email"
           lazy-rules
-          :rules="[ val => val && !/\s/.test(val) || 'Insira um email válido']"
+          :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira um email válido']"
         />
 
         <q-input
@@ -68,7 +98,6 @@
         />
 
         <q-input
-          v-if="showSignup"
           filled
           v-model="user.confirmPassword"
           label="Confirme a sua senha"
@@ -77,7 +106,6 @@
           :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
         />
         <q-toggle
-          v-if="showSignup"
           v-model="terms"
           label="I accept the license and terms"
           :rules="[ val => val === true || 'senhas não conferem', ]"
@@ -85,15 +113,7 @@
 
         <div>
           <q-btn
-            v-if="showSignup"
-            label="Registrar"
-            type="submit"
-            color="primary"
-            @click="signup()"
-          />
-          <q-btn
-            v-else
-            label="Entrar"
+            label="Submit"
             type="submit"
             color="primary"
             @click="signup()"
@@ -105,19 +125,11 @@
             flat
             class="q-ml-sm"
           />
-          <div>
-            <a
-              href
-              @click.prevent="showSignup = !showSignup"
-            >
-              <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
-              <span v-else>Não tem cadastro? Registre-se aqui!</span>
-            </a>
-          </div>
         </div>
-      </q-form>
+      </q-form> -->
 
     </div>
+
     <!-- <div class="auth-content">
       <div class="auth-modal">
         <img
@@ -155,11 +167,11 @@
 
         <button
           v-if="showSignup"
-          @click="signUp"
+          @click="signup"
         >Registrar</button>
         <button
           v-else
-          @click="signIn"
+          @click="signin"
         >Entrar</button>
 
         <a
@@ -189,56 +201,51 @@ export default {
       showSignup: false,
       user: {},
       terms: false,
+      isConnected: false,
+      name: '',
+      email: '',
+      personalID: '',
+      picture: '',
       FB: undefined
     }
   },
-  computed: {
-    isConnected: {
-      get () {
-        return this.$store.state.user.isConnectedFacebook
-      },
-      set (val) {
-        this.$store.commit('user/setFacebookUser', val)
-      }
-    }
-  },
   methods: {
-    //google
     onSignIn (user) {
       const profile = user.getBasicProfile()
     },
-    //facebook
-    async getUserData () {
-      await this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+    getUserData () {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
         user => {
-          this.user.name = user.name;
+          // this.personalID = user.id;
+          // this.email = user.email;
+          // this.name = user.name;
+          // this.picture = user.picture.data.url;
           this.user.email = user.email;
+          this.user.name = user.name;
           this.user.password = user.id;
           this.user.confirmPassword = user.id;
           this.user.image = user.picture.data.url;
-          this.isConnected = true
-          axios.post(`${baseApiUrl}/signup`, this.user)
-            .then(() => {
-              this.$toasted.global.defaultSuccess()
-              this.showSignup = false
-            })
-            .catch(showError)
         }
       )
+      return this.user
     },
     sdkLoaded (payload) {
       this.isConnected = payload.isConnected
       this.FB = payload.FB
       if (this.isConnected) this.getUserData()
     },
-    onLogin (val) {
+    onLogin () {
+      // this.isConnected = true
+      // this.getUserData()
+      // if (val === 'signIn') {
+      //   this.terms = true
+      //   this.signIn('facebook')
+      // } else if (val === 'signUp') {
+      //   this.terms = true
+      this.isConnected = true
       this.getUserData()
-      if (val === 'signIn') {
-        this.signIn()
-      } else {
-        this.dialogTerms()
-        this.signUp()
-      }
+      this.signUp()
+      // }
     },
     onLogout () {
       this.isConnected = false;
@@ -247,7 +254,7 @@ export default {
       this.$q.dialog({
         dark: true,
         title: 'Apagar',
-        message: 'Você aceita os termos e condicoes de uso?',
+        message: 'É preciso aceitar os termos',
         cancel: true,
         persistent: true
       }).onOk(() => {
@@ -256,7 +263,20 @@ export default {
       }).onDismiss(() => {
       })
     },
-    signIn () {
+    signIn (val) {
+      // if (val === 'google') {
+      //   //google
+      // } else if (val === 'facebook') {
+      //   // this.isConnected = true
+      //   // this.getUserData()
+      //   axios.post(`${baseApiUrl}/signin`, this.getUserData())
+      //     .then(res => {
+      //       this.$store.commit('user/setUser', res.data)
+      //       localStorage.setItem(userKey, JSON.stringify(res.data))
+      //       this.$router.push({ path: '/' })
+      //     })
+      //     .catch(showError)
+      // } else {
       axios.post(`${baseApiUrl}/signin`, this.user)
         .then(res => {
           this.$store.commit('user/setUser', res.data)
@@ -264,18 +284,36 @@ export default {
           this.$router.push({ path: '/' })
         })
         .catch(showError)
+      // }
     },
-    signUp () {
-      if (this.terms === true) {
-        axios.post(`${baseApiUrl}/signup`, this.user)
-          .then(() => {
-            this.$toasted.global.defaultSuccess()
-            this.showSignup = false
-          })
-          .catch(showError)
-      } else {
-        this.dialogTerms()
-      }
+    signUp (val) {
+      // // this.terms = true
+      // // if (this.terms === true) {
+      // if (val === 'google') {
+      //   //google
+      // } else if (val === 'facebook') {
+      //   // this.isConnected = true
+      //   // this.getUserData()
+      //   console.log('signup facebook')
+      //   axios.post(`${baseApiUrl}/signup`, this.getUserData())
+      //     .then(() => {
+      //       this.$toasted.global.defaultSuccess()
+      //       this.user = {}
+      //       this.showSignup = false
+      //     })
+      //     .catch(showError)
+      // } else {
+      axios.post(`${baseApiUrl}/signup`, this.user)
+        .then(() => {
+          this.$toasted.global.defaultSuccess()
+          this.user = {}
+          this.showSignup = false
+        })
+        .catch(showError)
+      // }
+      // } else {
+      //   this.dialogTerms()
+      // }
     }
   },
   mounted () {
@@ -285,60 +323,3 @@ export default {
   },
 }
 </script>
-<style>
-.auth-content {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.auth-modal {
-  background-color: #fff;
-  width: 350px;
-  padding: 35px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.auth-title {
-  font-size: 1.2rem;
-  font-weight: 100;
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
-.auth-modal input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 3px 8px;
-  outline: none;
-}
-
-.auth-modal button {
-  align-self: flex-end;
-  background-color: #2460ae;
-  color: #fff;
-  padding: 5px 15px;
-}
-
-.auth-modal a {
-  margin-top: 35px;
-}
-
-.auth-modal hr {
-  border: 0;
-  width: 100%;
-  height: 1px;
-  background-image: linear-gradient(
-    to right,
-    rgba(120, 120, 120, 0),
-    rgba(120, 120, 120, 0.75),
-    rgba(120, 120, 120, 0)
-  );
-}
-</style>

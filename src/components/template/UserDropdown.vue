@@ -1,19 +1,20 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-mr-md">
     <q-btn-dropdown
       @mouseover.native="menuOver = true"
       @mouseout.native="menuOver = false"
       v-model="menu"
       auto-close
       :label="user.name"
-      dropdown-icon="mdi-triangle"
+      dropdown-icon="fa fa-adjust"
       style="background-color: #ffffff22;"
       :content-style="{ backgroundColor: '#ffffff22' }"
     >
+      <!-- mdi-triangle -->
       <!-- <Gravatar :email="user.email" alt="User" /> -->
       <!-- <div style="height:18px"></div> -->
       <q-list
-        class="q-pt-md"
+        class="q-mt-sm"
         @mouseover.native="listOver = true"
         @mouseout.native="listOver = false"
       >
@@ -21,7 +22,6 @@
           to="/admin"
           v-if="user.admin"
         >
-          <!-- v-if="user.admin" -->
           <q-item-section>
             <q-item-label>Admin Pages</q-item-label>
           </q-item-section>
@@ -76,7 +76,9 @@ export default {
   methods: {
     logout () {
       localStorage.removeItem(userKey)
+      this.$store.commit('rightDrawer/toggleMenu', false)
       this.$store.commit('user/setUser', null)
+      this.$store.commit('user/setFacebookUser', false)
       this.$router.push({ name: 'auth' })
     },
     debounceFunc: debounce(function () { this.checkMenu() }, 0),

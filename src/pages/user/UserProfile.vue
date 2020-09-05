@@ -1,11 +1,54 @@
 <template>
   <div class="q-pa-sm">
-    <!-- {{user}} -->
-    <q-btn
-      @click.prevent="right = !right"
-      class="q-mb-sm"
-    >voltar
-    </q-btn>
+    {{user.image}}
+    <div class="fit row wrap justify-between items-start content-start">
+      <div class="col-auto">
+        <q-btn
+          dense
+          @click.prevent="right = !right"
+          class="q-mb-sm"
+        >voltar
+        </q-btn>
+      </div>
+      <div class="col-auto">
+        <q-btn-dropdown
+          dense
+          @click="$q.dark.toggle()"
+          :label="$q.dark.isActive ? 'Modo Escuro': 'Modo Claro'"
+          dropdown-icon="fa fa-adjust"
+          class="q-mb-sm q-ml-sm"
+        />
+      </div>
+      <div class="col-auto">
+        <q-btn
+          dense
+          color="orange"
+          class="q-mb-sm q-ml-sm"
+          @click="$q.fullscreen.toggle()"
+          :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+        />
+      </div>
+      <div class="col-auto">
+        <q-btn
+          dense
+          color="orange"
+          class="q-mb-sm q-ml-sm"
+          @click="$q.fullscreen.toggle()"
+          :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+        />
+      </div>
+    </div>
+    <!-- @mouseover.native="menuOver = true"
+      @mouseout.native="menuOver = false" -->
+    <!-- <q-space/> -->
+    <!-- </q-btn-dropdown> -->
+    <!-- <q-btn
+      dense
+      color="orange"
+      class="q-mb-sm q-ml-sm"
+      @click="$q.fullscreen.toggle()"
+      :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+    /> -->
     <q-card class="my-card">
       <q-item>
         <q-item-section avatar>
@@ -289,6 +332,7 @@
               flat
               class="bg-green q-mr-sm"
               to="/user/articles"
+              @click="$store.commit('rightDrawer/toggleMenu', val)"
             >
               <i class="fa fa-user-edit"></i>
             </q-btn>
@@ -357,7 +401,7 @@ import { VueEditor } from "vue2-editor"
 export default {
   name: 'UserArticles',
   components: { VueEditor },
-  data: function () {
+  data () {
     return {
       baseApiUrl: baseApiUrl,
       showForm: false,
