@@ -1,6 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lff">
-
+  <q-layout :view="user ? 'hHh LpR lFf' : 'hHh LpR lff'">
     <q-header
       v-if="!validatingToken"
       elevated
@@ -21,9 +20,17 @@
         {{$store.state.rightDrawer.isMenuVisible}} -->
         <q-toolbar-title class="q-pt-sm">
           <img
+            v-if="!user"
             @click="$q.dark.toggle()"
             src="../assets/logo/your-design-trans-white.png"
             height="22"
+          >
+          <img
+            v-if="user"
+            @click="$q.dark.toggle()"
+            src="../assets/logo/your.png"
+            height="25"
+            class
           >
         </q-toolbar-title>
 
@@ -47,7 +54,7 @@
         />
       </q-toolbar>
 
-      <q-tabs>
+      <q-tabs v-if="!user">
         <q-space />
         <q-route-tab
           label="Início"
@@ -75,6 +82,7 @@
       side="left"
       show-if-above
       elevated
+      content-class="bg-white"
     >
       <LeftDrawer v-if="user" />
     </q-drawer>
@@ -83,7 +91,9 @@
       v-if="user"
       v-model="right"
       side="right"
+      show-if-above
       elevated
+      content-class="bg-white"
     >
       <RightDrawer v-if="user" />
     </q-drawer>
@@ -99,17 +109,39 @@
     <q-footer
       v-if="!validatingToken"
       elevated
-      class="bg-grey-8 text-white"
+      class="bg-deep-purple-8"
     >
       <q-toolbar>
         <img
+          v-if="!user"
           src="../assets/logo/your.png"
           height="25"
           class
         >
-        <q-toolbar-title>
+        <q-toolbar-title v-if="!user">
           Your Projects
         </q-toolbar-title>
+        <q-space />
+        <q-tabs v-if="user">
+          <q-space />
+          <q-route-tab
+            label="Início"
+            to="/"
+          />
+          <q-route-tab
+            label="Sobre"
+            to="/about"
+          />
+          <q-route-tab
+            label="Serviços"
+            to="/services"
+          />
+          <q-route-tab
+            label="Dúvidas"
+            to="/doubts"
+          />
+        </q-tabs>
+        <q-space v-if="user && !$q.screen.gt.xs" />
       </q-toolbar>
     </q-footer>
 
@@ -241,6 +273,10 @@ body::-webkit-scrollbar {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.drawer-bg {
+  background-color: white;
 }
 
 /* * {

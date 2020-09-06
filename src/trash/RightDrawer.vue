@@ -1,6 +1,7 @@
 <template>
   <div>
-    <q-toolbar :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'">
+    <UserProfile v-if="$store.state.user.user" />
+    <q-toolbar :class="$q.dark.isActive ? 'bg-black text-white': 'bg-white text-black'">
       <q-input
         dense
         standout
@@ -29,9 +30,8 @@
       :options="treeOptions"
       :filter="treeFilter"
       ref="tree"
-      class="tree"
+      class="text-blue"
     />
-    <!-- class="text-white" -->
     <!-- </div>
     </div> -->
   </div>
@@ -41,18 +41,22 @@
 import { baseApiUrl } from '../../global'
 import Tree from 'liquor-tree'
 import axios from 'axios'
+import UserProfile from '../../pages/user/UserProfile'
 
 export default {
-  components: { Tree },
+  components: {
+    Tree,
+    UserProfile
+  },
   computed: {
-    // isMenuVisible: {
-    //   get () {
-    //     return this.$store.state.leftDrawer.isMenuVisible
-    //   },
-    //   set (val) {
-    //     this.$store.commit('leftDrawer/isMenuVisible', val)
-    //   }
-    // }
+    isMenuVisible: {
+      get () {
+        return this.$store.state.leftDrawer.isMenuVisible
+      },
+      set (val) {
+        this.$store.commit('leftDrawer/isMenuVisible', val)
+      }
+    }
   },
   methods: {
     getTreeData () {
@@ -67,7 +71,7 @@ export default {
     }
   },
   mounted () {
-    this.$refs.tree.$on('node:clicked', this.onNodeSelect)
+    this.$refs.tree.$on('node:selected', this.onNodeSelect)
   },
   data () {
     return {
@@ -82,3 +86,20 @@ export default {
 }
 </script>
 
+<style scoped>
+.tree {
+  color: blue;
+}
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.example {
+  flex-basis: 49%;
+  padding: 30px;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  margin-top: 5px;
+}
+</style>

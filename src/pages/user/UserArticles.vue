@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{article}}
+    {{articles}}
     <q-form
       v-show="showForm"
       class="q-gutter-md"
@@ -184,7 +186,7 @@
             :props="props"
           >
             <strong>
-              {{ col.label }}
+              {{ col.label == 'Name' ? '' : col.label }}
             </strong>
           </q-th>
         </q-tr>

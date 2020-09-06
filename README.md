@@ -38,7 +38,10 @@ free css:
 
 
 liguor-tree:
+- https://amsik.github.io/liquor-tree/
 - https://jsfiddle.net/amsik/6jm2b1dq/
+- https://github.com/amsik/liquor-tree/issues/5
+- https://jsfiddle.net/amsik/cuseo1j7/
 
 
 quasar uploader:
