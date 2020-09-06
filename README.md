@@ -58,3 +58,8 @@ login google/facebook vue.js:
 - https://developers.google.com/identity/sign-in/web/build-button
 - https://developers.google.com/identity/sign-in/web/
 - https://developers.google.com/identity/sign-in/web/sign-in#create_authorization_credentials
+- https://gist.github.com/niksumeiko/360164708c3b326bd1c8
+
+
+autocomplete off:
+- https://github.com/aacassandra/vue-disable-autocomplete

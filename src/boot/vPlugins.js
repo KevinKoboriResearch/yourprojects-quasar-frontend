@@ -5,17 +5,20 @@
 // import BootstrapVue from 'bootstrap-vue'
 
 // Vue.use(BootstrapVue)
+import DisableAutocomplete from '@aacassandra/vue-disable-autocomplete'
+
+Vue.use(DisableAutocomplete)
 
 import VueMq from 'vue-mq'
 
 Vue.use(VueMq, {
-    breakpoints: {
-        xs: 576,
-        sm: 768,
-        md: 960,
-        lg: 1140,
-        xl: Infinity
-    }
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 960,
+    lg: 1140,
+    xl: Infinity
+  }
 })
 
 import Vue from 'vue'

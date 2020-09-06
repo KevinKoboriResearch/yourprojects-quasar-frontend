@@ -10,7 +10,7 @@
       <div id="google-signin-button"></div>
       <facebook-login
         appId="623142018572569"
-        @login="onLogin('signIn')"
+        @login="getUserData(true)"
         @logout="onLogout"
         @get-initial-status="getUserData"
         @sdk-loaded="sdkLoaded"
@@ -18,14 +18,22 @@
       </facebook-login>
       <facebook-login
         appId="623142018572569"
-        @login="onLogin('signUp')"
+        @login="getUserData(false)"
         @logout="onLogout"
         @get-initial-status="getUserData"
         @sdk-loaded="sdkLoaded"
       >
       </facebook-login>
 
-      <q-form class="q-gutter-md">
+      <!-- @submit="onSubmit"
+        @reset="onReset" -->
+      <q-form
+        class="q-gutter-md"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="off"
+        spellcheck="false"
+      >
 
         <q-input
           v-if="showSignup"
@@ -35,8 +43,9 @@
           lazy-rules
           :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']"
         />
+        <!-- autocomplete="nope" -->
 
-        <q-input
+        <!-- <q-input
           v-if="showSignup"
           filled
           type="number"
@@ -47,7 +56,7 @@
           val => val !== null && val !== '' || 'Insira apenas números',
           val => val > 0 && val < 100 || 'Insira uma idade real'
         ]"
-        />
+        /> -->
 
         <q-input
           filled
@@ -55,7 +64,8 @@
           label="Email"
           type="email"
           lazy-rules
-          :rules="[ val => val && !/\s/.test(val) || 'Insira um email válido']"
+          :rules="[ val => val && !/\s/.test(val) && !this.reg.test(val) || 'Insira um email válido']"
+          autocomplete="nope"
         />
 
         <q-input
@@ -75,12 +85,14 @@
           type="password"
           lazy-rules
           :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
+          autocomplete="nope"
         />
         <q-toggle
           v-if="showSignup"
           v-model="terms"
           label="I accept the license and terms"
           :rules="[ val => val === true || 'senhas não conferem', ]"
+          autocomplete="nope"
         />
 
         <div>
@@ -89,14 +101,14 @@
             label="Registrar"
             type="submit"
             color="primary"
-            @click="signup()"
+            @click="signUp()"
           />
           <q-btn
             v-else
             label="Entrar"
             type="submit"
             color="primary"
-            @click="signup()"
+            @click="signIn()"
           />
           <q-btn
             label="Reset"
@@ -189,7 +201,8 @@ export default {
       showSignup: false,
       user: {},
       terms: false,
-      FB: undefined
+      FB: undefined,
+      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     }
   },
   computed: {
@@ -208,8 +221,8 @@ export default {
       const profile = user.getBasicProfile()
     },
     //facebook
-    async getUserData () {
-      await this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+    getUserData (val) {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
         user => {
           this.user.name = user.name;
           this.user.email = user.email;
@@ -217,12 +230,22 @@ export default {
           this.user.confirmPassword = user.id;
           this.user.image = user.picture.data.url;
           this.isConnected = true
-          axios.post(`${baseApiUrl}/signup`, this.user)
-            .then(() => {
-              this.$toasted.global.defaultSuccess()
-              this.showSignup = false
-            })
-            .catch(showError)
+          if (val === true) {
+            axios.post(`${baseApiUrl}/signin`, this.user)
+              .then(res => {
+                this.$store.commit('user/setUser', res.data)
+                localStorage.setItem(userKey, JSON.stringify(res.data))
+                this.$router.push({ path: '/' })
+              })
+              .catch(showError)
+          } else {
+            axios.post(`${baseApiUrl}/signup`, this.user)
+              .then(() => {
+                this.$toasted.global.defaultSuccess()
+                this.showSignup = false
+              })
+              .catch(showError)
+          }
         }
       )
     },
@@ -232,13 +255,14 @@ export default {
       if (this.isConnected) this.getUserData()
     },
     onLogin (val) {
-      this.getUserData()
-      if (val === 'signIn') {
-        this.signIn()
-      } else {
-        this.dialogTerms()
-        this.signUp()
-      }
+      this.getUserData(val)
+      // this.getUserData()
+      // if (val === 'signIn') {
+      //   this.signIn()
+      // } else {
+      //   this.dialogTerms()
+      //   this.signUp()
+      // }
     },
     onLogout () {
       this.isConnected = false;

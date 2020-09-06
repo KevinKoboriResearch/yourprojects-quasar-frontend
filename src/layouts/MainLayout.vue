@@ -8,7 +8,7 @@
       height-hint="98"
     >
       <q-toolbar>
-        {{$store.state.user.isConnectedFacebook}}
+        <!-- {{$store.state.user.isConnectedFacebook}} -->
         <q-btn
           v-if="user"
           dense
