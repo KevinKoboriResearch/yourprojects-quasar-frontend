@@ -48,7 +48,7 @@ export default {
     onNodeSelect (node) {
       this.$router.push({
         name: 'articlesByCategory',
-        params: { id: JSON.parse(node.id) }
+        params: { id: node.id }
       })
     }
   },

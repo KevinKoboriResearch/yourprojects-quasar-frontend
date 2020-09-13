@@ -93,11 +93,11 @@
       v-model="right"
       side="right"
       elevated
+      show-if-above
       content-class="bg-white"
     >
       <RightDrawer v-if="user" />
     </q-drawer>
-    <!-- show-if-above -->
 
     <q-page-container>
       <Loading v-if="validatingToken" />

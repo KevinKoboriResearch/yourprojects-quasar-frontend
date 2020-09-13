@@ -92,6 +92,7 @@ export default {
       this.$nextTick().then(() => {
         this.renderComponent = true
         this.treeData = this.getTreeData()
+        this.minum = true
       });
     },
     editNode (node, e) {
@@ -126,7 +127,7 @@ export default {
     onNodeSelect (node) {
       this.$router.push({
         name: 'articlesByCategory',
-        params: { id: node.id }
+        params: { id: JSON.parse(node.id) }
       })
     },
     makeid (length) {
@@ -177,8 +178,8 @@ export default {
       axios[method](`${baseApiUrl}/categories${id}`, this.category)
         .then(() => {
           this.$toasted.global.defaultSuccess()
-          location.reload()
-          // this.forceRerender()
+          // location.reload()
+          this.forceRerenderTree()
         })
         .catch(showError)
     },
