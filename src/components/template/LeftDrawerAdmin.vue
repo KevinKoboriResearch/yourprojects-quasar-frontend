@@ -110,7 +110,8 @@ export default {
     },
     addChildNode (node) {
       if (node.enabled()) {
-        this.saveChild(node)
+        this.save(node, true)
+        // this.saveChild(node)
       }
     },
     // addNew (node) {
@@ -181,7 +182,19 @@ export default {
         })
         .catch(showError)
     },
-    async save (node) {
+    async save (node, child = false) {
+      if (!child) {
+        this.category.id = node.id
+        // this.category = category
+        this.category.name = node.text
+        this.category.parentId = node.parentId
+        // this.category.userId = this.user.id
+      } else {
+        this.category.name = this.makeid(5) //'novo nó ' + Math.floor(Math.random() * (1000 - 0))
+        this.category.parentId = node.id
+      }
+      this.category.userId = this.user.id
+      // console.log(this.user.id)
       // const category = {}
       // console.log('oioioi ' + this.category.id)
       // const url = `${baseApiUrl}/categories${node.id}`
@@ -194,32 +207,12 @@ export default {
       //   })
       // })
       // this.category = await this.loadCategory(node)
-      this.category.id = node.id
-      // this.category = category
-      this.category.name = node.text
-      this.category.userId = this.user.id
+      // this.category.id = node.id
+      // // this.category = category
+      // this.category.name = node.text
+      // this.category.parentId = node.parentId
+      // this.category.userId = this.user.id
       // this.category.parentId = node.parentId ? node.parentId : null
-      const method = this.category.id ? 'put' : 'post'
-      const id = this.category.id ? `/${this.category.id}` : ''
-      // axios[method](`${baseApiUrl}/categories${id}`, this.category)
-      axios[method](`${baseApiUrl}/category/name${id}`, this.category)
-        .then(() => {
-          this.$toasted.global.defaultSuccess()
-          location.reload()
-          // this.forceRerender()
-        })
-        .catch(showError)
-      // .catch(() => {
-      //   location.reload()
-      // }, showError)
-    },
-    saveChild (node) {
-      // console.log(this.category.id)
-      // this.category.id = ''
-      this.forceRerenderTree()
-      this.category.name = this.makeid(5) //'novo nó ' + Math.floor(Math.random() * (1000 - 0))
-      this.category.parentId = node.id
-      this.category.userId = this.user.id
       const method = this.category.id ? 'put' : 'post'
       const id = this.category.id ? `/${this.category.id}` : ''
       axios.post(`${baseApiUrl}/categories`, this.category)
@@ -228,7 +221,36 @@ export default {
           location.reload()
         })
         .catch(showError)
+      // const method = this.category.id ? 'put' : 'post'
+      // const id = this.category.id ? `/${this.category.id}` : ''
+      // // axios[method](`${baseApiUrl}/categories${id}`, this.category)
+      // axios[method](`${baseApiUrl}/category/name${id}`, this.category)
+      //   .then(() => {
+      //     this.$toasted.global.defaultSuccess()
+      //     location.reload()
+      //     // this.forceRerender()
+      //   })
+      //   .catch(showError)
+      // .catch(() => {
+      //   location.reload()
+      // }, showError)
     },
+    // saveChild (node) {
+    //   // console.log(this.category.id)
+    //   // this.category.id = ''
+    //   // this.forceRerenderTree()
+    //   this.category.name = this.makeid(5) //'novo nó ' + Math.floor(Math.random() * (1000 - 0))
+    //   this.category.parentId = node.id
+    //   this.category.userId = this.user.id
+    //   const method = this.category.id ? 'put' : 'post'
+    //   const id = this.category.id ? `/${this.category.id}` : ''
+    //   axios.post(`${baseApiUrl}/categories`, this.category)
+    //     .then(() => {
+    //       this.$toasted.global.defaultSuccess()
+    //       location.reload()
+    //     })
+    //     .catch(showError)
+    // },
     loadUser () {
       const json = localStorage.getItem(userKey)
       this.user = JSON.parse(json)
@@ -274,7 +296,7 @@ export default {
       // if (this.minum === true) {
       //   location.reload()
       // }
-      this.save(node)
+      this.save(node, false)
     })
     // this.$watch(this.$refs.tree.$on('node:clicked', this.onNodeSelect))
     // this.$watch(this.$refs.tree.$on('node:editing:start', (node) => {
