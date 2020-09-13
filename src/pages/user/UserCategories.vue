@@ -1,6 +1,8 @@
 <template>
   <div class="category-admin">
-    <!-- {{categories}} -->
+    {{categories}}
+    {{category}}
+    <!-- {{user}} -->
     <q-form
       v-show="showForm"
       class="q-gutter-md"
@@ -40,16 +42,6 @@
             standout
             :options="categories"
             v-model="category.parentId"
-            map-options
-            emit-value
-          />
-        </div>
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-          <q-select
-            id="category-parentId"
-            standout
-            :options="users"
-            v-model="category.userId"
             map-options
             emit-value
           />
@@ -194,16 +186,6 @@
                     emit-value
                   />
                 </div>
-                <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-                  <q-select
-                    id="category-parentId"
-                    standout
-                    :options="users"
-                    v-model="category.userId"
-                    map-options
-                    emit-value
-                  />
-                </div>
               </div>
               <div class="row">
                 <q-btn
@@ -239,17 +221,18 @@
 </template>
 
 <script>
-import { baseApiUrl, showError } from '../../global'
+import { baseApiUrl, showError, userKey } from '../../global'
 import axios from 'axios'
+import { QSpinnerGears } from 'quasar'
 
 export default {
   name: 'CategoryAdmin',
   data () {
     return {
+      user: {},
       showForm: false,
       category: {},
       categories: [],
-      users: [],
       tableCategories: [],
       fields: [
         { key: 'id', label: 'Código', sortable: true },
@@ -273,9 +256,26 @@ export default {
       }).onDismiss(() => {
       })
     },
+    // loadCategories () {
+    //   const url = `${baseApiUrl}/categories`
+    //   axios.get(url).then(res => {
+    //     this.tableCategories = res.data.map(category => {
+    //       return { id: category.id, name: category.name, path: category.path }
+    //     })
+    //     this.categories = res.data.map(category => {
+    //       return { ...category, label: category.path, value: category.id }
+    //     })
+    //   })
+    // },
     loadCategories () {
-      const url = `${baseApiUrl}/categories`
+      // const json = localStorage.getItem(userKey)
+      // const user = JSON.parse(json)
+      // `user/${user.id}/articles`
+      const url = `${baseApiUrl}/user/${this.user.id}/categories`
+      // const id = this.user.id
+      // const url = `${baseApiUrl}/user/${id}/articles`
       axios.get(url).then(res => {
+        // this.categories = res.data
         this.tableCategories = res.data.map(category => {
           return { id: category.id, name: category.name, path: category.path }
         })
@@ -289,6 +289,7 @@ export default {
       // this.loadCategories()
     },
     save () {
+      this.category.userId = this.user.id
       const method = this.category.id ? 'put' : 'post'
       const id = this.category.id ? `/${this.category.id}` : ''
       axios[method](`${baseApiUrl}/categories${id}`, this.category)
@@ -313,18 +314,20 @@ export default {
     loadCategory (category) {
       this.category = { ...category }
     },
-    loadUsers () {
-      const url = `${baseApiUrl}/users`
-      axios.get(url).then(res => {
-        this.users = res.data.map(user => {
-          return { value: user.id, label: `${user.name} - ${user.email}` }
-        })
-      })
+    // loadArticle (article) {
+    //   // `user/${user.id}/article/${article.id}`
+    //   axios.get(`${baseApiUrl}/articles/${article.id}`)
+    //     .then(res => this.article = res.data)
+    // },
+    loadUser () {
+      const json = localStorage.getItem(userKey)
+      this.user = JSON.parse(json)
     }
   },
   mounted () {
-    this.loadUsers()
+    this.loadUser()
     this.loadCategories()
+    this.loadCategory()
   }
 }
 </script>

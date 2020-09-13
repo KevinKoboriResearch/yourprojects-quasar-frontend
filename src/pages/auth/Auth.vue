@@ -222,32 +222,32 @@ export default {
     },
     //facebook
     getUserData (val) {
-      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
-        user => {
-          this.user.name = user.name;
-          this.user.email = user.email;
-          this.user.password = user.id;
-          this.user.confirmPassword = user.id;
-          this.user.image = user.picture.data.url;
-          this.isConnected = true
-          if (val === true) {
-            axios.post(`${baseApiUrl}/signin`, this.user)
-              .then(res => {
-                this.$store.commit('user/setUser', res.data)
-                localStorage.setItem(userKey, JSON.stringify(res.data))
-                this.$router.push({ path: '/' })
-              })
-              .catch(showError)
-          } else {
-            axios.post(`${baseApiUrl}/signup`, this.user)
-              .then(() => {
-                this.$toasted.global.defaultSuccess()
-                this.showSignup = false
-              })
-              .catch(showError)
-          }
-        }
-      )
+      // this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+      //   user => {
+      //     this.user.name = user.name;
+      //     this.user.email = user.email;
+      //     this.user.password = user.id;
+      //     this.user.confirmPassword = user.id;
+      //     this.user.image = user.picture.data.url;
+      //     this.isConnected = true
+      //     if (val === true) {
+      //       axios.post(`${baseApiUrl}/signin`, this.user)
+      //         .then(res => {
+      //           this.$store.commit('user/setUser', res.data)
+      //           localStorage.setItem(userKey, JSON.stringify(res.data))
+      //           this.$router.push({ path: '/' })
+      //         })
+      //         .catch(showError)
+      //     } else {
+      //       axios.post(`${baseApiUrl}/signup`, this.user)
+      //         .then(() => {
+      //           this.$toasted.global.defaultSuccess()
+      //           this.showSignup = false
+      //         })
+      //         .catch(showError)
+      //     }
+      //   }
+      // )
     },
     sdkLoaded (payload) {
       this.isConnected = payload.isConnected

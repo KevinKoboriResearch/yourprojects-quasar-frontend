@@ -1,5 +1,5 @@
 export default function () {
   return {
-    tab: 'articles'
+    tab: 'categories'
   }
 }

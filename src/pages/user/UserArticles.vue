@@ -517,7 +517,7 @@ export default {
     // },
     reset () {
       this.article = {}
-      this.loadArticles()
+      // this.loadArticles()
     },
     save (val) {
       this.article.userId = this.user.id
@@ -588,7 +588,7 @@ export default {
     this.loadUser()
     // this.loadUsers()
     this.loadCategories()
-    this.loadArticles(this.user)
+    this.loadArticles()
   }
   // beforeDestroy () {
   //   if (this.timer !== void 0) {

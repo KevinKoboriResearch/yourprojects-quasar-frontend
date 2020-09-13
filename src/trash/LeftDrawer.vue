@@ -48,7 +48,7 @@ export default {
     onNodeSelect (node) {
       this.$router.push({
         name: 'articlesByCategory',
-        params: { id: JSON.parse(node.id) }
+        params: { id: node.id }
       })
     }
   },
@@ -60,7 +60,7 @@ export default {
       treeFilter: '',
       treeData: this.getTreeData(),
       treeOptions: {
-        // editing: true,
+        editing: true,
         propertyNames: { 'text': 'name' },
         filter: { emptyText: 'Categoria não encontrada' }
       }

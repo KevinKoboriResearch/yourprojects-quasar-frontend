@@ -31,6 +31,11 @@
             <q-item-label>Meu Perfil</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item to="/user/categories">
+          <q-item-section>
+            <q-item-label>Minhas categorias</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item to="/user/articles">
           <q-item-section>
             <q-item-label>Meu Blog</q-item-label>

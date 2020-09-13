@@ -523,7 +523,7 @@ export default {
     },
     reset () {
       this.article = {}
-      this.loadArticles()
+      // this.loadArticles()
     },
     save (val) {
       const method = this.article.id ? 'put' : 'post'

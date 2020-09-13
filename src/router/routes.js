@@ -4,6 +4,7 @@ import Services from '../pages/static/services/Services'
 import Doubts from '../pages/static/doubts/Doubts'
 import UserProfile from '../pages/user/UserProfile'
 import UserArticles from '../pages/user/UserArticles'
+import UserCategories from '../pages/user/UserCategories'
 import AdminPages from '../pages/admin/AdminPages'
 import ArticlesByCategory from '../pages/article/ArticlesByCategory'
 import ArticleById from '../pages/article/ArticleById'
@@ -35,6 +36,7 @@ const routes = [
       //logged in user routes
       { name: 'userProfile', path: 'user/profile', component: UserProfile },
       { name: 'userArticles', path: 'user/articles', component: UserArticles },
+      { name: 'userCategories', path: 'user/categories', component: UserCategories },
       //logged in admin routes
       { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
       //logged in free routes

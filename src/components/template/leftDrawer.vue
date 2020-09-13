@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{getTreeData}}
     <q-toolbar :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'">
       <q-input
         dense
@@ -47,7 +48,7 @@ export default {
     onNodeSelect (node) {
       this.$router.push({
         name: 'articlesByCategory',
-        params: { id: node.id }
+        params: { id: JSON.parse(node.id) }
       })
     }
   },
@@ -59,6 +60,7 @@ export default {
       treeFilter: '',
       treeData: this.getTreeData(),
       treeOptions: {
+        // editing: true,
         propertyNames: { 'text': 'name' },
         filter: { emptyText: 'Categoria não encontrada' }
       }

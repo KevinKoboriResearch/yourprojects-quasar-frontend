@@ -84,19 +84,20 @@
       elevated
       content-class="bg-white"
     >
-      <LeftDrawer v-if="user" />
+      <LeftDrawerAdmin v-if="user.admin" />
+      <LeftDrawer v-if="user && !user.admin" />
     </q-drawer>
 
     <q-drawer
       v-if="user"
       v-model="right"
       side="right"
-      show-if-above
       elevated
       content-class="bg-white"
     >
       <RightDrawer v-if="user" />
     </q-drawer>
+    <!-- show-if-above -->
 
     <q-page-container>
       <Loading v-if="validatingToken" />
@@ -169,6 +170,7 @@ import { mapState } from "vuex"
 // import Footer from "../components/template/Footer"
 import Loading from "../components/template/Loading"
 import LeftDrawer from "../components/template/LeftDrawer"
+import LeftDrawerAdmin from "../components/template/LeftDrawerAdmin"
 import RightDrawer from "../components/template/RightDrawer"
 import UserDropdown from '../components/template/UserDropdown'
 // import Btn from '../components/template/Btn'
@@ -183,6 +185,7 @@ export default {
     // Footer,
     Loading,
     LeftDrawer,
+    LeftDrawerAdmin,
     RightDrawer
   },
   data () {
