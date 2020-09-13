@@ -3,7 +3,7 @@
     <q-header
       v-if="!validatingToken"
       elevated
-      class="selectDisable bg-red-8 text-white"
+      class="selectDisable bg-black text-white"
       height-hint="98"
     >
       <q-toolbar>
@@ -18,21 +18,20 @@
         />
         <!-- {{$store.state.leftDrawer.isMenuVisible}}
         {{$store.state.rightDrawer.isMenuVisible}} -->
-        <!-- class="q-pt-sm" -->
-        <q-toolbar-title>
-          <!-- v-if="!user" -->
-          <!-- <img class="q-pt-sm"
+        <q-toolbar-title class="q-pt-sm">
+          <img
+            v-if="!user"
             @click="$q.dark.toggle()"
             src="../assets/logo/your-design-trans-white.png"
-            height="32"
-          > -->
-          iFood
-          <!-- <img class="q-pt-sm"
+            height="22"
+          >
+          <img
             v-if="user"
             @click="$q.dark.toggle()"
             src="../assets/logo/your.png"
-            height="35"
-          > -->
+            height="25"
+            class
+          >
         </q-toolbar-title>
 
         <UserDropdown v-if="user && !right" />
@@ -93,8 +92,8 @@
       v-if="user"
       v-model="right"
       side="right"
-      show-if-above
       elevated
+      show-if-above
       content-class="bg-white"
     >
       <RightDrawer v-if="user" />
@@ -111,7 +110,7 @@
     <q-footer
       v-if="!validatingToken"
       elevated
-      class="bg-white text-black"
+      class="bg-deep-purple-8"
     >
       <q-toolbar>
         <img

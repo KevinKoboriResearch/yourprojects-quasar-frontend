@@ -2,187 +2,120 @@
   <div class="fit row wrap justify-center items-center content-center">
     <div
       class="q-pa-md"
-      style="max-width: 400px"
+      style="min-width: 300px; max-width: 300px;"
     >
-      {{user}}
-      {{isConnected}}
-      <!-- {{showSignup}} -->
-      <div id="google-signin-button"></div>
-      <facebook-login
-        appId="623142018572569"
-        @login="getUserData(true)"
-        @logout="onLogout"
-        @get-initial-status="getUserData"
-        @sdk-loaded="sdkLoaded"
-      >
-      </facebook-login>
-      <facebook-login
-        appId="623142018572569"
-        @login="getUserData(false)"
-        @logout="onLogout"
-        @get-initial-status="getUserData"
-        @sdk-loaded="sdkLoaded"
-      >
-      </facebook-login>
+      <q-card>
+        {{user}}
+        {{isConnected}}
+        <!-- {{showSignup}} -->
+        <div id="google-signin-button"></div>
+        <facebook-login
+          appId="623142018572569"
+          @login="getUserData(true)"
+          @logout="onLogout"
+          @get-initial-status="getUserData"
+          @sdk-loaded="sdkLoaded"
+        >
+        </facebook-login>
+        <facebook-login
+          appId="623142018572569"
+          @login="getUserData(false)"
+          @logout="onLogout"
+          @get-initial-status="getUserData"
+          @sdk-loaded="sdkLoaded"
+        >
+        </facebook-login>
 
-      <!-- @submit="onSubmit"
-        @reset="onReset" -->
-      <q-form
-        class="q-gutter-md"
-        autocorrect="off"
-        autocapitalize="off"
-        autocomplete="off"
-        spellcheck="false"
-      >
+        <q-form
+          class="q-gutter-md"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="off"
+          spellcheck="false"
+        >
+          <!-- style="min-width: 300px; max-width: 300px;" -->
 
-        <q-input
-          v-if="showSignup"
-          filled
-          v-model="user.name"
-          label="Nome e sobrenome"
-          lazy-rules
-          :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']"
-        />
-        <!-- autocomplete="nope" -->
-
-        <!-- <q-input
-          v-if="showSignup"
-          filled
-          type="number"
-          v-model="user.age"
-          label="Your age *"
-          lazy-rules
-          :rules="[
-          val => val !== null && val !== '' || 'Insira apenas números',
-          val => val > 0 && val < 100 || 'Insira uma idade real'
-        ]"
-        /> -->
-
-        <q-input
-          filled
-          v-model="user.email"
-          label="Email"
-          type="email"
-          lazy-rules
-          :rules="[ val => val && !/\s/.test(val) && !this.reg.test(val) || 'Insira um email válido']"
-          autocomplete="nope"
-        />
-
-        <q-input
-          filled
-          v-model="user.password"
-          label="Senha"
-          type="password"
-          lazy-rules
-          :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]"
-        />
-
-        <q-input
-          v-if="showSignup"
-          filled
-          v-model="user.confirmPassword"
-          label="Confirme a sua senha"
-          type="password"
-          lazy-rules
-          :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
-          autocomplete="nope"
-        />
-        <q-toggle
-          v-if="showSignup"
-          v-model="terms"
-          label="I accept the license and terms"
-          :rules="[ val => val === true || 'senhas não conferem', ]"
-          autocomplete="nope"
-        />
-
-        <div>
-          <q-btn
+          <q-input
             v-if="showSignup"
-            label="Registrar"
-            type="submit"
-            color="primary"
-            @click="signUp()"
+            filled
+            v-model="user.name"
+            label="Nome e sobrenome"
+            lazy-rules
+            :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']"
           />
-          <q-btn
-            v-else
-            label="Entrar"
-            type="submit"
-            color="primary"
-            @click="signIn()"
+
+          <q-input
+            filled
+            v-model="user.email"
+            label="Email"
+            lazy-rules
+            autocomplete="nope"
           />
-          <q-btn
-            label="Reset"
-            type="reset"
-            color="primary"
-            flat
-            class="q-ml-sm"
+          <!-- type="email"
+          :rules="[ val => val && !/\s/.test(val) && !this.reg.test(val) || 'Insira um email válido']" -->
+
+          <q-input
+            filled
+            v-model="user.password"
+            label="Senha"
+            type="password"
+            lazy-rules
+            :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]"
           />
+
+          <q-input
+            v-if="showSignup"
+            filled
+            v-model="user.confirmPassword"
+            label="Confirme a sua senha"
+            type="password"
+            lazy-rules
+            :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
+            autocomplete="nope"
+          />
+          <q-toggle
+            v-if="showSignup"
+            v-model="terms"
+            label="I accept the license and terms"
+            :rules="[ val => val === true || 'senhas não conferem', ]"
+            autocomplete="nope"
+          />
+
           <div>
-            <a
-              href
-              @click.prevent="showSignup = !showSignup"
-            >
-              <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
-              <span v-else>Não tem cadastro? Registre-se aqui!</span>
-            </a>
+            <q-btn
+              v-if="showSignup"
+              label="Registrar"
+              type="submit"
+              color="primary"
+              @click="signUp()"
+            />
+            <q-btn
+              v-else
+              label="Entrar"
+              type="submit"
+              color="primary"
+              @click="signIn()"
+            />
+            <q-btn
+              label="Reset"
+              type="reset"
+              color="primary"
+              flat
+              class="q-ml-sm"
+            />
+            <div>
+              <a
+                href
+                @click.prevent="showSignup = !showSignup"
+              >
+                <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
+                <span v-else>Não tem cadastro? Registre-se aqui!</span>
+              </a>
+            </div>
           </div>
-        </div>
-      </q-form>
-
+        </q-form>
+      </q-card>
     </div>
-    <!-- <div class="auth-content">
-      <div class="auth-modal">
-        <img
-          src="../../assets/favicon.png"
-          width="200"
-          alt="Logo"
-        />
-        <hr>
-        <div class="auth-title">{{ showSignup ? 'Cadastro' : 'Login' }}</div>
-
-        <input
-          v-if="showSignup"
-          v-model="user.name"
-          type="text"
-          placeholder="Nome"
-        >
-        <input
-          v-model="user.email"
-          name="email"
-          type="text"
-          placeholder="E-mail"
-        >
-        <input
-          v-model="user.password"
-          name="password"
-          type="password"
-          placeholder="Senha"
-        >
-        <input
-          v-if="showSignup"
-          v-model="user.confirmPassword"
-          type="password"
-          placeholder="Confirme a Senha"
-        >
-
-        <button
-          v-if="showSignup"
-          @click="signUp"
-        >Registrar</button>
-        <button
-          v-else
-          @click="signIn"
-        >Entrar</button>
-
-        <a
-          href
-          @click.prevent="showSignup = !showSignup"
-        >
-          <span v-if="showSignup">Já tem cadastro? Acesse o Login!</span>
-          <span v-else>Não tem cadastro? Registre-se aqui!</span>
-        </a>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -222,32 +155,32 @@ export default {
     },
     //facebook
     getUserData (val) {
-      // this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
-      //   user => {
-      //     this.user.name = user.name;
-      //     this.user.email = user.email;
-      //     this.user.password = user.id;
-      //     this.user.confirmPassword = user.id;
-      //     this.user.image = user.picture.data.url;
-      //     this.isConnected = true
-      //     if (val === true) {
-      //       axios.post(`${baseApiUrl}/signin`, this.user)
-      //         .then(res => {
-      //           this.$store.commit('user/setUser', res.data)
-      //           localStorage.setItem(userKey, JSON.stringify(res.data))
-      //           this.$router.push({ path: '/' })
-      //         })
-      //         .catch(showError)
-      //     } else {
-      //       axios.post(`${baseApiUrl}/signup`, this.user)
-      //         .then(() => {
-      //           this.$toasted.global.defaultSuccess()
-      //           this.showSignup = false
-      //         })
-      //         .catch(showError)
-      //     }
-      //   }
-      // )
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+        user => {
+          this.user.name = user.name;
+          this.user.email = user.email;
+          this.user.password = user.id;
+          this.user.confirmPassword = user.id;
+          this.user.image = user.picture.data.url;
+          this.isConnected = true
+          if (val === true) {
+            axios.post(`${baseApiUrl}/signin`, this.user)
+              .then(res => {
+                this.$store.commit('user/setUser', res.data)
+                localStorage.setItem(userKey, JSON.stringify(res.data))
+                this.$router.push({ path: '/' })
+              })
+              .catch(showError)
+          } else {
+            axios.post(`${baseApiUrl}/signup`, this.user)
+              .then(() => {
+                this.$toasted.global.defaultSuccess()
+                this.showSignup = false
+              })
+              .catch(showError)
+          }
+        }
+      )
     },
     sdkLoaded (payload) {
       this.isConnected = payload.isConnected
