@@ -2,14 +2,14 @@
   <q-layout :view="user ? 'hHh LpR lFf' : 'hHh LpR lff'">
     <q-header
       v-if="!validatingToken"
-      elevated
-      class="selectDisable bg-red-8 text-white"
+      class="selectDisable"
+      :class="$q.dark.isActive ? 'bg-white text-black' : 'bg-black text-white'"
       height-hint="98"
     >
       <q-toolbar>
         <!-- {{$store.state.user.isConnectedFacebook}} -->
+        <!-- v-if="user" -->
         <q-btn
-          v-if="user"
           dense
           flat
           round
@@ -21,13 +21,18 @@
         <!-- class="q-pt-sm" -->
         <q-toolbar-title>
           <!-- v-if="!user" -->
-          <!-- <img class="q-pt-sm"
+          <!-- <img
+            class="q-pt-sm"
             @click="$q.dark.toggle()"
             src="../assets/logo/your-design-trans-white.png"
             height="32"
           > -->
-          iFood
-          <!-- <img class="q-pt-sm"
+          <!-- iFood -->
+          <div @click="$q.dark.toggle()">
+            MEWNU
+          </div>
+          <!-- <img
+            class="q-pt-sm"
             v-if="user"
             @click="$q.dark.toggle()"
             src="../assets/logo/your.png"
@@ -77,16 +82,17 @@
     </q-header>
 
     <!-- :show-if-above="!validatingToken" -->
+    <!-- v-if="user" -->
     <q-drawer
-      v-if="user"
       v-model="left"
       side="left"
       show-if-above
-      elevated
+      bordered
       content-class="bg-white"
     >
-      <LeftDrawerAdmin v-if="user.admin" />
-      <LeftDrawer v-if="user && !user.admin" />
+      <LeftDrawer v-if="!user" />
+      <LeftDrawerAdmin v-else-if="user.admin" />
+      <LeftDrawerUser v-else />
     </q-drawer>
 
     <q-drawer
@@ -94,7 +100,7 @@
       v-model="right"
       side="right"
       show-if-above
-      elevated
+      bordered
       content-class="bg-white"
     >
       <RightDrawer v-if="user" />
@@ -110,7 +116,7 @@
 
     <q-footer
       v-if="!validatingToken"
-      elevated
+      bordered
       class="bg-white text-black"
     >
       <q-toolbar>
@@ -172,6 +178,7 @@ import { mapState } from "vuex"
 import Loading from "../components/template/Loading"
 import LeftDrawer from "../components/template/LeftDrawer"
 import LeftDrawerAdmin from "../components/template/LeftDrawerAdmin"
+import LeftDrawerUser from "../components/template/LeftDrawerUser"
 import RightDrawer from "../components/template/RightDrawer"
 import UserDropdown from '../components/template/UserDropdown'
 // import Btn from '../components/template/Btn'
@@ -186,6 +193,7 @@ export default {
     // Footer,
     Loading,
     LeftDrawer,
+    LeftDrawerUser,
     LeftDrawerAdmin,
     RightDrawer
   },

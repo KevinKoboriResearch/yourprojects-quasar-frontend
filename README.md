@@ -66,3 +66,13 @@ login google/facebook vue.js:
 
 autocomplete off:
 - https://github.com/aacassandra/vue-disable-autocomplete
+
+
+css horizontal scroll bar:
+- https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp
+- https://css-tricks.com/pure-css-horizontal-scrolling/
+- https://codepen.io/lemmin/pen/xRyXMZ
+
+vuejs scroll:
+- https://itnext.io/make-elements-fade-in-while-scrolling-daily-vue-tip-3-6540dd975c7e
+- https://css-tricks.com/intro-to-vue-5-animations/

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{nodeData.selected.map(el => el.text)}} -->
     <q-toolbar
       class="q-pa-sm"
       :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'"
@@ -28,11 +29,13 @@
     <q-btn
       dense
       @click.stop="addNew()"
-      icon="mdi-file-tree"
-      size="12px"
       class="q-mx-md q-mt-md"
       :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-teal'"
-    />
+    >
+      <!-- icon="mdi-plus-box"
+      size="12px" -->
+      <i class="q-px-xs fas fa-plus-square"></i>
+    </q-btn>
     <Tree
       v-if="renderComponent"
       :data="treeData"
@@ -41,28 +44,36 @@
       ref="tree"
       class="tree"
     >
+      <!-- v-model="nodeData" -->
+      <!-- <div v-if="node.text == user.id"> -->
       <div slot-scope="{ node }">
         <div class="">{{ node.text }}</div>
-        <div>
-          <q-btn
-            dense
-            class="text-teal"
-            @click.stop="editNode(node)"
-          ><i class="q-px-xs fas fa-pen-square"></i></q-btn>
-          <q-btn
-            dense
-            class="text-teal"
-            @click.stop="removeNode(node), minum = true"
-          ><i class="q-px-xs fas fa-minus-square"></i></q-btn>
-          <q-btn
-            dense
-            class="text-teal"
-            @click.stop="addChildNode(node)"
-          >
-            <i class="q-px-xs fas fa-plus-square"></i>
-          </q-btn>
-        </div>
+        <!-- <div v-if="userEditable(node.id) == true"> -->
+        <!-- <q-btn
+          dense
+          class="text-teal"
+          @click.stop="userEditable(node)"
+        >?</q-btn> -->
+        <q-btn
+          dense
+          class="text-teal"
+          @click.stop="editNode(node)"
+        ><i class="q-px-xs fas fa-pen-square"></i></q-btn>
+        <q-btn
+          dense
+          class="text-teal"
+          @click.stop="removeNode(node)"
+        ><i class="q-px-xs fas fa-minus-square"></i></q-btn>
+        <!-- minum = true -->
+        <q-btn
+          dense
+          class="text-teal"
+          @click.stop="addChildNode(node)"
+        >
+          <i class="q-px-xs fas fa-plus-square"></i>
+        </q-btn>
       </div>
+      <!-- </div> -->
     </Tree>
   </div>
 </template>
@@ -79,16 +90,40 @@ export default {
       user: {},
       minum: false,
       category: {},
+      // nodeData: null,
       treeFilter: '',
       treeData: this.getTreeData(),
       treeOptions: {
-        propertyNames: { 'text': 'name' },
+        // data: { 'text': 'name' },
+        propertyNames: {
+          'text': 'name'
+          // 'userId': 'userId'
+        }, //, 'userId': 'userId'
         filter: { emptyText: 'Categoria não encontrada' }
+        // fetchData: (node) => {
+        //   return treeData[node.id - 1].userId
+        // },
       },
       renderComponent: true,
     }
   },
   methods: {
+    userEditable (id) {
+      let userAcessible = false
+      // console.log(this.treeData)
+      for (let i = 0; i < this.treeData.length; i++) {
+        // if (this.treeData[i].id == id && this.treeData[i].userId == user.id) {
+        userAcessible = true
+        // console.log(userAcessible)
+        // }
+      }
+      return userAcessible
+      // const compareId = treeData.filter(td => {
+      //   td.userId == this.user.id
+      // })
+      // if (compareId == node.id)
+      // console.log(node)
+    },
     reloadMinum2 () {
       if (this.minum === true) {
         location.reload()
@@ -120,8 +155,15 @@ export default {
       }
     },
     getTreeData () {
-      const url = `${baseApiUrl}/categories/tree`
-      return axios.get(url).then(res => res.data)
+      this.loadUser()
+      // const url = `${baseApiUrl}/categories/tree`
+      // this.user.id
+      // console.log(this.user)
+      const url = `${baseApiUrl}/user/${this.user.id}/categories/tree`
+      return axios.get(url).then(res => {
+        // console.log(res.data)
+        return res.data
+      })
     },
     onNodeSelect (node) {
       this.$router.push({

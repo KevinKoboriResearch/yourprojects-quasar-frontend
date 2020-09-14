@@ -1,7 +1,7 @@
 <template>
   <div>
     {{getTreeData}}
-    <q-toolbar :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'">
+    <q-toolbar :class="$q.dark.isActive ? 'bg-grey-10 text-white q-pa-sm': 'text-black q-pa-sm'">
       <q-input
         dense
         standout

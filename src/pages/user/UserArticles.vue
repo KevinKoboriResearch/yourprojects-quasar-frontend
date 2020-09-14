@@ -559,13 +559,31 @@ export default {
       })
     },
     loadCategories () {
-      const url = `${baseApiUrl}/categories`
+      // const url = `${baseApiUrl}/categories`
+      const url = `${baseApiUrl}/user/${this.user.id}/categories`
       axios.get(url).then(res => {
         this.categories = res.data.map(category => {
           return { value: category.id, label: category.path }
         })
       })
     },
+    // loadCategories () {
+    //   // const json = localStorage.getItem(userKey)
+    //   // const user = JSON.parse(json)
+    //   // `user/${user.id}/articles`
+    //   const url = `${baseApiUrl}/user/${this.user.id}/categories`
+    //   // const id = this.user.id
+    //   // const url = `${baseApiUrl}/user/${id}/articles`
+    //   axios.get(url).then(res => {
+    //     // this.categories = res.data
+    //     this.tableCategories = res.data.map(category => {
+    //       return { id: category.id, name: category.name, path: category.path }
+    //     })
+    //     this.categories = res.data.map(category => {
+    //       return { ...category, label: category.path, value: category.id }
+    //     })
+    //   })
+    // },
     loadUser () {
       const json = localStorage.getItem(userKey)
       this.user = JSON.parse(json)
