@@ -4,9 +4,11 @@ import Services from '../pages/static/services/Services'
 import Doubts from '../pages/static/doubts/Doubts'
 import UserProfile from '../pages/user/UserProfile'
 import UserArticles from '../pages/user/UserArticles'
+import UserArticlesByCategory from '../pages/user/UserArticlesByCategory'
 import UserCategories from '../pages/user/UserCategories'
 import AdminPages from '../pages/admin/AdminPages'
 import ArticlesByCategory from '../pages/article/ArticlesByCategory'
+import AllArticles from '../pages/article/AllArticles'
 import ArticleById from '../pages/article/ArticleById'
 import Auth from '../pages/auth/Auth'
 import Error404 from '../pages/Error404.vue'
@@ -36,16 +38,23 @@ const routes = [
       //logged in user routes
       { name: 'userProfile', path: 'user/profile', component: UserProfile },
       { name: 'userArticles', path: 'user/articles', component: UserArticles },
+      { name: 'userArticlesByCategory', path: 'user/category/:id/articles', component: UserArticlesByCategory },
       { name: 'userCategories', path: 'user/categories', component: UserCategories },
       //logged in admin routes
       { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
       //logged in free routes
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
+      { name: 'allArticles', path: 'articles', component: AllArticles },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },
-      { name: 'auth', path: 'auth', component: Auth },
+      // { name: 'auth', path: 'auth', component: Auth },
       { name: 'error', path: '*', component: Error404 }
     ]
   },
+  {
+    name: 'auth',
+    path: '/auth',
+    component: Auth
+  }
   // {
   //   // name: 'articlesByCategory',
   //   // path: '/',

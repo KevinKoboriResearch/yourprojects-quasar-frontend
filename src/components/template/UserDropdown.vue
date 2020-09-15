@@ -1,20 +1,23 @@
 <template>
-  <div class="q-mr-md">
+  <div class="q-mr-sm">
     <q-btn-dropdown
       @mouseover.native="menuOver = true"
       @mouseout.native="menuOver = false"
       v-model="menu"
       auto-close
       :label="user.name"
-      dropdown-icon="fa fa-adjust"
-      style="background-color: #ffffff22;"
-      :content-style="{ backgroundColor: '#ffffff22' }"
+      dropdown-icon="fa fa-sort-amount-down-alt"
+      style="background-color: #ffffff11;"
+      :content-style="{ backgroundColor: '#000000dd' }"
+      color="black"
+      toggle-color="yellow"
     >
+      <!-- class="text-white" -->
       <!-- mdi-triangle -->
       <!-- <Gravatar :email="user.email" alt="User" /> -->
       <!-- <div style="height:18px"></div> -->
       <q-list
-        class="q-mt-sm"
+        class="text-white q-mt-sm"
         @mouseover.native="listOver = true"
         @mouseout.native="listOver = false"
       >

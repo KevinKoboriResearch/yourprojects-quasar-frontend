@@ -1,14 +1,63 @@
 <template>
-  <q-layout :view="user ? 'hHh LpR lFf' : 'hHh LpR lff'">
-    <q-header
+  <q-layout
+    class="selectDisable"
+    :view="user ? 'hHh LpR lFf' : 'hHh LpR lff'"
+    style="background:linear-gradient( 135deg, #2f95b2 10%, #00596c 100%)"
+  >
+    <q-header class="bg-transparent">
+      <q-toolbar class="q-pa-md">
+        <!-- <q-space /> -->
+        <!-- <q-toolbar-title> -->
+        <img
+          class="q-pa-xs"
+          @click="$q.dark.toggle()"
+          src="../assets/logo/your-design-trans-light.png"
+          height="32"
+        >
+        <!-- </q-toolbar-title> -->
+        <q-space />
+
+        <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn
+            square
+            dense
+            flat
+            to="/"
+            label="Dashboard"
+            icon="dashboard"
+          >
+            <q-tooltip>Dashboard</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Pricing"
+            label="Pricing"
+            icon="lock"
+          >
+            <q-tooltip>Pricing</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Lock-2"
+            label="Lock"
+            icon="lock"
+          >
+            <q-tooltip>Lock</q-tooltip>
+          </q-btn>
+        </div>
+      </q-toolbar>
+    </q-header>
+    <!-- <q-header
       v-if="!validatingToken"
-      class="selectDisable"
-      :class="$q.dark.isActive ? 'bg-white text-black' : 'bg-black text-white'"
+      bordered
       height-hint="98"
+      class="selectDisable bg-black text-white"
     >
       <q-toolbar>
-        <!-- {{$store.state.user.isConnectedFacebook}} -->
-        <!-- v-if="user" -->
         <q-btn
           dense
           flat
@@ -16,29 +65,17 @@
           icon="menu"
           @click="left = !left"
         />
-        <!-- {{$store.state.leftDrawer.isMenuVisible}}
-        {{$store.state.rightDrawer.isMenuVisible}} -->
-        <!-- class="q-pt-sm" -->
-        <q-toolbar-title>
-          <!-- v-if="!user" -->
-          <!-- <img
-            class="q-pt-sm"
-            @click="$q.dark.toggle()"
-            src="../assets/logo/your-design-trans-white.png"
-            height="32"
-          > -->
-          <!-- iFood -->
-          <div @click="$q.dark.toggle()">
-            MEWNU
-          </div>
-          <!-- <img
-            class="q-pt-sm"
-            v-if="user"
-            @click="$q.dark.toggle()"
-            src="../assets/logo/your.png"
-            height="35"
-          > -->
-        </q-toolbar-title>
+
+        <q-space v-if="!user && $q.screen.lt.sm" />
+
+        <img
+          class="q-pa-xs"
+          @click="$q.dark.toggle()"
+          src="../assets/logo/your-design-grad-pink.png"
+          height="32"
+        >
+
+        <q-space />
 
         <UserDropdown v-if="user && !right" />
 
@@ -53,15 +90,15 @@
           v-else
           dense
           flat
-          size="12px"
-          class="q-py-xs q-px-sm"
-          icon="fa fa-user-cog"
+          :size="right ? '16px' : '12px'"
+          :class="right ? 'q-py-none q-px-xs' : 'q-py-xs q-px-sm'"
+          :icon="right ? 'fas fa-window-close' : 'fa fa-user-cog'"
           @click="right = !right"
         />
       </q-toolbar>
 
       <q-tabs v-if="!user">
-        <q-space />
+        <q-space v-if="$q.screen.gt.xs" />
         <q-route-tab
           label="Início"
           to="/"
@@ -79,14 +116,12 @@
           to="/doubts"
         />
       </q-tabs>
-    </q-header>
+    </q-header> -->
 
-    <!-- :show-if-above="!validatingToken" -->
-    <!-- v-if="user" -->
+    <!-- show-if-above -->
     <q-drawer
       v-model="left"
       side="left"
-      show-if-above
       bordered
       content-class="bg-white"
     >
@@ -95,11 +130,11 @@
       <LeftDrawerUser v-else />
     </q-drawer>
 
+    <!-- show-if-above -->
     <q-drawer
       v-if="user"
       v-model="right"
       side="right"
-      show-if-above
       bordered
       content-class="bg-white"
     >
@@ -108,63 +143,52 @@
 
     <q-page-container>
       <Loading v-if="validatingToken" />
+      <!-- q-py-md  -->
       <router-view
-        class="q-py-md q-px-md"
+        class="q-pb-md q-px-md"
         v-else
       />
+      <whatsapp />
     </q-page-container>
 
     <q-footer
       v-if="!validatingToken"
       bordered
-      class="bg-white text-black"
+      class="selectDisable bg-black text-white"
     >
-      <q-toolbar>
+
+      <q-toolbar v-if="!user">
         <img
-          v-if="!user"
           src="../assets/logo/your.png"
           height="25"
           class
         >
-        <q-toolbar-title v-if="!user">
-          Your Projects
+        <q-toolbar-title>
+          Projects
         </q-toolbar-title>
-        <q-space />
-        <q-tabs v-if="user">
-          <q-space />
-          <q-route-tab
-            label="Início"
-            to="/"
-          />
-          <q-route-tab
-            label="Sobre"
-            to="/about"
-          />
-          <q-route-tab
-            label="Serviços"
-            to="/services"
-          />
-          <q-route-tab
-            label="Dúvidas"
-            to="/doubts"
-          />
-        </q-tabs>
-        <q-space v-if="user && !$q.screen.gt.xs" />
       </q-toolbar>
+      <q-tabs v-if="user">
+        <q-space v-if="$q.screen.gt.xs" />
+        <q-route-tab
+          label="Início"
+          to="/"
+        />
+        <q-route-tab
+          label="Sobre"
+          to="/about"
+        />
+        <q-route-tab
+          label="Serviços"
+          to="/services"
+        />
+        <q-route-tab
+          label="Dúvidas"
+          to="/doubts"
+        />
+      </q-tabs>
     </q-footer>
 
   </q-layout>
-  <!-- <q-layout>
-    <div id="q-app" :class="{'hide-menu': !isMenuVisible || !user}">
-      <Header title="Cod3r - Base de Conhecimento"
-        :hideToggle="!user"
-        :hideUserDropdown="!user" />
-      <leftDrawer v-if="user" />
-      <Loading v-if="validatingToken" />
-      <Content v-else />
-      <Footer />
-    </div>
-  </q-layout> -->
 </template>
 
 <script>
@@ -181,6 +205,7 @@ import LeftDrawerAdmin from "../components/template/LeftDrawerAdmin"
 import LeftDrawerUser from "../components/template/LeftDrawerUser"
 import RightDrawer from "../components/template/RightDrawer"
 import UserDropdown from '../components/template/UserDropdown'
+import whatsapp from '../components/whatsapp/Dynamicwhatsapp'
 // import Btn from '../components/template/Btn'
 
 export default {
@@ -195,7 +220,8 @@ export default {
     LeftDrawer,
     LeftDrawerUser,
     LeftDrawerAdmin,
-    RightDrawer
+    RightDrawer,
+    whatsapp
   },
   data () {
     return {

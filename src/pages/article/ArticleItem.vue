@@ -12,7 +12,7 @@
       <q-img
         v-else
         class="col-5"
-        :src="require('../../assets/article.png')"
+        :src="require('../../assets/article/1.gif')"
         style="min-height: 150px;"
         alt="Article"
       />

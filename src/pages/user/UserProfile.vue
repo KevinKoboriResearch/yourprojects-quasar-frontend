@@ -1,13 +1,13 @@
 <template>
-  <div class="q-pa-sm">
-    {{user.image}}
+  <div class="q-pa-xs">
+    <!-- {{user}} -->
     <div class="fit row wrap justify-between items-start content-start">
       <div class="col-auto">
         <q-btn
           dense
           @click.prevent="right = !right"
-          class="q-mb-sm"
-        >voltar
+          class="bg-white text-black q-mb-sm"
+        >fechar
         </q-btn>
       </div>
       <div class="col-auto">
@@ -16,7 +16,7 @@
           @click="$q.dark.toggle()"
           :label="$q.dark.isActive ? 'Modo Escuro': 'Modo Claro'"
           dropdown-icon="fa fa-adjust"
-          class="q-mb-sm q-ml-sm"
+          class="bg-white text-black q-mb-sm q-ml-sm"
         />
       </div>
       <div class="col-auto">
@@ -78,18 +78,19 @@
 
       <q-card-actions vertical>
         <q-btn
-          label="Editar Perfil"
+          label="Editar"
           color="primary"
           @click="toolbar = true"
         />
-        <q-separator />
+        <!-- <q-separator /> -->
         <!-- {{user.id+ 'oi'}} -->
+        <!-- v-if="user.admin === false" -->
         <q-btn
           class="q-mt-sm"
-          v-if="user.admin === false"
-          @click.prevent="confirmDelete()"
+          color="primary"
+          @click.prevent="logout()"
           flat
-        >Apagar Conta</q-btn>
+        >Sair</q-btn>
       </q-card-actions>
     </q-card>
     <q-dialog v-model="perfilPhoto">
@@ -157,7 +158,7 @@
       </q-card>
     </q-dialog>
     <br>
-    <q-form
+    <!-- <q-form
       v-show="showForm"
       class="q-gutter-md"
     >
@@ -298,7 +299,7 @@
         />
       </div>
       <hr>
-    </q-form>
+    </q-form> -->
     <q-table
       separator="cell"
       v-show="!showForm"
@@ -307,6 +308,16 @@
       style="min-witdh: 100%;"
     >
       <template v-slot:top="props">
+        <q-btn
+          v-if="!props.inFullscreen"
+          flat
+          class="bg-green q-mr-sm"
+          to="/user/articles"
+          @click="$store.commit('rightDrawer/toggleMenu', val)"
+        >
+          <i class="fa fa-user-edit"></i>
+        </q-btn>
+        Articles
         <q-space />
         <q-btn
           flat
@@ -318,16 +329,8 @@
         />
       </template>
       <template v-slot:header="props">
-        <!-- <q-btn
-          flat
-          round
-          dense
-          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-          @click="props.toggleFullscreen"
-          class="q-ml-md"
-        /> -->
         <q-tr :props="props">
-          <q-th auto-width>
+          <!-- <q-th auto-width>
             <q-btn
               flat
               class="bg-green q-mr-sm"
@@ -336,7 +339,7 @@
             >
               <i class="fa fa-user-edit"></i>
             </q-btn>
-          </q-th>
+          </q-th> -->
           <q-th
             auto-width
             v-for="col in props.cols"
@@ -347,36 +350,12 @@
               {{ col.label }}
             </strong>
           </q-th>
-          <!-- <q-th>
-            <q-btn
-              flat
-              round
-              dense
-              :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-              @click="props.toggleFullscreen"
-              class="q-ml-md"
-            />
-          </q-th> -->
         </q-tr>
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td>
-            <!-- <q-btn
-              class="bg-yellow q-mr-sm"
-              flat
-              @click="loadArticle(props.row), props.expand = !props.expand"
-            >
-              <i class="fa fa-user-edit"></i>
-            </q-btn> -->
-            <!-- <q-btn
-              class="bg-red"
-              flat
-              @click="loadArticle(props.row), confirmDelete()"
-            >
-              <i class="fa fa-trash-alt"></i>
-            </q-btn> -->
-          </q-td>
+          <!-- <q-td>
+          </q-td> -->
           <q-td
             v-for="col in props.cols"
             :key="col.name"
@@ -384,11 +363,18 @@
           >
             {{ col.value.toString().length > 10 ? col.value.toString().substring(0,10) + '...'
               : col.value.toString().substring(0,10) + '' }}
-            <!-- {{ user.name.substring(0,10)+"..." }} -->
           </q-td>
         </q-tr>
       </template>
     </q-table>
+    <!-- <br> -->
+    <q-btn
+      class="bg-black q-mt-sm"
+      color="red"
+      @click.prevent="confirmDelete()"
+      flat
+      style="min-width: 100%;"
+    >Apagar Conta</q-btn>
   </div>
 </template>
 
@@ -505,7 +491,7 @@ export default {
         // })
         .then(res => {
           this.articles = res.data.map(article => {
-            return { id: article.id, name: article.name }
+            return { name: article.name, description: article.description }
           })
         })
     },
@@ -563,9 +549,16 @@ export default {
     //     })
     //     .catch(showError)
     // },
+    // logout () {
+    //   localStorage.removeItem(userKey)
+    //   this.$store.commit('user/setUser', null)
+    //   this.$router.push({ name: 'auth' })
+    // },
     logout () {
       localStorage.removeItem(userKey)
+      this.$store.commit('rightDrawer/toggleMenu', false)
       this.$store.commit('user/setUser', null)
+      this.$store.commit('user/setFacebookUser', false)
       this.$router.push({ name: 'auth' })
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
-    {{article}}
-    {{articles}}
+    <!-- {{article}}
+    {{articles}} -->
     <q-form
       v-show="showForm"
       class="q-gutter-md"

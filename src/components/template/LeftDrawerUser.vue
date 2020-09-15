@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- {{nodeData.selected.map(el => el.text)}} -->
     <q-toolbar
       class="q-pa-sm"
       :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'"
@@ -32,8 +31,6 @@
       class="q-mx-md q-mt-md"
       :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-teal'"
     >
-      <!-- icon="mdi-plus-box"
-      size="12px" -->
       <i class="q-px-xs fas fa-plus-square"></i>
     </q-btn>
     <Tree
@@ -44,16 +41,8 @@
       ref="tree"
       class="tree"
     >
-      <!-- v-model="nodeData" -->
-      <!-- <div v-if="node.text == user.id"> -->
       <div slot-scope="{ node }">
         <div class="">{{ node.text }}</div>
-        <!-- <div v-if="userEditable(node.id) == true"> -->
-        <!-- <q-btn
-          dense
-          class="text-teal"
-          @click.stop="userEditable(node)"
-        >?</q-btn> -->
         <q-btn
           dense
           class="text-teal"
@@ -64,7 +53,6 @@
           class="text-teal"
           @click.stop="removeNode(node)"
         ><i class="q-px-xs fas fa-minus-square"></i></q-btn>
-        <!-- minum = true -->
         <q-btn
           dense
           class="text-teal"
@@ -72,8 +60,14 @@
         >
           <i class="q-px-xs fas fa-plus-square"></i>
         </q-btn>
+        <q-btn
+          dense
+          class="text-teal"
+          @click.stop="onNodeArticles(node)"
+        >
+          <i class="far fa-sticky-note"></i>
+        </q-btn>
       </div>
-      <!-- </div> -->
     </Tree>
   </div>
 </template>
@@ -108,24 +102,24 @@ export default {
     }
   },
   methods: {
-    userEditable (id) {
-      let userAcessible = false
-      // console.log(this.treeData)
-      for (let i = 0; i < this.treeData.length; i++) {
-        // if (this.treeData[i].id == id && this.treeData[i].userId == user.id) {
-        userAcessible = true
-        // console.log(userAcessible)
-        // }
-      }
-      return userAcessible
-      // const compareId = treeData.filter(td => {
-      //   td.userId == this.user.id
-      // })
-      // if (compareId == node.id)
-      // console.log(node)
-    },
+    // userEditable (id) {
+    //   let userAcessible = false
+    //   // console.log(this.treeData)
+    //   for (let i = 0; i < this.treeData.length; i++) {
+    //     // if (this.treeData[i].id == id && this.treeData[i].userId == user.id) {
+    //     userAcessible = true
+    //     // console.log(userAcessible)
+    //     // }
+    //   }
+    //   return userAcessible
+    //   // const compareId = treeData.filter(td => {
+    //   //   td.userId == this.user.id
+    //   // })
+    //   // if (compareId == node.id)
+    //   // console.log(node)
+    // },
     reloadMinum2 () {
-      if (this.minum === true) {
+      if (this.minum == true) {
         location.reload()
       }
     },
@@ -146,6 +140,7 @@ export default {
         .then(() => {
           this.$toasted.global.defaultSuccess()
           this.forceRerenderTree()
+          location.reload()
         })
         .catch(showError)
     },
@@ -156,12 +151,8 @@ export default {
     },
     getTreeData () {
       this.loadUser()
-      // const url = `${baseApiUrl}/categories/tree`
-      // this.user.id
-      // console.log(this.user)
       const url = `${baseApiUrl}/user/${this.user.id}/categories/tree`
       return axios.get(url).then(res => {
-        // console.log(res.data)
         return res.data
       })
     },
@@ -171,9 +162,15 @@ export default {
         params: { id: JSON.parse(node.id) }
       })
     },
+    onNodeArticles (node) {
+      this.$router.push({
+        name: 'userArticlesByCategory',
+        params: { id: JSON.parse(node.id) }
+      })
+    },
     makeid (length) {
       var result = '';
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var charactersLength = characters.length;
       for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -233,7 +230,9 @@ export default {
   },
   mounted () {
     this.loadUser()
-    this.$refs.tree.$on('node:clicked', this.onNodeSelect)
+    this.$refs.tree.$on('node:clicked', (node) => {
+      this.onNodeSelect(node)
+    })
     this.$refs.tree.$on('node:editing:stop', (node) => {
       this.save(node, false)
     })

@@ -1,31 +1,37 @@
 <template>
   <div>
-    <q-toolbar :class="$q.dark.isActive ? 'text-white': 'text-black'">
+    <!-- {{articles}} -->
+    <!-- <q-btn
+      label="Pesquisar Todos os Artigos"
+      to="/articles"
+    > -->
+    <!-- </q-btn> -->
+    <!-- <q-toolbar :class="$q.dark.isActive ? 'text-white': 'text-black'">
       <q-input
         @change="getArticles"
         placeholder="pesquise aqui todos artigos..."
         dense
         standout
-        v-model="searchArticle"
+        v-model="searchArticleAll"
         input-class="text-left"
         style="width: 100%;"
       >
         <template v-slot:append>
           <q-icon
-            v-if="searchArticle === ''"
+            v-if="searchArticleAll === ''"
             name="search"
           />
           <q-icon
             v-else
             name="clear"
             class="cursor-pointer"
-            @click="searchArticle = ''"
+            @click="searchArticleAll = ''"
           />
         </template>
       </q-input>
-    </q-toolbar>
+    </q-toolbar> -->
     <PageTitle
-      icon="fa fa-folder-o"
+      icon="fa fa-user"
       :main="category.name"
       sub="Categoria"
     />
@@ -53,6 +59,8 @@
         </template>
       </q-input>
     </q-toolbar>
+    <!-- {{searchArticle}}
+    {{searchArticleAll }} -->
     <div class="fit row wrap justify-start items-start content-start">
       <div
         class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
@@ -60,8 +68,17 @@
         :key="article.id"
         v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
       >
+        <!-- {{article}} -->
         <ArticleItem :article="article" />
       </div>
+      <!-- <div
+        class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
+        v-for="article in articles"
+        :key="article.id"
+        v-if="searchArticleAll === '' || article.name.includes(searchArticleAll) || article.description.includes(searchArticleAll)"
+      >
+        <ArticleItem :article="article" />
+      </div> -->
     </div>
     <div class="column justify-center items-center">
       <q-btn
@@ -86,6 +103,7 @@ export default {
   data () {
     return {
       searchArticle: '',
+      searchArticleAll: '',
       category: {},
       articles: [],
       page: 1,
@@ -109,13 +127,13 @@ export default {
 
         if (res.data.length === 0) this.loadMore = false
       })
-    },
-    getArticles () {
-      const url = `${baseApiUrl}/articles?page=${this.page}`
-      axios.get(url).then(res => {
-        this.articles = res.data
-      })
     }
+    // getArticles () {
+    //   const url = `${baseApiUrl}/articles?page=${this.page}`
+    //   axios.get(url).then(res => {
+    //     this.articles = res.data
+    //   })
+    // }
   },
   watch: {
     $route (to) {

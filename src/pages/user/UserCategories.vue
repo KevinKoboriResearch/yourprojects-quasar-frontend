@@ -1,7 +1,7 @@
 <template>
   <div class="category-admin">
-    {{categories}}
-    {{category}}
+    <!-- {{categories}}
+    {{category}} -->
     <!-- {{user}} -->
     <q-form
       v-show="showForm"
