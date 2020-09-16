@@ -436,7 +436,14 @@ export default {
     getArticlesByCategory () {
       const url = `${baseApiUrl}/categories/${this.category.id}/articles`
       axios(url).then(res => {
-        this.articles = res.data //this.articles.concat(res.data)
+        this.articles = res.data
+        // .map(article => {
+        //   return { id: article.id, name: article.name, : article.id }
+        // })
+        //  this.categories = res.data.map(category => {
+        //   return { ...category, label: category.path, value: category.id }
+        // })
+        //this.articles.concat(res.data)
         // this.page++
 
         // if (res.data.length === 0) this.loadMore = false

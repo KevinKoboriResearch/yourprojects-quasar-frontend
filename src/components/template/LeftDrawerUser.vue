@@ -1,12 +1,24 @@
 <template>
   <div>
-    <q-toolbar
-      class="q-pa-sm"
-      :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'"
-    >
+    {{categories}}
+    <q-toolbar class="q-pa-sm">
+      <!-- <q-toolbar
+        dense
+        class="bg-orange q-pa-sm"
+      > -->
+      <!-- :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-black'" -->
+      <!-- <q-input
+        standout="bg-teal text-white"
+        class="bg-orange"
+        v-model="text"
+        label="Custom standout"
+      /> -->
+      <!-- bg-color="green" -->
       <q-input
+        square
         dense
         standout
+        :class="$q.dark.isActive ? 'bg-black' : 'bg-grey-3'"
         v-model="treeFilter"
         input-class="text-left"
         style="width: 100%;"
@@ -24,14 +36,19 @@
           />
         </template>
       </q-input>
+      <!-- </q-toolbar> -->
     </q-toolbar>
     <q-btn
       dense
+      flat
+      size="15px"
+      padding="none"
       @click.stop="addNew()"
-      class="q-mx-md q-mt-md"
-      :class="$q.dark.isActive ? 'bg-grey-10 text-white': 'text-teal'"
+      color="black"
+      icon="fas fa-plus-square"
+      class="q-mx-md q-mt-sm"
     >
-      <i class="q-px-xs fas fa-plus-square"></i>
+      <!-- <i class="fas fa-plus-square"></i> -->
     </q-btn>
     <Tree
       v-if="renderComponent"
@@ -42,31 +59,47 @@
       class="tree"
     >
       <div slot-scope="{ node }">
-        <div class="">{{ node.text }}</div>
+        {{ node.text }}
         <q-btn
+          flat
           dense
-          class="text-teal"
+          size="10px"
+          padding="none"
+          icon="fas fa-pen-square"
+          class="q-ml-sm text-orange-10"
           @click.stop="editNode(node)"
-        ><i class="q-px-xs fas fa-pen-square"></i></q-btn>
+        />
+        <!-- style="color: #f34636;" -->
         <q-btn
+          flat
           dense
-          class="text-teal"
+          size="10px"
+          padding="none"
+          icon="fas fa-minus-square"
+          class="q-ml-sm text-orange-10"
           @click.stop="removeNode(node)"
-        ><i class="q-px-xs fas fa-minus-square"></i></q-btn>
+        />
+        <!-- style="color: #f34636;" -->
         <q-btn
+          flat
           dense
-          class="text-teal"
+          size="10px"
+          padding="none"
+          icon="fas fa-plus-square"
+          class="q-ml-sm text-orange-10"
           @click.stop="addChildNode(node)"
-        >
-          <i class="q-px-xs fas fa-plus-square"></i>
-        </q-btn>
+        />
+        <!-- style="color: #f34636;" -->
         <q-btn
+          flat
           dense
-          class="text-teal"
+          size="10px"
+          padding="none"
+          icon="fas fa-sticky-note"
+          class="q-ml-sm text-orange-10"
           @click.stop="onNodeArticles(node)"
-        >
-          <i class="far fa-sticky-note"></i>
-        </q-btn>
+        />
+        <!-- style="color: #f34636;" -->
       </div>
     </Tree>
   </div>
@@ -139,8 +172,8 @@ export default {
       axios.delete(`${baseApiUrl}/categories/${node.id}`)
         .then(() => {
           this.$toasted.global.defaultSuccess()
-          this.forceRerenderTree()
-          location.reload()
+          // this.forceRerenderTree()
+          // location.reload()
         })
         .catch(showError)
     },
@@ -177,19 +210,19 @@ export default {
       }
       return result;
     },
-    loadCategory (node) {
-      const category = {}
-      const url = `${baseApiUrl}/categories${node.id}`
-      axios.get(url).then(res => {
-        category = res.data.map(category => {
-          return { id: category.id, name: category.name, parentId: category.parentId }
-        })
-      })
-      return category
-    },
+    // loadCategory (node) {
+    //   const category = {}
+    //   const url = `${baseApiUrl}/categories${node.id}`
+    //   axios.get(url).then(res => {
+    //     category = res.data.map(category => {
+    //       return { id: category.id, name: category.name, parentId: category.parentId }
+    //     })
+    //   })
+    //   return category
+    // },
     addNew () {
       this.category = {}
-      this.category.name = this.makeid(5)
+      this.category.name = this.user.name + ' ' + this.makeid(5)
       this.category.userId = this.user.id
       const method = this.category.id ? 'put' : 'post'
       const id = this.category.id ? `/${this.category.id}` : ''
@@ -207,7 +240,7 @@ export default {
         this.category.name = node.text
         this.category.parentId = node.parentId
       } else {
-        this.category.name = this.makeid(5)
+        this.category.name = this.user.name + ' ' + this.makeid(5)
         this.category.parentId = node.id
       }
       this.category.userId = this.user.id
@@ -226,7 +259,7 @@ export default {
     loadUser () {
       const json = localStorage.getItem(userKey)
       this.user = JSON.parse(json)
-    },
+    }
   },
   mounted () {
     this.loadUser()

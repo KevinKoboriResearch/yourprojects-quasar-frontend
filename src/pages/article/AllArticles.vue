@@ -29,6 +29,98 @@
       :main="category.name"
       sub="Categoria"
     /> -->
+    <q-card class="bg-transparent no-shadow no-border q-pa-md">
+      <q-card-section class="q-pa-none">
+        <div class="row q-col-gutter-sm">
+          <div class="col-md-3 col-sm-12 col-xs-12">
+            <q-item
+              style="background-color: #f37169"
+              class="q-pa-none q-ml-xs "
+            >
+              <q-item-section
+                side
+                style="background-color: #f34636"
+                class=" q-pa-lg q-mr-none text-white"
+              >
+                <q-icon
+                  name="fab fa-twitter"
+                  size="24px"
+                ></q-icon>
+              </q-item-section>
+              <q-item-section class=" q-pa-md q-ml-none  text-white">
+                <q-item-label class="text-white text-h6 text-weight-bolder">{{countCategories}}</q-item-label>
+                <!-- {{categories[0].children.length}} -->
+                <q-item-label>Categories here</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col-md-3 col-sm-12 col-xs-12">
+            <q-item
+              style="background-color: #5064b5"
+              class="q-pa-none q-ml-xs"
+            >
+              <q-item-section
+                side
+                style="background-color: #3e51b5"
+                class=" q-pa-lg q-mr-none text-white"
+              >
+                <q-icon
+                  name="far fa-newspaper"
+                  color="white"
+                  size="24px"
+                ></q-icon>
+              </q-item-section>
+              <q-item-section class=" q-pa-md q-ml-none  text-white">
+                <q-item-label class="text-white text-h6 text-weight-bolder">{{articles.length}}</q-item-label>
+                <q-item-label>All Articles</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col-md-3 col-sm-12 col-xs-12">
+            <q-item
+              style="background-color: #ea6a7f"
+              class="q-pa-none q-ml-xs"
+            >
+              <q-item-section
+                side
+                style="background-color: #ea4b64"
+                class=" q-pa-lg q-mr-none text-white"
+              >
+                <q-icon
+                  name="fab fa-google"
+                  size="24px"
+                ></q-icon>
+              </q-item-section>
+              <q-item-section class=" q-pa-md q-ml-none  text-white">
+                <q-item-label class="text-white text-h6 text-weight-bolder">50</q-item-label>
+                <q-item-label>Connections</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+          <div class="col-md-3 col-sm-12 col-xs-12">
+            <q-item
+              style="background-color: #a270b1"
+              class="q-pa-none q-ml-xs q-mr-xs"
+            >
+              <q-item-section
+                side
+                style="background-color: #9f52b1"
+                class=" q-pa-lg q-mr-none text-white"
+              >
+                <q-icon
+                  name="bar_chart"
+                  size="24px"
+                ></q-icon>
+              </q-item-section>
+              <q-item-section class=" q-pa-md q-ml-none  text-white">
+                <q-item-label class="text-white text-h6 text-weight-bolder">1020</q-item-label>
+                <q-item-label> Website Visits</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
     <q-toolbar :class="$q.dark.isActive ? 'text-white': 'text-black'">
       <q-input
         @change="getArticles"
@@ -62,7 +154,7 @@
         :key="article.id"
         v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
       >
-        <!-- {{article}} -->
+        {{article}}
         <ArticleItem :article="article" />
       </div>
       <!-- <div
@@ -86,7 +178,7 @@
 </template>
 
 <script>
-import { baseApiUrl } from '../../global'
+import { baseApiUrl, userKey } from '../../global'
 import axios from 'axios'
 // import PageTitle from '../../components/template/PageTitle'
 import ArticleItem from './ArticleItem'
@@ -99,6 +191,9 @@ export default {
       searchArticle: '',
       searchArticleAll: '',
       category: {},
+      categories: [],
+      countCategories: 0,
+      count: 0,
       articles: [],
       page: 1,
       loadMore: true
@@ -141,7 +236,28 @@ export default {
         // this.getCategory()
         if (res.data.data.length === 0) this.loadMore = false
       })
-    }
+    },
+    countTree (cat) {
+      for (let i = 0; i < cat[0].children.length; i++) {
+        this.count++
+        this.categoryYet = [cat[0].children[i]]
+        this.countTree(this.categoryYet)
+      }
+    },
+    //     getTreeData () {
+    //   const url = `${baseApiUrl}/categories/tree`
+    //   return axios.get(url).then(res => res.data)
+    // },
+    loadCategories () {
+      this.loadUser()
+      const url = `${baseApiUrl}/categories/tree`
+      axios.get(url).then(res => {
+        this.categories = res.data
+        this.countTree(this.categories)
+        this.countCategories = this.count
+        this.count = 0
+      })
+    },
     // getArticles () {
     //   const url = `${baseApiUrl}/articles?page=${this.page}`
     //   axios.get(url).then(res => {
@@ -164,6 +280,7 @@ export default {
     // this.category.id = this.$route.params.id
     // this.getCategory()
     this.getArticles()
+    this.loadCategories()
   }
 }
 </script>

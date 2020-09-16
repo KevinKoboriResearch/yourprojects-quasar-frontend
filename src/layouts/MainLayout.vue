@@ -2,19 +2,24 @@
   <q-layout
     class="selectDisable"
     :view="user ? 'hHh LpR lFf' : 'hHh LpR lff'"
-    style="background:linear-gradient( 135deg, #2f95b2 10%, #00596c 100%)"
+    :style="$q.dark.isActive ? 'background:linear-gradient( 180deg, #16434d 0%, #c1f4ff 100%)' : 'background:linear-gradient( 180deg, #c1f4ff 0%, #16434d 100%)'"
   >
-    <q-header class="bg-transparent">
-      <q-toolbar class="q-pa-md">
-        <!-- <q-space /> -->
-        <!-- <q-toolbar-title> -->
+    <!-- <q-header class="bg-transparent">
+      <q-toolbar>
+        <q-btn
+          dense
+          flat
+          round
+          icon="menu"
+          @click="left = !left"
+        />
+        <q-space v-if="!user && $q.screen.lt.sm" />
         <img
-          class="q-pa-xs"
+          class="q-pa-xs q-pl-sm"
           @click="$q.dark.toggle()"
-          src="../assets/logo/your-design-trans-light.png"
+          src="../assets/logo/your-design-trans-white.png"
           height="32"
         >
-        <!-- </q-toolbar-title> -->
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap">
@@ -48,32 +53,120 @@
           >
             <q-tooltip>Lock</q-tooltip>
           </q-btn>
+
+          <q-space v-if="!user && $q.screen.lt.sm" />
+
+          <q-space />
+
+          <UserDropdown v-if="user && !right" />
+
+          <q-btn
+            v-if="!user"
+            dense
+            flat
+            icon="fa fa-user"
+            to="auth"
+          />
+          <q-btn
+            v-else
+            dense
+            flat
+            :size="right ? '16px' : '12px'"
+            :class="right ? 'q-py-none q-px-xs' : 'q-py-xs q-px-sm'"
+            :icon="right ? 'fas fa-window-close' : 'fa fa-user-cog'"
+            @click="right = !right"
+          />
+
         </div>
+
       </q-toolbar>
-    </q-header>
-    <!-- <q-header
+      <q-tabs v-if="!user">
+        <q-space v-if="$q.screen.gt.xs" />
+        <q-route-tab
+          label="Início"
+          to="/"
+        />
+        <q-route-tab
+          label="Sobre"
+          to="/about"
+        />
+        <q-route-tab
+          label="Serviços"
+          to="/services"
+        />
+        <q-route-tab
+          label="Dúvidas"
+          to="/doubts"
+        />
+      </q-tabs>
+    </q-header> -->
+    <q-header
       v-if="!validatingToken"
-      bordered
       height-hint="98"
-      class="selectDisable bg-black text-white"
+      class="selectDisable text-white"
+      style="background-color: #000000"
     >
       <q-toolbar>
         <q-btn
+          square
           dense
           flat
-          round
           icon="menu"
           @click="left = !left"
-        />
+        >
+          <q-tooltip v-if="$q.screen.gt.xs">menu</q-tooltip>
+        </q-btn>
 
         <q-space v-if="!user && $q.screen.lt.sm" />
 
-        <img
-          class="q-pa-xs"
-          @click="$q.dark.toggle()"
-          src="../assets/logo/your-design-grad-pink.png"
-          height="32"
-        >
+        <!-- <q-toolbar-title> -->
+        <div>
+          <!-- class="q-px-xs q-pt-xs" -->
+          <img
+            style="margin-top: 8px;"
+            class="q-px-sm"
+            @click="$q.dark.toggle()"
+            src="../assets/logo/your-design-trans-white.png"
+            height="22"
+          >
+          <q-tooltip v-if="$q.screen.gt.xs">projects</q-tooltip>
+        </div>
+        <!-- </q-toolbar-title> -->
+        <q-space />
+
+        <!-- <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn
+            square
+            dense
+            flat
+            to="/"
+            label="Dashboard"
+            icon="dashboard"
+          >
+            <q-tooltip>Dashboard</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Pricing"
+            label="Pricing"
+            icon="lock"
+          >
+            <q-tooltip>Pricing</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Lock-2"
+            label="Lock"
+            icon="lock"
+          >
+            <q-tooltip>Lock</q-tooltip>
+          </q-btn> -->
+
+        <q-space v-if="!user && $q.screen.lt.sm" />
 
         <q-space />
 
@@ -86,15 +179,21 @@
           icon="fa fa-user"
           to="auth"
         />
+        <!-- padding="none" -->
         <q-btn
+          :size="right ? '17px' : '10px'"
           v-else
           dense
           flat
-          :size="right ? '16px' : '12px'"
-          :class="right ? 'q-py-none q-px-xs' : 'q-py-xs q-px-sm'"
-          :icon="right ? 'fas fa-window-close' : 'fa fa-user-cog'"
+          :padding="right ? 'none' : ''"
+          :class="right ? '' : 'q-pa-xs'"
+          :icon="right ? 'mdi-close' : 'fa fa-user-cog'"
           @click="right = !right"
-        />
+        >
+          <q-tooltip v-if="$q.screen.gt.xs">config</q-tooltip>
+        </q-btn>
+
+        <!-- </div> -->
       </q-toolbar>
 
       <q-tabs v-if="!user">
@@ -116,11 +215,11 @@
           to="/doubts"
         />
       </q-tabs>
-    </q-header> -->
+    </q-header>
 
-    <!-- show-if-above -->
     <q-drawer
       v-model="left"
+      show-if-above
       side="left"
       bordered
       content-class="bg-white"
@@ -143,12 +242,10 @@
 
     <q-page-container>
       <Loading v-if="validatingToken" />
-      <!-- q-py-md  -->
-      <router-view
-        class="q-pb-md q-px-md"
-        v-else
-      />
-      <whatsapp />
+      <div v-else>
+        <router-view class="q-pa-md" />
+        <whatsapp />
+      </div>
     </q-page-container>
 
     <q-footer
@@ -167,11 +264,45 @@
           Projects
         </q-toolbar-title>
       </q-toolbar>
-      <q-tabs v-if="user">
+      <q-tabs
+        dense
+        v-if="user"
+      >
+        <!-- <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn
+            square
+            dense
+            flat
+            to="/"
+            label="Dashboard"
+            icon="dashboard"
+          >
+            <q-tooltip>Dashboard</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Pricing"
+            label="Pricing"
+            icon="lock"
+          >
+            <q-tooltip>Pricing</q-tooltip>
+          </q-btn>
+          <q-btn
+            square
+            dense
+            flat
+            to="/Lock-2"
+            label="Lock"
+            icon="lock"
+          >
+            <q-tooltip>Lock</q-tooltip>
+          </q-btn> -->
         <q-space v-if="$q.screen.gt.xs" />
         <q-route-tab
-          label="Início"
-          to="/"
+          label="Articles"
+          to="/articles"
         />
         <q-route-tab
           label="Sobre"

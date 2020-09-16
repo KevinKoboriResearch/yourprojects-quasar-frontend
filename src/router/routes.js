@@ -46,15 +46,15 @@ const routes = [
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
       { name: 'allArticles', path: 'articles', component: AllArticles },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },
-      // { name: 'auth', path: 'auth', component: Auth },
+      { name: 'auth', path: 'auth', component: Auth },
       { name: 'error', path: '*', component: Error404 }
     ]
-  },
-  {
-    name: 'auth',
-    path: '/auth',
-    component: Auth
   }
+  // {
+  //   name: 'auth',
+  //   path: '/auth',
+  //   component: Auth
+  // }
   // {
   //   // name: 'articlesByCategory',
   //   // path: '/',

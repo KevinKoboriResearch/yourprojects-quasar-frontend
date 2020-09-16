@@ -190,6 +190,7 @@
         <!-- v-bind:style="$q.screen.lt.sm?{'width': '80%'}:{'width':'30%'}" -->
         <q-card
           style="background-color: #c1f4ff55"
+          class="text-black"
           v-bind:style="$q.screen.lt.sm?{'width': '80%'}: $q.screen.lt.md? {'width':'45%'} : {'width':'30%'}"
         >
           <!-- style="min-width: 350px;"> -->
@@ -214,6 +215,7 @@
           <q-card-section>
             <q-form class="q-gutter-md">
               <q-input
+                color="black"
                 filled
                 v-model="username"
                 label="Username"
@@ -221,6 +223,7 @@
               />
 
               <q-input
+                color="black"
                 type="password"
                 filled
                 v-model="password"

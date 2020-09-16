@@ -13,19 +13,25 @@
         v-else
         class="col-5"
         :src="require('../../assets/article/1.gif')"
-        style="min-height: 150px;"
         alt="Article"
       />
+      <!-- style="min-height: 50px;" -->
 
       <q-card-section class="q-pt-xs">
-        <div class="text-overline">Categoria: {{ article.categoryName }}</div>
-        <div class="text-h5 q-mt-sm q-mb-xs">{{article.name}}
-          <!-- {{ $mq === 'xs' ? article.name.substring(0,8)+"..." : $mq === 'sm' ?
-            article.name.substring(0,8)+"..." : article.name.substring(0,11)+'...'}} -->
+        <!-- >Categoria:<br>
+          <p class="text-orange">>Categoria:<br>
+          <p class="text-orange"> -->
+        <div class="text-overline text-orange">{{ article.categoryName }}
+        </div>
+        <div class="text-h6 q-mt-sm q-mb-xs">
+          <!-- {{article.name}} -->
+          {{ $mq === 'xs' ? article.name.substring(0,12) : $mq === 'sm' ?
+            article.name.substring(0,11) : article.name.substring(0,11)}}
         </div>
         <div class="text-caption text-grey">
-          {{ $mq === 'xs' ? article.description.substring(0,130)+"..." : $mq === 'sm' ?
-            article.description.substring(0,50)+"..." : article.description.substring(0,80)+'...'}}
+          {{ $mq === 'xs' ? article.description.substring(0,130)
+            : $mq === 'sm' ? article.description.substring(0,50)
+            : article.description.substring(0,80)}}
         </div>
       </q-card-section>
     </q-card-section>
@@ -42,6 +48,7 @@
       <q-btn
         flat
         color="primary"
+        @click.stop="onNodeArticles()"
       >
         Compartilhar
       </q-btn>
@@ -78,6 +85,14 @@ export default {
   data () {
     return {
       // descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    }
+  },
+  methods: {
+    onNodeArticles (id) {
+      this.$router.push({
+        name: 'userArticlesByCategory',
+        params: { id: JSON.parse(this.article.categoryId) }
+      })
     }
   }
 }

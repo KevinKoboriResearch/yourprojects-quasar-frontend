@@ -66,7 +66,7 @@ module.exports = function (/* ctx */) {
         // cfg.module.rules.push({
         //   enforce: 'pre',
         //   test: /\.(js|vue)$/,
-        //   // loader: 'eslint-loader',
+        //   loader: 'eslint-loader',
         //   exclude: /node_modules/
         // })
       }
@@ -84,7 +84,7 @@ module.exports = function (/* ctx */) {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
       config: {
-        dark: false
+        dark: true
       },
 
       // Possible values for "importStrategy":

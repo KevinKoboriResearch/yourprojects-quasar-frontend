@@ -1,15 +1,17 @@
 <template>
   <div class="q-mr-sm">
+    <!-- dropdown-icon="fa fa-sort-amount-down-alt" -->
     <q-btn-dropdown
       @mouseover.native="menuOver = true"
       @mouseout.native="menuOver = false"
       v-model="menu"
       auto-close
       :label="user.name"
-      dropdown-icon="fa fa-sort-amount-down-alt"
+      size="14px"
+      dropdown-icon="mdi-menu-down"
       style="background-color: #ffffff11;"
       :content-style="{ backgroundColor: '#000000dd' }"
-      color="black"
+      color="transparent"
       toggle-color="yellow"
     >
       <!-- class="text-white" -->

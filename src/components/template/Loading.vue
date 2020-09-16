@@ -30,6 +30,26 @@
         height="22"
       >
     </q-page-sticky>
+    <q-page-sticky
+      position="top-right"
+      :offset="[40, 40]"
+    >
+      <!-- <q-btn class="bg-green">oi</q-btn> -->
+      <!-- <img
+        @click="$router.go()"
+        src="../../assets/logo/your-design-trans-white.png"
+        height="22"
+      > -->
+      <!-- color="orange" -->
+      <q-btn
+        dense
+        padding="none"
+        size="18px"
+        class="text-white q-mb-sm q-ml-sm"
+        @click="$q.fullscreen.toggle()"
+        :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+      />
+    </q-page-sticky>
   </div>
 </template>
 
@@ -84,10 +104,10 @@ body {
   transition: all 0.2s ease-in-out;
   opacity: 0.9;
 }
-.grow:hover {
+/* .grow:hover {
   transform: scale(1.1);
   opacity: 2;
-}
+} */
 .grow-text {
   transform: scale(1);
   transition: all 0.2s ease-in-out;
@@ -122,6 +142,8 @@ body {
 #perspective3d .card:hover #mac3-preview {
   /* -webkit-transform: rotateY(15deg); */
   -webkit-box-shadow: 0 0 100px #0202a0;
+  transform: scale(1.1);
+  opacity: 2;
 }
 
 #mac3-preview {
@@ -176,7 +198,7 @@ h1 small {
   transition: all 0.2s ease-in-out;
 }
 h1 small:hover {
-  -webkit-transform: rotateY(0deg);
+  -webkit-transform: rotateY(20deg);
 }
 /* h2 a { display: block; text-decoration: none; margin: 0 0 30px 0; font: italic 45px Georgia, Times, Serif;  text-align: center; color: #bfe1f1; text-shadow: 0px 2px 6px #333; }
 h2 a:hover { color: #90bcd0; } */
