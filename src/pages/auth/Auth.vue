@@ -27,6 +27,8 @@
         </facebook-login>
 
         <q-form
+              @submit="onSubmit"
+      @reset="onReset"
           class="q-gutter-md"
           autocorrect="off"
           autocapitalize="off"

@@ -1,9 +1,10 @@
 <template>
-  <div class="selectDisable fit row wrap justify-center items-start content-start">
+  <div class="selectDisable fit row wrap justify-center items-center content-center">
     <!-- {{$route.fullPath}} -->
+    <!-- position: absolute; top:6vh; -->
     <q-card
       v-if="showSignup"
-      style="background-color: #c1f4ff55; position: absolute; top:6vh;"
+      style="background-color: #c1f4ff55;"
       class="text-black"
       :style="$q.screen.lt.sm?{'width': '80%'}: $q.screen.lt.md? {'width':'45%'} : {'width':'30%'}"
     >
@@ -16,15 +17,17 @@
           <img src="../../assets/logo/user-logo.png">
         </q-avatar>
       </q-card-section>
-      <q-card-section>
+      <!-- <q-card-section>
         <div class="text-center q-pt-lg">
           <div class="col text-h6 ellipsis">
             Registro
           </div>
         </div>
-      </q-card-section>
+      </q-card-section> -->
       <q-card-section>
         <q-form
+              @submit="onSubmit"
+      @reset="onReset"
           class="q-gutter-md"
           autocorrect="off"
           autocapitalize="off"
@@ -37,8 +40,8 @@
             v-model="user.name"
             label="Nome e sobrenome"
             lazy-rules
-            :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']"
           />
+            <!-- :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']" -->
 
           <q-input
             dense
@@ -59,8 +62,8 @@
             label="Senha"
             type="password"
             lazy-rules
-            :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]"
           />
+            <!-- :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]" -->
 
           <q-input
             dense
@@ -69,9 +72,9 @@
             label="Confirme a sua senha"
             type="password"
             lazy-rules
-            :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
             autocomplete="nope"
           />
+            <!-- :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]" -->
           <q-toggle
             v-model="terms"
             label="I accept the license and terms"
@@ -123,15 +126,17 @@
           <img src="../../assets/logo/user-logo.png">
         </q-avatar>
       </q-card-section>
-      <q-card-section>
+      <!-- <q-card-section>
         <div class="text-center q-pt-lg">
           <div class="col text-h6 ellipsis">
             Log in
           </div>
         </div>
-      </q-card-section>
+      </q-card-section> -->
       <q-card-section>
         <q-form
+              @submit="onSubmit"
+      @reset="onReset"
           class="q-gutter-md"
           autocorrect="off"
           autocapitalize="off"

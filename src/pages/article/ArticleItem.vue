@@ -17,14 +17,14 @@
       <q-card-section class="q-pt-xs">
         <div class="text-overline text-orange">{{ article.categoryName }}
         </div>
-        <div class="text-h6 q-mt-sm q-mb-xs">
-          {{ $mq === 'xs' ? article.name.substring(0,12) : $mq === 'sm' ?
-            article.name.substring(0,11) : article.name.substring(0,11)}}
+        <div class="text-h6 q-mt-sm q-mb-xs">{{article.name}}
+          <!-- {{ $mq === 'xs' ? article.name.substring(0,12) : $mq === 'sm' ?
+            article.name.substring(0,11) : article.name.substring(0,11)}} -->
         </div>
-        <div class="text-caption text-grey">
-          {{ $mq === 'xs' ? article.description.substring(0,130)
+        <div class="text-caption text-grey">{{article.description}}
+          <!-- {{ $mq === 'xs' ? article.description.substring(0,130)
             : $mq === 'sm' ? article.description.substring(0,50)
-            : article.description.substring(0,80)}}
+            : article.description.substring(0,80)}} -->
         </div>
       </q-card-section>
     </q-card-section>
@@ -43,7 +43,14 @@
         color="primary"
         @click.stop="onNodeArticles()"
       >
-        Compartilhar
+        editar
+      </q-btn>
+            <q-btn
+        flat
+        color="primary"
+        @click.stop="estado = !estado"
+      >
+      {{ estado | abrirFechar}}
       </q-btn>
     </q-card-actions>
   </q-card>
@@ -53,8 +60,18 @@
 export default {
   name: 'ArticleItem',
   props: ['article'],
+  filters: {
+    abrirFechar(val) {
+      if (val == false) {
+        return 'fechado'
+      } else {
+        return 'aberto'
+      }
+    }
+  },
   data () {
     return {
+      estado: false,
       // descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
   },

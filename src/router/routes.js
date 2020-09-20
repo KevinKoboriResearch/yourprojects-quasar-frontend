@@ -12,7 +12,7 @@ import AllArticles from '../pages/article/AllArticles'
 import ArticleById from '../pages/article/ArticleById'
 import Auth from '../pages/auth/Pricing'
 import Error404 from '../pages/Error404.vue'
-import allCategories from '../pages/category/allCategories'
+// import allCategories from '../pages/category/allCategories'
 import Tutorials from '../pages/user/Tutorials'
 import Dashboard from '../pages/user/Dashboard'
 
@@ -49,7 +49,7 @@ const routes = [
       { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
       //free routes
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
-      { name: 'allCategories', path: 'categories', component: AllCategories },
+      // { name: 'allCategories', path: 'categories', component: AllCategories },
       { name: 'allArticles', path: 'articles', component: AllArticles },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },
       { name: 'auth', path: 'auth', component: Auth },

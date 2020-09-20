@@ -94,9 +94,10 @@
       </q-tabs>
     </q-header>
 
+      <!-- :show-if-above="$route.fullPath != '/auth' && !validatingToken" -->
     <q-drawer
+    show-if-above
       v-model="left"
-      :show-if-above="$route.fullPath != '/auth' && !validatingToken"
       side="left"
       bordered
       content-class="bg-white"
@@ -155,21 +156,31 @@
       >
         <q-space v-if="$q.screen.gt.xs" />
         <q-route-tab
-          label="Conta"
-          to="/account"
+          label="Dashboard"
+          to="/dashboard"
+        />
+        <!-- <a href="http://localhost:8081/#/">
+        <q-route-tab
+          label="site"
+        >
+        </q-route-tab>
+        </a> -->
+                <q-route-tab
+          label="Account"
+          to="/dashboard"
         />
         <q-route-tab
           label="Categorias"
-          to="/Categories"
+          to="/articles"
         />
         <q-route-tab
           label="Artigos"
           to="/articles"
         />
-        <q-route-tab
+        <!-- <q-route-tab
           label="Como Usar"
           to="/tutorials"
-        />
+        /> -->
       </q-tabs>
     </q-footer>
 
