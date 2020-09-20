@@ -43,7 +43,7 @@
         </q-item>
         <q-item to="/user/articles">
           <q-item-section>
-            <q-item-label>Meu Blog</q-item-label>
+            <q-item-label>Meus Artigos</q-item-label>
           </q-item-section>
         </q-item>
         <q-item

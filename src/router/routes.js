@@ -12,6 +12,9 @@ import AllArticles from '../pages/article/AllArticles'
 import ArticleById from '../pages/article/ArticleById'
 import Auth from '../pages/auth/Pricing'
 import Error404 from '../pages/Error404.vue'
+import allCategories from '../pages/category/allCategories'
+import Tutorials from '../pages/user/Tutorials'
+import Dashboard from '../pages/user/Dashboard'
 
 
 const routes = [
@@ -30,20 +33,23 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      //logged out free routes
+      //free routes
       { name: 'home', path: '', component: Home },
       { name: 'about', path: 'about', component: About },
       { name: 'services', path: 'services', component: Services },
       { name: 'doubts', path: 'doubts', component: Doubts },
-      //logged in user routes
+      //user routes
       { name: 'userProfile', path: 'user/profile', component: UserProfile },
       { name: 'userArticles', path: 'user/articles', component: UserArticles },
       { name: 'userArticlesByCategory', path: 'user/category/:id/articles', component: UserArticlesByCategory },
       { name: 'userCategories', path: 'user/categories', component: UserCategories },
-      //logged in admin routes
+      { name: 'dashboard', path: 'dashboard', component: Dashboard },
+      { name: 'tutorials', path: 'tutorials', component: Tutorials },
+      //admin routes
       { name: 'adminPages', path: 'admin', component: AdminPages, meta: { requiresAdmin: true } },
-      //logged in free routes
+      //free routes
       { name: 'articlesByCategory', path: 'categories/:id/articles', component: ArticlesByCategory },
+      { name: 'allCategories', path: 'categories', component: AllCategories },
       { name: 'allArticles', path: 'articles', component: AllArticles },
       { name: 'articleById', path: 'articles/:id', component: ArticleById },
       { name: 'auth', path: 'auth', component: Auth },

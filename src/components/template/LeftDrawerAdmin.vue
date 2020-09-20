@@ -73,6 +73,7 @@ import Tree from 'liquor-tree'
 import axios from 'axios'
 
 export default {
+  name: 'LeftDrawerAdmin',
   components: { Tree },
   data () {
     return {

@@ -39,6 +39,7 @@ import Tree from 'liquor-tree'
 import axios from 'axios'
 
 export default {
+  name: 'LeftDrawer',
   components: { Tree },
   methods: {
     getTreeData () {

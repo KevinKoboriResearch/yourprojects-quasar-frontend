@@ -96,7 +96,7 @@
 
     <q-drawer
       v-model="left"
-      :show-if-above="$route.fullPath != '/auth'"
+      :show-if-above="$route.fullPath != '/auth' && !validatingToken"
       side="left"
       bordered
       content-class="bg-white"
@@ -117,7 +117,10 @@
     </q-drawer>
 
     <q-page-container>
-      <Loading v-if="validatingToken" />
+      <Loading
+        v-scrollanimation
+        v-if="validatingToken"
+      />
       <div v-else>
         <router-view
           v-scrollanimation
@@ -152,20 +155,20 @@
       >
         <q-space v-if="$q.screen.gt.xs" />
         <q-route-tab
-          label="Articles"
+          label="Conta"
+          to="/account"
+        />
+        <q-route-tab
+          label="Categorias"
+          to="/Categories"
+        />
+        <q-route-tab
+          label="Artigos"
           to="/articles"
         />
         <q-route-tab
-          label="Sobre"
-          to="/about"
-        />
-        <q-route-tab
-          label="Serviços"
-          to="/services"
-        />
-        <q-route-tab
-          label="Dúvidas"
-          to="/doubts"
+          label="Como Usar"
+          to="/tutorials"
         />
       </q-tabs>
     </q-footer>

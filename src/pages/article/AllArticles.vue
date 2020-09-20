@@ -170,7 +170,8 @@ export default {
       axios.get(url).then(res => {
         this.articles = this.articles.concat(res.data)
         this.page++
-        if (res.data.length === 0) this.loadMore = false
+        // if (res.data.length === 0) this.loadMore = false
+        if (res.data.length <= 5 || res.data.length === 0) this.loadMore = false
       })
     },
     countTree (cat) {

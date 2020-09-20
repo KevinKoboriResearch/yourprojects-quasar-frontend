@@ -148,7 +148,7 @@
         v-if="!showForm"
         placeholder="pesquisar..."
         dense
-        class="col-12 bg-deep-purple-5"
+        class="col-12 bg-pink"
         style="witdh: 100%;border-radius: 5px;"
         standout
         v-model="filter"
@@ -174,8 +174,9 @@
       :filter="filter"
       :pagination="pagination"
       row-key="name"
-      :style="$q.screen.gt.xs ? 'max-width: 100%;' : 'max-width: 100%;'"
+      style="min-width: 100%;"
     >
+      <!-- :style="$q.screen.gt.xs ? 'min-width: 100%;' : 'max-width: 100%;'" -->
       <template v-slot:top="props">
         <div class="q-ml-xs text-h6">
           Articles1
@@ -210,6 +211,16 @@
           @click="reset(),
           article.content = `<pre class=\'ql-syntax\' spellcheck=\'false\'>\nDigite aqui dentro o seu código fonte...</pre>`,
           showForm = !showForm"
+        />
+        <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-adjust"
+          size="sm"
+          flat
+          dense
+          @click="$q.dark.toggle()"
         />
         <q-btn
           padding="none"
@@ -503,6 +514,16 @@
           showForm = !showForm"
         />
         <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-adjust"
+          size="sm"
+          flat
+          dense
+          @click="$q.dark.toggle()"
+        />
+        <q-btn
           padding="none"
           class="q-pa-xs"
           size="sm"
@@ -790,6 +811,16 @@
           showForm = !showForm"
         />
         <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-adjust"
+          size="sm"
+          flat
+          dense
+          @click="$q.dark.toggle()"
+        />
+        <q-btn
           padding="none"
           class="q-pa-xs"
           size="sm"
@@ -830,14 +861,14 @@
                 icon="edit"
                 round
                 dense
-                class="bg-deep-purple-7 text-white"
+                class="bg-pink text-white"
                 @click="loadArticle(props.row), props.expand = !props.expand"
               />
               <q-btn
                 icon="delete"
                 round
                 dense
-                class="bg-deep-purple-7 text-white"
+                class="bg-pink text-white"
                 @click="loadArticle(props.row), confirmDelete()"
               />
             </q-card-actions>

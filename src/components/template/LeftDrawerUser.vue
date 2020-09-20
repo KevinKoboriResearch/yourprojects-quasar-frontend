@@ -111,6 +111,7 @@ import Tree from 'liquor-tree'
 import axios from 'axios'
 
 export default {
+  name: 'LeftDrawerUser',
   components: { Tree },
   data () {
     return {

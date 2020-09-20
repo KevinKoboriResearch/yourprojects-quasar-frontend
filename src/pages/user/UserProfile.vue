@@ -1,8 +1,51 @@
 <template>
   <div class="q-pa-xs">
     <!-- {{user}} -->
-    <div class="fit row wrap justify-between items-start content-start">
-      <div class="col-auto">
+    <div class="fit row no-wrap justify-between items-start content-start">
+      <q-toolbar class="q-mb-xs bg-pink text-white shadow-2 rounded-borders">
+        <!-- style="max-height: 2px;" -->
+        <!-- icon="close" -->
+        <q-btn
+          label="Sair"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          size="md"
+          flat
+          dense
+          @click.prevent="right = !right"
+        />
+        <q-space />
+        <q-btn
+          round
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-adjust"
+          size="sm"
+          flat
+          dense
+          @click="$q.dark.toggle()"
+        />
+        <q-btn
+          padding="none"
+          class="q-pa-xs"
+          size="sm"
+          flat
+          dense
+          @click="$q.fullscreen.toggle()"
+          :icon="inFullscreen ? 'fas fa-compress' : 'fas fa-expand'"
+        />
+        <!-- :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" -->
+      </q-toolbar>
+      <!-- v-if="!props.inFullscreen" -->
+      <!-- <div class="col-auto">
+      </div>
+       <div class="col-auto">
+      </div>
+       <div class="col-auto">
+      </div>
+       <div class="col-auto">
+      </div> -->
+      <!-- <div class="col-auto">
         <q-btn
           dense
           @click.prevent="right = !right"
@@ -36,7 +79,7 @@
           @click="$q.fullscreen.toggle()"
           :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
         />
-      </div>
+      </div> -->
     </div>
     <!-- @mouseover.native="menuOver = true"
       @mouseout.native="menuOver = false" -->
@@ -155,191 +198,108 @@
         <q-card-section>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
         </q-card-section>
+        <div class="row justify-center bg-red q-ma-xs rounded-borders">
+          <q-btn
+            square
+            @click.prevent="confirmDelete()"
+            flat
+            style="min-width: 100%;"
+          >Apagar Conta</q-btn>
+        </div>
       </q-card>
     </q-dialog>
-    <br>
-    <!-- <q-form
-      v-show="showForm"
-      class="q-gutter-md"
-    >
-      <div class="row">
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-          <q-input
-            standout
-            color="white"
-            v-model="article.name"
-            label-slot
-            hint="Nome - necessário pelo menos 2 caracteres"
-            lazy-rules
-            :rules="[ val => val && val.length >= 2 || 'Please type something']"
-            clearable
-          >
-            <template v-slot:label>
-              <div class="row items-center all-pointer-events">
-                <q-icon
-                  class="q-mr-xs"
-                  color="deep-orange"
-                  size="24px"
-                  name="fa fa-user-tie"
-                />
-                Informe o Nome do Artigo...
-
-                <q-tooltip
-                  content-class="bg-grey-8"
-                  anchor="top left"
-                  self="bottom left"
-                  :offset="[0, 8]"
-                >
-                  this will be your email login... for more info contact your teacher
-                </q-tooltip>
-              </div>
-            </template>
-          </q-input>
-        </div>
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-          <q-input
-            standout
-            color="white"
-            v-model="article.description"
-            label-slot
-            hint="Nome - necessário pelo menos 4 caracteres"
-            clearable
-          >
-            <template v-slot:label>
-              <div class="row items-center all-pointer-events">
-                <q-icon
-                  class="q-mr-xs"
-                  color="deep-orange"
-                  size="24px"
-                  name="fa fa-user-tie"
-                />
-                Informe a Descrição do Artigo...
-
-                <q-tooltip
-                  content-class="bg-grey-8"
-                  anchor="top left"
-                  self="bottom left"
-                  :offset="[0, 8]"
-                >
-                  this will be your email login... for more info contact your teacher
-                </q-tooltip>
-              </div>
-            </template>
-          </q-input>
-        </div>
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-          <q-input
-            standout
-            color="white"
-            v-model="article.imageUrl"
-            label-slot
-            hint="Nome - necessário pelo menos 4 caracteres"
-            clearable
-          >
-            <template v-slot:label>
-              <div class="row items-center all-pointer-events">
-                <q-icon
-                  class="q-mr-xs"
-                  color="deep-orange"
-                  size="24px"
-                  name="fa fa-user-tie"
-                />
-                Informe a URL da Imagem...
-
-                <q-tooltip
-                  content-class="bg-grey-8"
-                  anchor="top left"
-                  self="bottom left"
-                  :offset="[0, 8]"
-                >
-                  this will be your email login... for more info contact your teacher
-                </q-tooltip>
-              </div>
-            </template>
-          </q-input>
-        </div>
-        <div class="q-pa-sm col-xs-12 col-sm-12 col-md-6">
-          <q-select
-            id="article-parentId"
-            standout
-            :options="categories"
-            v-model="article.categoryId"
-            map-options
-            emit-value
-          />
-        </div>
-      </div>
-      <VueEditor
-        v-model="article.content"
-        placeholder="Informe o Conteúdo do Artigo..."
-      />
-      <div class="row">
-        <q-btn
-          @click="save"
-          label="Submit"
-          type="submit"
-          color="primary"
-        />
-        <q-btn
-          @click="reset"
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
-        <q-space />
-        <q-btn
-          @click="showForm = false"
-          label="Cancelar"
-          type="cancel"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
-      </div>
-      <hr>
-    </q-form> -->
     <q-table
       separator="cell"
       v-show="!showForm"
       :data="articles"
       row-key="name"
       style="min-witdh: 100%;"
+      class="q-mt-xs"
+      :pagination.sync="pagination"
+      hide-pagination
     >
       <template v-slot:top="props">
+        <div class="q-ml-xs text-h6">
+          Articles1
+        </div>
         <q-btn
           v-if="!props.inFullscreen"
+          padding="none"
+          class="q-ml-md q-pa-xs"
+          color="orange"
           flat
-          class="bg-green q-mr-sm"
-          to="/user/articles"
-          @click="$store.commit('rightDrawer/toggleMenu', val)"
-        >
-          <i class="fa fa-user-edit"></i>
-        </q-btn>
-        Articles
+          icon="fas fa-th-large"
+          @click="tableType = 'gridImage'"
+        />
+        <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-ml-md q-pa-xs"
+          color="orange"
+          flat
+          icon="fas fa-th"
+          @click="tableType = 'gridNotes'"
+        />
         <q-space />
         <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-plus"
+          size="sm"
           flat
-          round
           dense
-          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+          @click="reset(),
+          article.content = `<pre class=\'ql-syntax\' spellcheck=\'false\'>\nDigite aqui dentro o seu código fonte...</pre>`,
+          showForm = !showForm"
+        />
+        <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="fa fa-adjust"
+          size="sm"
+          flat
+          dense
+          @click="$q.dark.toggle()"
+        />
+        <q-btn
+          padding="none"
+          class="q-pa-xs"
+          size="sm"
+          flat
+          dense
+          :icon="props.inFullscreen ? 'fas fa-compress' : 'fas fa-expand'"
           @click="props.toggleFullscreen"
-          class="q-ml-md"
+        />
+      </template><template v-slot:top="props">
+        <div class="q-ml-xs text-h6">
+          Articles1
+        </div>
+        <q-space />
+        <q-btn
+          v-if="!props.inFullscreen"
+          padding="none"
+          class="q-pa-xs q-mr-sm"
+          icon="edit"
+          size="sm"
+          flat
+          dense
+          to="/user/articles"
+          @click="$store.commit('rightDrawer/toggleMenu', val)"
+        />
+        <q-btn
+          padding="none"
+          class="q-pa-xs"
+          size="sm"
+          flat
+          dense
+          :icon="props.inFullscreen ? 'fas fa-compress' : 'fas fa-expand'"
+          @click="props.toggleFullscreen"
         />
       </template>
       <template v-slot:header="props">
         <q-tr :props="props">
-          <!-- <q-th auto-width>
-            <q-btn
-              flat
-              class="bg-green q-mr-sm"
-              to="/user/articles"
-              @click="$store.commit('rightDrawer/toggleMenu', val)"
-            >
-              <i class="fa fa-user-edit"></i>
-            </q-btn>
-          </q-th> -->
           <q-th
             auto-width
             v-for="col in props.cols"
@@ -354,8 +314,6 @@
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <!-- <q-td>
-          </q-td> -->
           <q-td
             v-for="col in props.cols"
             :key="col.name"
@@ -366,15 +324,66 @@
           </q-td>
         </q-tr>
       </template>
+      <template v-slot:pagination="scope">
+        <q-btn
+          v-if="scope.pagesNumber > 2"
+          icon="mdi-chevron-double-left"
+          color="orange"
+          round
+          dense
+          flat
+          :disable="scope.isFirstPage"
+          @click="scope.firstPage"
+        />
+
+        <q-btn
+          icon="mdi-chevron-left"
+          color="orange"
+          round
+          dense
+          flat
+          :disable="scope.isFirstPage"
+          @click="scope.prevPage"
+        />
+
+        <q-btn
+          icon="mdi-chevron-right"
+          color="orange"
+          round
+          dense
+          flat
+          :disable="scope.isLastPage"
+          @click="scope.nextPage"
+        />
+
+        <q-btn
+          v-if="pagesNumber > 2"
+          icon="mdi-chevron-double-right"
+          color="orange"
+          round
+          dense
+          flat
+          :disable="scope.isLastPage"
+          @click="scope.lastPage"
+        />
+      </template>
     </q-table>
-    <!-- <br> -->
-    <q-btn
-      class="bg-black q-mt-sm"
-      color="red"
-      @click.prevent="confirmDelete()"
-      flat
-      style="min-width: 100%;"
-    >Apagar Conta</q-btn>
+    <div class="row justify-center q-mt-xs rounded-borders">
+      <q-pagination
+        v-model="pagination.page"
+        color="grey-8"
+        :max="pagesNumber"
+        size="lg"
+      />
+    </div>
+    <!-- <q-btn
+        class="bg-black q-mt-xs"
+        color="
+      red"
+        @click.prevent="confirmDelete()"
+        flat
+        style="min-width: 100%;"
+      >Apagar Conta</q-btn> -->
   </div>
 </template>
 
@@ -389,6 +398,11 @@ export default {
   components: { VueEditor },
   data () {
     return {
+      pagination: {
+        sortBy: 'desc',
+        descending: false,
+        rowsPerPage: 8
+      },
       baseApiUrl: baseApiUrl,
       showForm: false,
       article: {},
@@ -402,6 +416,9 @@ export default {
     }
   },
   computed: {
+    pagesNumber () {
+      return Math.ceil(this.articles.length / this.pagination.rowsPerPage)
+    },
     right: {
       get () {
         return this.$store.state.rightDrawer.isMenuVisible
