@@ -7,7 +7,7 @@
       </div>
       <q-space />
       <q-btn
-        label="Voltar"
+        label="Todos os Artigos"
         to="/articles"
       />
     </div>

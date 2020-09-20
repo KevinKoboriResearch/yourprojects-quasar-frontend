@@ -10,7 +10,7 @@ import AdminPages from '../pages/admin/AdminPages'
 import ArticlesByCategory from '../pages/article/ArticlesByCategory'
 import AllArticles from '../pages/article/AllArticles'
 import ArticleById from '../pages/article/ArticleById'
-import Auth from '../pages/auth/Auth'
+import Auth from '../pages/auth/Pricing'
 import Error404 from '../pages/Error404.vue'
 
 

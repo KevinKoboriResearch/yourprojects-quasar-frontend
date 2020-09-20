@@ -70,9 +70,9 @@ export default {
       })
     }
   },
-  mounted () {
-    this.$refs.tree.$on('node:selected', this.onNodeSelect)
-  },
+  // mounted () {
+  //   this.$refs.tree.$on('node:selected', this.onNodeSelect)
+  // },
   data () {
     return {
       treeFilter: '',

@@ -1,5 +1,4 @@
 <template>
-  <!-- <div> -->
   <q-card class="q-mb-md">
     <q-card-section horizontal>
       <q-img
@@ -15,16 +14,10 @@
         :src="require('../../assets/article/1.gif')"
         alt="Article"
       />
-      <!-- style="min-height: 50px;" -->
-
       <q-card-section class="q-pt-xs">
-        <!-- >Categoria:<br>
-          <p class="text-orange">>Categoria:<br>
-          <p class="text-orange"> -->
         <div class="text-overline text-orange">{{ article.categoryName }}
         </div>
         <div class="text-h6 q-mt-sm q-mb-xs">
-          <!-- {{article.name}} -->
           {{ $mq === 'xs' ? article.name.substring(0,12) : $mq === 'sm' ?
             article.name.substring(0,11) : article.name.substring(0,11)}}
         </div>
@@ -54,28 +47,6 @@
       </q-btn>
     </q-card-actions>
   </q-card>
-
-  <!-- <div class="article-item">
-        <router-link :to="{ name: 'articleById', params: { id: article.id } }">
-            <div class="article-item-image d-none d-sm-block">
-                <img v-if="article.imageUrl"
-                    :src="article.imageUrl"
-                    height="150" width="150" alt="Article">
-                <img v-else
-                    src="../../assets/article.png"
-                    height="150" width="150" alt="Article">
-            </div>
-            <div class="article-item-info">
-                <h2>Categoria: {{ article.categoryName }}</h2>
-                <h2>Artigo: {{ article.name }}</h2>
-                <p>Descricão:{{ article.description }}</p>
-                <span class="article-item-author">
-                    <strong>Autor: </strong>{{ article.author }}
-                </span>
-            </div>
-        </router-link>
-    </div> -->
-  <!-- </div> -->
 </template>
 
 <script>

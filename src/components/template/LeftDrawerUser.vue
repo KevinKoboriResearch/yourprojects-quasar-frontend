@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{categories}}
+    <!-- {{categories}} -->
     <q-toolbar class="q-pa-sm">
       <!-- <q-toolbar
         dense

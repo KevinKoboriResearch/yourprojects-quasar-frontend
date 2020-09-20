@@ -1,279 +1,327 @@
 <template>
-  <q-layout
-    view="lHh Lpr lFf"
-    style="background:linear-gradient( 135deg, #c1f4ff 10%, #162b4d 100%)"
-  >
-    <!-- reveal -->
-    <q-header class="bg-transparent text-white">
-      <q-toolbar class="q-pa-md">
-        <q-space />
-        <!-- <q-toolbar-title> -->
-        <img
-          class="q-pa-xs"
-          @click="$q.dark.toggle()"
-          src="../../assets/logo/your-design-grad-pink.png"
-          height="32"
+  <div class="selectDisable fit row wrap justify-center items-start content-start">
+    <!-- {{$route.fullPath}} -->
+    <q-card
+      v-if="showSignup"
+      style="background-color: #c1f4ff55; position: absolute; top:6vh;"
+      class="text-black"
+      :style="$q.screen.lt.sm?{'width': '80%'}: $q.screen.lt.md? {'width':'45%'} : {'width':'30%'}"
+    >
+      <q-card-section>
+        <q-avatar
+          style="background-color: #c1f4ffaa"
+          size="90px"
+          class="absolute-center shadow-10"
         >
-        <!-- </q-toolbar-title> -->
-        <q-space />
-
-        <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn
-            square
-            dense
-            flat
-            color="text-grey-7"
-            to="/"
-            label="Dashboard"
-            icon="dashboard"
-          >
-            <q-tooltip>Dashboard</q-tooltip>
-          </q-btn>
-          <q-btn
-            square
-            dense
-            flat
-            color="text-grey-7"
-            to="/Pricing"
-            label="Pricing"
-            icon="lock"
-          >
-            <q-tooltip>Pricing</q-tooltip>
-          </q-btn>
-          <q-btn
-            square
-            dense
-            flat
-            color="text-grey-7"
-            to="/Lock-2"
-            label="Lock"
-            icon="lock"
-          >
-            <q-tooltip>Lock</q-tooltip>
-          </q-btn>
-        </div>
-      </q-toolbar>
-    </q-header>
-
-    <!-- <q-page-container>
-      <section style="min-height: 25vh;" class="flex text-white flex-center layout_bg">
-        <div style="position: relative">
-          <div class="text-h4 text-center">
-            Pick the best plan for you
-          </div>
-          <div class="text-subtitle2 q-pt-sm text-center">
-            You have Free Unlimited Updates and Premium Support on
-            each package.
+          <img src="../../assets/logo/user-logo.png">
+        </q-avatar>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-center q-pt-lg">
+          <div class="col text-h6 ellipsis">
+            Registro
           </div>
         </div>
-      </section>
-      <section class="q-pb-lg">
-        <div class="row q-col-gutter-sm q-px-sm">
-          <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-            <q-card class="text-white" style="background-image: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);">
-              <q-card-section>
-                <div class="text-h6 text-center">
-                  Basic
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h2 text-weight-bolder text-center">
-                  <q-icon name="home_work"></q-icon>
-                </div>
-              </q-card-section>
-              <q-card-section class="q-pa-none">
-                <div class="text-h2 text-weight-bolder text-center">
-                  $0
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h6 text-weight-bolder text-center">
-                  This is good if your company size is between 2 and 10 Persons.
-                </div>
-              </q-card-section>
-              <q-card-actions vertical align="center">
-                <q-btn outline class="text-capitalize">Buy Now</q-btn>
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-            <q-card class="text-white"
-                    style="background-image: linear-gradient(-225deg, #5D9FFF 0%, #6BBBFF 100%);">
-              <q-card-section>
-                <div class="text-h6 text-center">
-                  Small Compnay
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h2 text-weight-bolder text-center">
-                  <q-icon name="home"></q-icon>
-                </div>
-              </q-card-section>
-              <q-card-section class="q-pa-none">
-                <div class="text-h2 text-weight-bolder text-center">
-                  $25
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h6 text-weight-bolder text-center">
-                  This is good if your company size is between 2 and 10 Persons.
-                </div>
-              </q-card-section>
-              <q-card-actions vertical align="center">
-                <q-btn outline class="text-capitalize">Buy Now</q-btn>
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-            <q-card class="text-white"
-                    style="background-color: #2B86C5">
-              <q-card-section>
-                <div class="text-h6 text-center">
-                  Extended
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h2 text-weight-bolder text-center">
-                  <q-icon name="apartment"></q-icon>
-                </div>
-              </q-card-section>
-              <q-card-section class="q-pa-none">
-                <div class="text-h2 text-weight-bolder text-center">
-                  $250
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h6 text-weight-bolder text-center">
-                  This is good if your company size is between 2 and 10 Persons.
-                </div>
-              </q-card-section>
-              <q-card-actions vertical align="center">
-                <q-btn outline class="text-capitalize">Buy Now</q-btn>
-              </q-card-actions>
-            </q-card>
-          </div>
-          <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-            <q-card class="text-white"
-                    style="background-image: linear-gradient(87deg, rgb(17, 205, 239), rgb(17, 113, 239)) !important">
-              <q-card-section>
-                <div class="text-h6 text-center">
-                  Extra Pack
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h2 text-weight-bolder text-center">
-                  <q-icon name="business_center"></q-icon>
-                </div>
-              </q-card-section>
-              <q-card-section class="q-pa-none">
-                <div class="text-h2 text-weight-bolder text-center">
-                  $750
-                </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="text-h6 text-weight-bolder text-center">
-                  This is good if your company size is between 2 and 10 Persons.
-                </div>
-              </q-card-section>
-              <q-card-actions vertical align="center">
-                <q-btn outline class="text-capitalize">Buy Now</q-btn>
-              </q-card-actions>
-            </q-card>
-          </div>
-
-        </div>
-      </section>
-    </q-page-container> -->
-
-    <q-page-container>
-      <q-page class="bg-transparent flex flex-center">
-        <!-- v-bind:style="$q.screen.lt.sm?{'width': '80%'}:{'width':'30%'}" -->
-        <q-card
-          style="background-color: #c1f4ff55"
-          class="text-black"
-          v-bind:style="$q.screen.lt.sm?{'width': '80%'}: $q.screen.lt.md? {'width':'45%'} : {'width':'30%'}"
+      </q-card-section>
+      <q-card-section>
+        <q-form
+          class="q-gutter-md"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="off"
+          spellcheck="false"
         >
-          <!-- style="min-width: 350px;"> -->
-          <q-card-section>
-            <!-- size="103px" -->
-            <q-avatar
-              style="background-color: #c1f4ff"
-              size="90px"
-              class="absolute-center shadow-10"
+          <q-input
+            dense
+            color="black"
+            v-model="user.name"
+            label="Nome e sobrenome"
+            lazy-rules
+            :rules="[ val => val && val.length >= 7 && /\s/.test(val) || 'Insira o nome completo']"
+          />
+
+          <q-input
+            dense
+            color="black"
+            v-model="user.email"
+            label="Email"
+            lazy-rules
+            autocomplete="nope"
+            type="email"
+          />
+          <!-- :rules="[ val => val && !/\s/.test(val) && !this.test(String(val).toLowerCase()) || 'Insira um email válido']" -->
+          <!-- :rules="[ val => val && !/\s/.test(val) && !this.reg.test(val) || 'Insira um email válido']" -->
+
+          <q-input
+            dense
+            color="black"
+            v-model="user.password"
+            label="Senha"
+            type="password"
+            lazy-rules
+            :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]"
+          />
+
+          <q-input
+            dense
+            color="black"
+            v-model="user.confirmPassword"
+            label="Confirme a sua senha"
+            type="password"
+            lazy-rules
+            :rules="[ val => user.password === user.confirmPassword || 'senhas não conferem', ]"
+            autocomplete="nope"
+          />
+          <q-toggle
+            v-model="terms"
+            label="I accept the license and terms"
+            :rules="[ val => val === true || 'senhas não conferem', ]"
+            autocomplete="nope"
+          />
+          <q-card-actions align="right">
+            <q-btn
+              label="Limpar"
+              type="reset"
+              color="primary"
+              flat
+              class="q-ml-sm"
+              @click="user = {}"
+            />
+            <q-btn
+              label="Registrar"
+              type="submit"
+              color="primary"
+              @click="signUp()"
+            />
+          </q-card-actions>
+          <q-card-actions
+            vertical
+            align="center"
+          >Já tem cadastro?
+            <a
+              href
+              @click.prevent="showSignup = !showSignup"
             >
-              <img src="../../assets/logo/user-logo.png">
-              <!-- <img src="../../statics/profile.svg"> -->
-            </q-avatar>
-          </q-card-section>
-          <q-card-section>
-            <div class="text-center q-pt-lg">
-              <div class="col text-h6 ellipsis">
-                Log in
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <q-form class="q-gutter-md">
-              <q-input
-                color="black"
-                filled
-                v-model="username"
-                label="Username"
-                lazy-rules
-              />
+              <span> Acesse o Login!</span>
+            </a>
+          </q-card-actions>
+        </q-form>
+      </q-card-section>
+    </q-card>
+    <q-card
+      v-else
+      style="background-color: #c1f4ff55; position: absolute; top:19vh;"
+      class="text-black"
+      :style="$q.screen.lt.sm?{'width': '80%'}: $q.screen.lt.md? {'width':'45%'} : {'width':'30%'}"
+    >
+      <q-card-section>
+        <q-avatar
+          style="background-color: #c1f4ffaa"
+          size="90px"
+          class="absolute-center shadow-10"
+        >
+          <img src="../../assets/logo/user-logo.png">
+        </q-avatar>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-center q-pt-lg">
+          <div class="col text-h6 ellipsis">
+            Log in
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section>
+        <q-form
+          class="q-gutter-md"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="off"
+          spellcheck="false"
+        >
+          <q-input
+            dense
+            color="black"
+            v-model="user.email"
+            label="Email"
+            lazy-rules
+            autocomplete="nope"
+            type="email"
+          />
 
-              <q-input
-                color="black"
-                type="password"
-                filled
-                v-model="password"
-                label="Password"
-                lazy-rules
-              />
-
-              <div>
-                <q-btn
-                  label="Login"
-                  to="/"
-                  type="button"
-                  color="primary"
-                />
-              </div>
-            </q-form>
-          </q-card-section>
-        </q-card>
-      </q-page>
-    </q-page-container>
-
-    <section class="flex row flex-center q-py-sm ">
-      <!--      <div class="flex col-12 q-pa-xs flex-center">-->
-      <!--        <q-icon name="fab fa-github" color="white" size="md">-->
-      <!--        </q-icon>-->
-      <!--      </div>-->
-      <div class="text-weight-bold text-subtitle2 text-white ">
-        Copyright © {{ year }}, made with
-        <q-icon name="fas fa-heart"></q-icon>
-        by Pratik Patel
-      </div>
-    </section>
-  </q-layout>
+          <q-input
+            dense
+            color="black"
+            v-model="user.password"
+            label="Senha"
+            type="password"
+            lazy-rules
+          />
+          <!-- :rules="[ val => val && val.length >= 6 && !/\s/.test(val) || 'minimo 6 caracteres, sem espaços em branco...', ]" -->
+          <q-card-actions align="right">
+            <q-btn
+              label="Limpar"
+              type="reset"
+              color="primary"
+              flat
+              class="q-ml-sm"
+              @click="user = {}"
+            />
+            <q-btn
+              label="Entrar"
+              type="submit"
+              color="primary"
+              @click="signIn()"
+            />
+          </q-card-actions>
+          <q-card-actions
+            vertical
+            align="center"
+          >Não tem cadastro?
+            <a
+              class="text-white"
+              href
+              @click.prevent="showSignup=!showSignup"
+            >
+              <span> Registre-se aqui!</span>
+            </a>
+          </q-card-actions>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </div>
 </template>
 
 <script>
+//   name: "Pricing",
+//   data () {
+//     return {
+//       year: (new Date()).getFullYear(),
+//       username: 'Pratik',
+//       password: '12345'
+//     }
+//   }
+// }
+import { baseApiUrl, showError, userKey } from '../../global'
+import axios from 'axios'
+import facebookLogin from 'facebook-login-vuejs'
+
 export default {
-  name: "Pricing",
+  name: 'Auth',
+  components: {
+    facebookLogin
+  },
   data () {
     return {
-      year: (new Date()).getFullYear(),
-      username: 'Pratik',
-      password: '12345'
+      // year: (new Date()).getFullYear(),
+      showSignup: false,
+      user: {},
+      terms: false,
+      FB: undefined,
+      // reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+      re: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     }
-  }
+  },
+  computed: {
+    isConnected: {
+      get () {
+        return this.$store.state.user.isConnectedFacebook
+      },
+      set (val) {
+        this.$store.commit('user/setFacebookUser', val)
+      }
+    }
+  },
+  methods: {
+    //google
+    onSignIn (user) {
+      const profile = user.getBasicProfile()
+    },
+    //facebook
+    getUserData (val) {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+        user => {
+          this.user.name = user.name;
+          this.user.email = user.email;
+          this.user.password = user.id;
+          this.user.confirmPassword = user.id;
+          this.user.image = user.picture.data.url;
+          this.isConnected = true
+          if (val === true) {
+            axios.post(`${baseApiUrl}/signin`, this.user)
+              .then(res => {
+                this.$store.commit('user/setUser', res.data)
+                localStorage.setItem(userKey, JSON.stringify(res.data))
+                this.$router.push({ path: '/' })
+              })
+              .catch(showError)
+          } else {
+            axios.post(`${baseApiUrl}/signup`, this.user)
+              .then(() => {
+                this.$toasted.global.defaultSuccess()
+                this.showSignup = false
+              })
+              .catch(showError)
+          }
+        }
+      )
+    },
+    sdkLoaded (payload) {
+      this.isConnected = payload.isConnected
+      this.FB = payload.FB
+      if (this.isConnected) this.getUserData()
+    },
+    onLogin (val) {
+      this.getUserData(val)
+      // this.getUserData()
+      // if (val === 'signIn') {
+      //   this.signIn()
+      // } else {
+      //   this.dialogTerms()
+      //   this.signUp()
+      // }
+    },
+    onLogout () {
+      this.isConnected = false;
+    },
+    dialogTerms () {
+      this.$q.dialog({
+        dark: true,
+        title: 'Apagar',
+        message: 'Você aceita os termos e condicoes de uso?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.terms = true
+      }).onCancel(() => {
+      }).onDismiss(() => {
+      })
+    },
+    signIn () {
+      axios.post(`${baseApiUrl}/signin`, this.user)
+        .then(res => {
+          this.$store.commit('user/setUser', res.data)
+          localStorage.setItem(userKey, JSON.stringify(res.data))
+          this.$router.push({ path: '/' })
+        })
+        .catch(showError)
+    },
+    signUp () {
+      if (this.terms === true) {
+        axios.post(`${baseApiUrl}/signup`, this.user)
+          .then(() => {
+            this.$toasted.global.defaultSuccess()
+            this.showSignup = false
+          })
+          .catch(showError)
+      } else {
+        this.dialogTerms()
+      }
+    }
+  },
+  mounted () {
+    gapi.signin2.render('google-signin-button', {
+      onsuccess: this.onSignIn
+    })
+  },
 }
 </script>
-
-<style scoped>
-.bg-image {
-  background-image: linear-gradient(0deg, #5c6b82 99%, #c1f4ff 100%);
-}
-</style>

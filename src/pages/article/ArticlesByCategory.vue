@@ -1,42 +1,10 @@
 <template>
   <div>
-    <!-- {{articles}} -->
-    <!-- <q-btn
-      label="Pesquisar Todos os Artigos"
-      to="/articles"
-    > -->
-    <!-- </q-btn> -->
-    <!-- <q-toolbar :class="$q.dark.isActive ? 'text-white': 'text-black'">
-      <q-input
-        @change="getArticles"
-        placeholder="pesquise aqui todos artigos..."
-        dense
-        standout
-        v-model="searchArticleAll"
-        input-class="text-left"
-        style="width: 100%;"
-      >
-        <template v-slot:append>
-          <q-icon
-            v-if="searchArticleAll === ''"
-            name="search"
-          />
-          <q-icon
-            v-else
-            name="clear"
-            class="cursor-pointer"
-            @click="searchArticleAll = ''"
-          />
-        </template>
-      </q-input>
-    </q-toolbar> -->
     <PageTitle
       icon="fa fa-user"
       :main="category.name"
       sub="Categoria"
     />
-    <!-- {{this.categories}} -->
-    <!-- {{this.categoryYet}} -->
     <q-card class="bg-transparent no-shadow no-border q-pa-md">
       <q-card-section class="q-pa-none">
         <div class="row q-col-gutter-sm">
@@ -56,27 +24,10 @@
                 ></q-icon>
               </q-item-section>
               <q-item-section class=" q-pa-md q-ml-none  text-white">
-                <!-- {{category}} -->
-                <!-- <br> -->
-                <!-- {{categories[0]}} -->
-                <!-- {{categories[0].children[0].id}} -->
-                <!-- {{categories[0].children[1].id}}
-                {{categories[0].children[2].id}} -->
-                <!-- {{categories[0].children[3].id}}
-                {{categories[0].children[4].id}}
-                {{categories[0].children[5].id}} -->
                 <q-item-label class="text-white text-h6 text-weight-bolder">
-                  <!-- {{showCategories()}} -->
-
-                  <!-- {{this.category.id}}
-                  <br> -->
-                  <!-- {{this.categories[0].children[0].parentId}} -->
-
                   {{countCategories}}
-                  <!-- {{categories[0].children.length}} -->
-                </q-item-label>Categories
-                <!-- {{categories['category.id'].children.length}} -->
-                <!-- <q-item-label>{{category}}</q-item-label> -->
+                </q-item-label>
+                Categories
               </q-item-section>
             </q-item>
           </div>
@@ -97,8 +48,8 @@
                 ></q-icon>
               </q-item-section>
               <q-item-section class=" q-pa-md q-ml-none  text-white">
-                <q-item-label class="text-white text-h6 text-weight-bolder">{{articles.length}}</q-item-label>
-                <q-item-label>Articles Here</q-item-label>
+                <q-item-label class="text-white text-h6 text-weight-bolder">{{articles.length == 6 ? '6' : articles.length }}</q-item-label>
+                <q-item-label>Articles</q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -171,26 +122,15 @@
         </template>
       </q-input>
     </q-toolbar>
-    <!-- {{searchArticle}}
-    {{searchArticleAll }} -->
     <div class="fit row wrap justify-start items-start content-start">
       <div
+        v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
         class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
         v-for="article in articles"
         :key="article.id"
-        v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
       >
-        <!-- {{article}} -->
         <ArticleItem :article="article" />
       </div>
-      <!-- <div
-        class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
-        v-for="article in articles"
-        :key="article.id"
-        v-if="searchArticleAll === '' || article.name.includes(searchArticleAll) || article.description.includes(searchArticleAll)"
-      >
-        <ArticleItem :article="article" />
-      </div> -->
     </div>
     <div class="column justify-center items-center">
       <q-btn
@@ -224,10 +164,6 @@ export default {
       articles: [],
       page: 1,
       loadMore: true
-      // treeOptions: {
-      //   propertyNames: { 'text': 'name' },
-      //   filter: { emptyText: 'Categoria não encontrada' }
-      // }
     }
   },
   methods: {
@@ -240,44 +176,9 @@ export default {
       axios(url).then(res => {
         this.articles = this.articles.concat(res.data)
         this.page++
-
         if (res.data.length === 0) this.loadMore = false
       })
     },
-    // getArticles () {
-    //   const url = `${baseApiUrl}/articles?page=${this.page}`
-    //   axios.get(url).then(res => {
-    //     this.articles = res.data
-    //   })
-    // }
-    showCategories () {
-      // for (let i = 0; i < this.categories[0].children.length; i++) {
-      //   // console.log(this.categories[0].children)
-      //   // {{category.parentId}}
-      //   // {{categories[0].children.id}}
-      //   const count = 0
-      //   this.countCategories = 0
-      //   if (this.categories[0].children[i].parentId == this.category.id) {
-      //     count++
-      //   }
-      //   this.countCategories = count
-      //   count = 0
-      // }
-      // return this.countCategories
-    },
-
-    // const getTree = (req, res) => {
-    //   app.db('categories')
-    //     .then(categories => res.json(toTree(categories)))
-    //     .catch(err => res.status(500).send(err))
-    // }
-
-    // const getTreeByUser = (req, res) => {
-    //   app.db('categories')
-    //     .where({ userId: req.params.id })//id: '475',
-    //     .then(categories => res.json(toTree(categories)))
-    //     .catch(err => res.status(500).send(err))
-    // }
     countTree (cat) {
       for (let i = 0; i < cat[0].children.length; i++) {
         this.count++
@@ -290,6 +191,7 @@ export default {
       const url = `${baseApiUrl}/user/${this.user.id}/categories/tree`
       axios.get(url).then(res => {
         this.categories = res.data
+        console.log(this.categories)
         this.countTree(this.categories)
         this.countCategories = this.count
         this.count = 0
@@ -301,7 +203,6 @@ export default {
     },
   },
   watch: {
-    // showCategories,
     $route (to) {
       this.category.id = to.params.id
       this.articles = []
@@ -318,21 +219,6 @@ export default {
     this.getCategory()
     this.getArticlesByCategory()
     this.loadCategories()
-    // this.showCategories()
   }
 }
 </script>
-
-<style>
-/* .articles-by-category ul {
-        list-style-type: none;
-        padding: 0px;
-    } */
-
-/* .articles-by-category .load-more {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 25px;
-    } */
-</style>

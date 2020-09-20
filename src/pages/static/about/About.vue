@@ -1,6 +1,8 @@
 <template>
   <div>
-
+    <q-card>
+      sifhuasgfiuys
+    </q-card>
   </div>
 </template>
 

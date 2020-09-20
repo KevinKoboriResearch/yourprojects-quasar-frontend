@@ -1,34 +1,5 @@
 <template>
   <div>
-    <!-- <q-toolbar :class="$q.dark.isActive ? 'text-white': 'text-black'">
-      <q-input
-        @change="getArticles"
-        placeholder="pesquise aqui todos artigos..."
-        dense
-        standout
-        v-model="searchArticleAll"
-        input-class="text-left"
-        style="width: 100%;"
-      >
-        <template v-slot:append>
-          <q-icon
-            v-if="searchArticleAll === ''"
-            name="search"
-          />
-          <q-icon
-            v-else
-            name="clear"
-            class="cursor-pointer"
-            @click="searchArticleAll = ''"
-          />
-        </template>
-      </q-input>
-    </q-toolbar> -->
-    <!-- <PageTitle
-      icon="fa fa-folder-o"
-      :main="category.name"
-      sub="Categoria"
-    /> -->
     <q-card class="bg-transparent no-shadow no-border q-pa-md">
       <q-card-section class="q-pa-none">
         <div class="row q-col-gutter-sm">
@@ -43,14 +14,15 @@
                 class=" q-pa-lg q-mr-none text-white"
               >
                 <q-icon
-                  name="fab fa-twitter"
+                  name="fas fa-layer-group"
                   size="24px"
                 ></q-icon>
               </q-item-section>
               <q-item-section class=" q-pa-md q-ml-none  text-white">
-                <q-item-label class="text-white text-h6 text-weight-bolder">{{countCategories}}</q-item-label>
-                <!-- {{categories[0].children.length}} -->
-                <q-item-label>Categories here</q-item-label>
+                <q-item-label class="text-white text-h6 text-weight-bolder">
+                  {{countCategories}}
+                </q-item-label>
+                Categories
               </q-item-section>
             </q-item>
           </div>
@@ -71,8 +43,8 @@
                 ></q-icon>
               </q-item-section>
               <q-item-section class=" q-pa-md q-ml-none  text-white">
-                <q-item-label class="text-white text-h6 text-weight-bolder">{{articles.length}}</q-item-label>
-                <q-item-label>All Articles</q-item-label>
+                <q-item-label class="text-white text-h6 text-weight-bolder">{{articles.length == 6 ? '6' : articles.length }}</q-item-label>
+                <q-item-label>Articles</q-item-label>
               </q-item-section>
             </q-item>
           </div>
@@ -145,26 +117,15 @@
         </template>
       </q-input>
     </q-toolbar>
-    <!-- {{searchArticle}}
-    {{searchArticleAll }} -->
     <div class="fit row wrap justify-start items-start content-start">
       <div
+        v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
         class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
         v-for="article in articles"
         :key="article.id"
-        v-if="searchArticle === '' || article.name.includes(searchArticle) || article.description.includes(searchArticle)"
       >
-        {{article}}
         <ArticleItem :article="article" />
       </div>
-      <!-- <div
-        class="q-pt-md q-px-md col-xs-12 col-sm-6 col-md-4"
-        v-for="article in articles"
-        :key="article.id"
-        v-if="searchArticleAll === '' || article.name.includes(searchArticleAll) || article.description.includes(searchArticleAll)"
-      >
-        <ArticleItem :article="article" />
-      </div> -->
     </div>
     <div class="column justify-center items-center">
       <q-btn
@@ -180,11 +141,10 @@
 <script>
 import { baseApiUrl, userKey } from '../../global'
 import axios from 'axios'
-// import PageTitle from '../../components/template/PageTitle'
 import ArticleItem from './ArticleItem'
 
 export default {
-  name: 'ArticlesByCategory',
+  name: 'AllArticles',
   components: { ArticleItem },
   data () {
     return {
@@ -194,47 +154,23 @@ export default {
       categories: [],
       countCategories: 0,
       count: 0,
+      categoryYet: [],
       articles: [],
       page: 1,
       loadMore: true
-      // treeOptions: {
-      //   propertyNames: { 'text': 'name' },
-      //   filter: { emptyText: 'Categoria não encontrada' }
-      // }
     }
   },
   methods: {
-    getCategory () {
-      const url = `${baseApiUrl}/categories/${this.category.id}`
-      axios(url).then(res => this.category = res.data)
-    },
-    // getArticlesByCategory () {
-    //   const url = `${baseApiUrl}/categories/${this.category.id}/articles?page=${this.page}`
-    //   axios(url).then(res => {
-    //     this.articles = this.articles.concat(res.data)
-    //     this.page++
-
-    //     if (res.data.length === 0) this.loadMore = false
-    //   })
-    // },
-    // loadArticles () {
-    //   const url = `${baseApiUrl}/articles?page=${this.page}`
-    //   axios.get(url).then(res => {
-    //     this.articles = res.data.data
-    //     this.count = res.data.count
-    //     this.limit = res.data.limit
-    //   })
+    // getCategory () {
+    //   const url = `${baseApiUrl}/categories/${this.category.id}`
+    //   axios(url).then(res => this.category = res.data)
     // },
     getArticles () {
       const url = `${baseApiUrl}/articles?page=${this.page}`
       axios.get(url).then(res => {
         this.articles = this.articles.concat(res.data)
-        // this.count = res.data.count
-        // this.limit = res.data.limit
         this.page++
-        // this.category.id = this.$route.params.id
-        // this.getCategory()
-        if (res.data.data.length === 0) this.loadMore = false
+        if (res.data.length === 0) this.loadMore = false
       })
     },
     countTree (cat) {
@@ -244,26 +180,17 @@ export default {
         this.countTree(this.categoryYet)
       }
     },
-    //     getTreeData () {
-    //   const url = `${baseApiUrl}/categories/tree`
-    //   return axios.get(url).then(res => res.data)
-    // },
     loadCategories () {
-      this.loadUser()
+      // this.loadUser()
       const url = `${baseApiUrl}/categories/tree`
       axios.get(url).then(res => {
         this.categories = res.data
+        console.log(this.categories)
         this.countTree(this.categories)
         this.countCategories = this.count
         this.count = 0
       })
     },
-    // getArticles () {
-    //   const url = `${baseApiUrl}/articles?page=${this.page}`
-    //   axios.get(url).then(res => {
-    //     this.articles = res.data
-    //   })
-    // }
   },
   // watch: {
   //   $route (to) {
@@ -273,28 +200,14 @@ export default {
   //     this.loadMore = true
 
   //     this.getCategory()
-  //     this.getArticles()
+  //     this.getArticlesByCategory()
+  //     this.loadCategories()
   //   }
   // },
   mounted () {
-    // this.category.id = this.$route.params.id
     // this.getCategory()
     this.getArticles()
     this.loadCategories()
   }
 }
 </script>
-
-<style>
-/* .articles-by-category ul {
-        list-style-type: none;
-        padding: 0px;
-    } */
-
-/* .articles-by-category .load-more {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 25px;
-    } */
-</style>
